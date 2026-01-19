@@ -6,3 +6,4 @@ export { GameButton } from './GameButton';
 export { GameHeader } from './GameHeader';
 export { ProgressPills } from './ProgressPills';
 export { ResultModal } from './ResultModal';
+export { LessonCompleteScreen } from './LessonCompleteScreen';

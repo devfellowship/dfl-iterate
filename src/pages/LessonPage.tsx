@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Bot } from 'lucide-react';
@@ -6,18 +6,21 @@ import {
   QualityReview,
   ConstrainedEdit,
   DecisionFork,
-  BreakAndFix
+  BreakAndFix,
+  VideoChallenge,
+  VisualImplementation
 } from '@/components/activity';
-import { ProjectPreview } from '@/components/preview';
+import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
 import { 
   GameHeader, 
   ProgressPills, 
   ResultModal,
   AIHistoryDrawer,
+  LessonCompleteScreen,
 } from '@/components/game';
-import { useActivityPage, useAIHistory, useSoundEffects } from '@/hooks';
-import { ActivityType } from '@/enums';
+import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
+import { ActivityType, ActivityStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 
@@ -31,6 +34,8 @@ export default function LessonPage() {
   // Drawer states
   const [gitLogOpen, setGitLogOpen] = useState(false);
   const [aiHistoryOpen, setAiHistoryOpen] = useState(false);
+  const [showLessonComplete, setShowLessonComplete] = useState(false);
+  const [lastCompletedActivity, setLastCompletedActivity] = useState<number | undefined>();
   
   // Result modal state
   const [showResult, setShowResult] = useState(false);
@@ -67,6 +72,17 @@ export default function LessonPage() {
     setProjectBroken,
   } = useActivityPage();
 
+  // Compute completed activities for preview state
+  const completedActivities = useMemo(() => 
+    activities
+      .map((a, i) => a.status === ActivityStatus.COMPLETED ? i : -1)
+      .filter(i => i !== -1),
+    [activities]
+  );
+
+  // Dynamic preview state
+  const previewState = usePreviewState(completedActivities, project.decisions);
+
   // Handle activity completion with result modal
   const handleActivityComplete = useCallback((
     activityId: string, 
@@ -89,6 +105,7 @@ export default function LessonPage() {
       } else {
         playSuccess();
       }
+      setLastCompletedActivity(currentActivityIndex);
     } else {
       playError();
     }
@@ -131,8 +148,8 @@ export default function LessonPage() {
     
     if (resultData?.isSuccess) {
       if (resultData.isLastActivity) {
-        // Lesson complete - go home!
-        navigate('/');
+        // Show lesson complete screen
+        setShowLessonComplete(true);
       } else if (currentActivityIndex < activities.length - 1) {
         goToNextActivity();
       }
@@ -140,6 +157,24 @@ export default function LessonPage() {
     
     setResultData(null);
   };
+
+  // Handle lesson complete
+  if (showLessonComplete) {
+    return (
+      <LessonCompleteScreen
+        lessonTitle={lesson?.title || 'Lesson'}
+        stats={{
+          xpEarned: xp,
+          livesRemaining: lives,
+          streak: streak,
+          timeMinutes: 32, // Mock
+        }}
+        decisions={project.decisions}
+        githubRepo="github.com/seu-usuario/boxshop-iterate"
+        onGoHome={() => navigate('/')}
+      />
+    );
+  }
 
   // Set project broken when on Break & Fix activity
   useEffect(() => {
@@ -223,6 +258,28 @@ export default function LessonPage() {
           />
         );
       
+      case ActivityType.VIDEO_CHALLENGE:
+        return (
+          <VideoChallenge
+            activity={currentActivity}
+            onComplete={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-5-success', true);
+            }}
+          />
+        );
+      
+      case ActivityType.VISUAL_IMPLEMENTATION:
+        return (
+          <VisualImplementation
+            activity={currentActivity}
+            onComplete={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-6-success', true);
+            }}
+          />
+        );
+      
       default:
         return null;
     }
@@ -266,8 +323,10 @@ export default function LessonPage() {
 
         {/* Right Panel - Preview */}
         <div className="hidden lg:flex lg:w-[45%] flex-col p-4 relative">
-          <ProjectPreview 
+          <DynamicPreview 
             status={project.status} 
+            previewState={previewState}
+            lastCompletedActivity={lastCompletedActivity}
             errorMessage={currentActivity?.type === ActivityType.BREAK_AND_FIX 
               ? "TypeError: Cannot read property 'map' of undefined" 
               : undefined
