@@ -10,32 +10,28 @@ interface BreakAndFixProps {
   activity: Activity;
   errorMessage: string;
   onFix: (code: string) => void;
+  onError: () => void;
   onRequestHint: () => void;
 }
 
-export function BreakAndFix({ activity, errorMessage, onFix, onRequestHint }: BreakAndFixProps) {
+export function BreakAndFix({ activity, errorMessage, onFix, onError, onRequestHint }: BreakAndFixProps) {
   const [code, setCode] = useState(activity.aiGeneratedCode || '');
   const [isTesting, setIsTesting] = useState(false);
-  const [testResult, setTestResult] = useState<'pending' | 'success' | 'error'>('pending');
 
   const handleTest = async () => {
     setIsTesting(true);
-    setTestResult('pending');
     
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     const hasOptionalChaining = code.includes('?.') || code.includes('|| []') || code.includes('?? []');
     
-    if (hasOptionalChaining) {
-      setTestResult('success');
-      setTimeout(() => {
-        onFix(code);
-      }, 500);
-    } else {
-      setTestResult('error');
-    }
-    
     setIsTesting(false);
+    
+    if (hasOptionalChaining) {
+      onFix(code);
+    } else {
+      onError();
+    }
   };
 
   return (
@@ -84,23 +80,6 @@ export function BreakAndFix({ activity, errorMessage, onFix, onRequestHint }: Br
             fontSize={14}
           />
         </div>
-
-        {/* Test Result */}
-        {testResult !== 'pending' && (
-          <motion.div 
-            className={`p-3 rounded-xl text-center font-bold shrink-0 ${
-              testResult === 'success' 
-                ? 'bg-success/10 border-2 border-success/30 text-success' 
-                : 'bg-destructive/10 border-2 border-destructive/30 text-destructive'
-            }`}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            {testResult === 'success' 
-              ? '✅ Projeto funcionando!'
-              : '❌ Ainda quebrado. Tente novamente.'}
-          </motion.div>
-        )}
       </div>
     </ActivityGameCard>
   );
