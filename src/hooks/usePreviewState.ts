@@ -18,28 +18,37 @@ const initialState: PreviewState = {
   cartCount: 0,
 };
 
+// Preview state based on current activity index (time travel!)
 export function usePreviewState(
+  currentActivityIndex: number,
   completedActivities: number[],
   decisions: Decision[]
 ): PreviewState {
   return useMemo(() => {
     let state = { ...initialState };
     
-    // After Activity 1: Header styled
-    if (completedActivities.includes(0)) {
+    // Show state UP TO the current activity
+    // If viewing activity 0, show initial state
+    // If viewing activity 1, show state after activity 0 completed (if it was)
+    
+    // After Activity 1 completed AND viewing activity 1+: Header styled
+    if (completedActivities.includes(0) && currentActivityIndex >= 1) {
       state.headerStyle = 'styled';
-      state.updateBadge = '✨ Header atualizado';
+      if (currentActivityIndex === 1) {
+        state.updateBadge = '✨ Header atualizado';
+      }
     }
     
-    // After Activity 2: Cards enhanced
-    if (completedActivities.includes(1)) {
+    // After Activity 2 completed AND viewing activity 2+: Cards enhanced
+    if (completedActivities.includes(1) && currentActivityIndex >= 2) {
       state.cardsStyle = 'enhanced';
-      state.updateBadge = '⚡ Performance otimizada';
+      if (currentActivityIndex === 2) {
+        state.updateBadge = '⚡ Performance otimizada';
+      }
     }
     
-    // After Activity 3: State management active
-    if (completedActivities.includes(2)) {
-      // Find the decision for state management
+    // After Activity 3 completed AND viewing activity 3+: State management active
+    if (completedActivities.includes(2) && currentActivityIndex >= 3) {
       const stateDecision = decisions.find(d => 
         d.choice === 'opt-context' || 
         d.choice === 'opt-zustand' || 
@@ -53,20 +62,24 @@ export function usePreviewState(
       } else if (stateDecision?.choice === 'opt-localstorage') {
         state.stateManagement = 'localstorage';
       } else {
-        state.stateManagement = 'zustand'; // Default
+        state.stateManagement = 'zustand';
       }
       
       state.cartCount = 2;
-      state.updateBadge = '🗄️ State management ativo';
+      if (currentActivityIndex === 3) {
+        state.updateBadge = '🗄️ State management ativo';
+      }
     }
     
-    // After Activity 4: Checkout working
-    if (completedActivities.includes(3)) {
+    // After Activity 4 completed AND viewing activity 4+: Checkout working
+    if (completedActivities.includes(3) && currentActivityIndex >= 4) {
       state.checkoutWorking = true;
       state.cartCount = 3;
-      state.updateBadge = '✅ Checkout funcionando';
+      if (currentActivityIndex === 4) {
+        state.updateBadge = '✅ Checkout funcionando';
+      }
     }
     
     return state;
-  }, [completedActivities, decisions]);
+  }, [currentActivityIndex, completedActivities, decisions]);
 }

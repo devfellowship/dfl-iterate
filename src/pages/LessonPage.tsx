@@ -80,8 +80,8 @@ export default function LessonPage() {
     [activities]
   );
 
-  // Dynamic preview state
-  const previewState = usePreviewState(completedActivities, project.decisions);
+  // Dynamic preview state - based on current activity index for time travel
+  const previewState = usePreviewState(currentActivityIndex, completedActivities, project.decisions);
 
   // Handle activity completion with result modal
   const handleActivityComplete = useCallback((
