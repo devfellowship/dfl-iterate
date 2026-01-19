@@ -20,7 +20,7 @@ import {
   LessonCompleteScreen,
 } from '@/components/game';
 import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
-import { ActivityType, ActivityStatus } from '@/enums';
+import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 
@@ -327,7 +327,7 @@ export default function LessonPage() {
             status={project.status} 
             previewState={previewState}
             lastCompletedActivity={lastCompletedActivity}
-            errorMessage={currentActivity?.type === ActivityType.BREAK_AND_FIX 
+            errorMessage={currentActivity?.type === ActivityType.BREAK_AND_FIX && project.status === ProjectStatus.BROKEN
               ? "TypeError: Cannot read property 'map' of undefined" 
               : undefined
             }
