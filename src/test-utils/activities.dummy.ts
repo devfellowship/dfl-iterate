@@ -186,9 +186,9 @@ export function ProductList({ products }: { products: Product[] }) {
   );
 }`,
     videoConfig: {
-      youtubeId: 'THL1OPn72vo',
-      title: 'Performance com useMemo - Na Prática',
-      duration: '3:42',
+      youtubeId: 'ohrTAqng3uo',
+      title: 'Learn useMemo In 10 Minutes',
+      duration: '10:38',
     },
   },
   {

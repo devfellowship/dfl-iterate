@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Check } from 'lucide-react';
+import { Play, Check, ExternalLink } from 'lucide-react';
 import { Activity } from '@/types';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game/GameButton';
@@ -48,57 +48,68 @@ export function VideoChallenge({ activity, onComplete }: VideoChallengeProps) {
       }
     >
       <div className="flex flex-col gap-4 flex-1 overflow-hidden">
-        {/* Video Thumbnail */}
-        <motion.div
-          className="relative aspect-video rounded-2xl overflow-hidden cursor-pointer group shrink-0"
-          onClick={() => setIsModalOpen(true)}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <img
-            src={thumbnailUrl}
-            alt={videoConfig.title}
-            className="w-full h-full object-cover"
-          />
-          
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70" />
-          
-          {/* Play Button */}
-          <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-primary rounded-full flex items-center justify-center shadow-lg"
-            whileHover={{ scale: 1.1 }}
-            style={{ boxShadow: '0 8px 32px rgba(243, 147, 37, 0.4)' }}
-          >
-            <Play className="w-7 h-7 text-primary-foreground ml-1" fill="currentColor" />
-          </motion.div>
-          
-          {/* Duration Badge */}
-          <div className="absolute bottom-3 right-3 bg-black/80 px-2 py-1 rounded text-xs font-mono font-semibold text-white">
-            {videoConfig.duration}
+        {/* Video Wrapper - Chrome style like preview */}
+        <div className="shrink-0 bg-card border border-border rounded-xl overflow-hidden">
+          {/* Toolbar */}
+          <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/30">
+            <div className="flex items-center gap-2">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-destructive/60" />
+                <div className="w-3 h-3 rounded-full bg-warning/60" />
+                <div className="w-3 h-3 rounded-full bg-success/60" />
+              </div>
+              <span className="text-xs text-muted-foreground ml-2">📹 {videoConfig.title}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono text-muted-foreground">{videoConfig.duration}</span>
+              <ExternalLink className="w-3.5 h-3.5 text-muted-foreground" />
+            </div>
           </div>
-          
-          {/* Title */}
-          <div className="absolute bottom-3 left-3 text-white font-semibold text-sm">
-            {videoConfig.title}
-          </div>
-        </motion.div>
 
-        {/* Watched Badge */}
-        {watched && (
-          <motion.div 
-            className="flex items-center gap-2 text-success text-sm font-semibold shrink-0"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+          {/* Video Thumbnail */}
+          <motion.div
+            className="relative aspect-video cursor-pointer group"
+            onClick={() => setIsModalOpen(true)}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
           >
-            <Check className="w-4 h-4" />
-            <span>Vídeo assistido</span>
+            <img
+              src={thumbnailUrl}
+              alt={videoConfig.title}
+              className="w-full h-full object-cover"
+            />
+            
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+            
+            {/* Play Button - Fixed and centered */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div 
+                className="w-20 h-20 bg-primary rounded-full flex items-center justify-center shadow-2xl"
+                whileHover={{ scale: 1.1 }}
+                style={{ boxShadow: '0 8px 40px rgba(243, 147, 37, 0.5)' }}
+              >
+                <Play className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" />
+              </motion.div>
+            </div>
+            
+            {/* Watched overlay */}
+            {watched && (
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <div className="flex items-center gap-2 text-success font-bold">
+                  <Check className="w-6 h-6" />
+                  <span>Assistido</span>
+                </div>
+              </div>
+            )}
           </motion.div>
-        )}
+        </div>
 
         {/* Instructions */}
         <p className="text-sm text-muted-foreground shrink-0">
-          Após assistir, implemente o mesmo pattern no código.
+          {watched 
+            ? '✅ Vídeo assistido! Agora implemente o mesmo pattern no código abaixo.' 
+            : 'Clique no vídeo para assistir, depois implemente o código.'}
         </p>
 
         {/* Code Editor */}
