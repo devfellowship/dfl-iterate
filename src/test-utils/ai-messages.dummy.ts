@@ -118,6 +118,32 @@ Isso significa que \`items\` é \`undefined\` quando o código tenta fazer \`.ma
 **Dica:** Como você pode garantir que \`items\` sempre seja um array antes de iterar?`,
   },
 
+  // Video Challenge - Sucesso
+  'act-5-success': {
+    isSuccess: true,
+    message: `Excelente aplicação do useMemo! 🎬
+
+Você aprendeu com o vídeo e aplicou corretamente:
+• \`useMemo\` para memoizar o array filtrado
+• \`useMemo\` para cachear o cálculo do total
+• Dependências corretas no array de deps
+
+Isso evita recálculos a cada re-render. Performance importa!`,
+  },
+
+  // Visual Implementation - Sucesso
+  'act-6-success': {
+    isSuccess: true,
+    message: `Design implementado com sucesso! 🎨
+
+Você replicou o visual de referência:
+• Cores e tipografia corretas
+• Espaçamentos proporcionais
+• Animações suaves
+
+Transformar design em código é uma habilidade essencial. Você está evoluindo!`,
+  },
+
   // Default success
   'default-success': {
     isSuccess: true,

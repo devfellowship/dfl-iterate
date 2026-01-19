@@ -188,3 +188,19 @@
     opacity: 1;
   }
 }
+
+@keyframes update-glow {
+  0% {
+    box-shadow: 0 0 0 0 hsl(33 90% 55% / 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px hsl(33 90% 55% / 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 0 hsl(33 90% 55% / 0);
+  }
+}
+
+.animate-update-glow {
+  animation: update-glow 3s ease-out;
+}
