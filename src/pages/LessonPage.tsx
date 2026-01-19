@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Terminal, Bot } from 'lucide-react';
 import { 
   QualityReview,
   ConstrainedEdit,
@@ -14,9 +15,8 @@ import {
   ProgressPills, 
   ResultModal,
   AIHistoryDrawer,
-  AIHistoryButton
 } from '@/components/game';
-import { useActivityPage, useAIHistory } from '@/hooks';
+import { useActivityPage, useAIHistory, useSoundEffects } from '@/hooks';
 import { ActivityType } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
@@ -24,6 +24,9 @@ import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
   const navigate = useNavigate();
+  
+  // Sound effects
+  const { playSuccess, playError, playCelebration } = useSoundEffects();
   
   // Drawer states
   const [gitLogOpen, setGitLogOpen] = useState(false);
@@ -36,6 +39,7 @@ export default function LessonPage() {
     xpEarned: number;
     feedback: string;
     activityTitle: string;
+    isLastActivity: boolean;
   } | null>(null);
 
   // Game state
@@ -54,7 +58,6 @@ export default function LessonPage() {
     currentActivityIndex,
     project,
     gitLog,
-    canAdvance,
     handleActivityComplete: originalHandleActivityComplete,
     handleDecision,
     handleCodeSubmit,
@@ -77,6 +80,18 @@ export default function LessonPage() {
     const isSuccess = template?.isSuccess ?? forceSuccess;
     const feedback = template?.message ?? aiMessageTemplates['default-success'].message;
     const earnedXP = isSuccess ? 25 : 0;
+    const isLastActivity = currentActivityIndex === activities.length - 1;
+
+    // Play sound
+    if (isSuccess) {
+      if (isLastActivity) {
+        playCelebration();
+      } else {
+        playSuccess();
+      }
+    } else {
+      playError();
+    }
 
     // Add to AI history
     addMessage({
@@ -100,6 +115,7 @@ export default function LessonPage() {
       xpEarned: earnedXP,
       feedback,
       activityTitle: currentActivity?.title ?? 'Activity',
+      isLastActivity: isSuccess && isLastActivity,
     });
     setShowResult(true);
 
@@ -107,14 +123,19 @@ export default function LessonPage() {
     if (isSuccess) {
       originalHandleActivityComplete(activityId, responseKey);
     }
-  }, [currentActivity, currentActivityIndex, addMessage, originalHandleActivityComplete]);
+  }, [currentActivity, currentActivityIndex, activities.length, addMessage, originalHandleActivityComplete, playSuccess, playError, playCelebration]);
 
   // Handle result modal continue
   const handleResultContinue = () => {
     setShowResult(false);
     
-    if (resultData?.isSuccess && currentActivityIndex < activities.length - 1) {
-      goToNextActivity();
+    if (resultData?.isSuccess) {
+      if (resultData.isLastActivity) {
+        // Lesson complete - go home!
+        navigate('/');
+      } else if (currentActivityIndex < activities.length - 1) {
+        goToNextActivity();
+      }
     }
     
     setResultData(null);
@@ -177,7 +198,6 @@ export default function LessonPage() {
             activity={currentActivity}
             onDecide={(optionId) => {
               handleDecision(optionId);
-              // Map option to response key
               const responseKey = optionId === 'context' ? 'act-3-context' 
                 : optionId === 'zustand' ? 'act-3-zustand' 
                 : 'act-3-localstorage';
@@ -251,7 +271,7 @@ export default function LessonPage() {
             }
           />
           
-          {/* Git Log Toggle */}
+          {/* Git Log Drawer */}
           <GitLog
             entries={gitLog}
             isOpen={gitLogOpen}
@@ -260,12 +280,27 @@ export default function LessonPage() {
         </div>
       </div>
 
-      {/* Footer Buttons - inside preview panel, next to GitLog */}
-      <div className="hidden lg:block fixed bottom-5 right-24 z-40">
-        <AIHistoryButton
-          messageCount={aiMessages.length}
+      {/* Footer Buttons - Aligned together */}
+      <div className="hidden lg:flex fixed bottom-5 right-5 z-40 items-center gap-3">
+        <motion.button
           onClick={() => setAiHistoryOpen(true)}
-        />
+          className="flex items-center gap-2 px-3 py-2 rounded-full bg-card border border-border hover:bg-muted transition-colors shadow-lg"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Bot className="w-4 h-4 text-muted-foreground" />
+          <span className="text-sm font-bold text-foreground">{aiMessages.length}</span>
+        </motion.button>
+
+        <motion.button
+          onClick={() => setGitLogOpen(!gitLogOpen)}
+          className="flex items-center gap-2 px-3 py-2 rounded-full bg-card border border-border hover:bg-muted transition-colors shadow-lg"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Terminal className="w-4 h-4 text-muted-foreground" />
+          <span className="text-sm font-bold text-foreground">{gitLog.length}</span>
+        </motion.button>
       </div>
 
       {/* Result Modal */}
@@ -277,6 +312,7 @@ export default function LessonPage() {
           activityTitle={resultData.activityTitle}
           aiFeedback={resultData.feedback}
           onContinue={handleResultContinue}
+          isLessonComplete={resultData.isLastActivity}
         />
       )}
 

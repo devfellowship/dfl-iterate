@@ -8,6 +8,7 @@ interface ResultModalProps {
   activityTitle: string;
   aiFeedback: string;
   onContinue: () => void;
+  isLessonComplete?: boolean;
 }
 
 export function ResultModal({
@@ -17,6 +18,7 @@ export function ResultModal({
   activityTitle,
   aiFeedback,
   onContinue,
+  isLessonComplete = false,
 }: ResultModalProps) {
   // Parse markdown-like syntax
   const renderFeedback = (content: string) => {
@@ -111,7 +113,11 @@ export function ResultModal({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              {isSuccess ? `${activityTitle} Completa!` : 'Quase lá!'}
+              {isSuccess 
+                ? isLessonComplete 
+                  ? '🎓 Lesson Completa!' 
+                  : `${activityTitle} Completa!`
+                : 'Quase lá!'}
             </motion.h2>
 
             {/* AI Feedback Card */}
@@ -141,7 +147,11 @@ export function ResultModal({
                 onClick={onContinue}
                 className="w-full"
               >
-                {isSuccess ? 'Próxima Activity →' : 'Tentar Novamente'}
+                {isSuccess 
+                  ? isLessonComplete 
+                    ? 'Voltar ao Início 🏠' 
+                    : 'Próxima Activity →' 
+                  : 'Tentar Novamente'}
               </GameButton>
             </motion.div>
           </motion.div>

@@ -25,15 +25,7 @@ const typeColors: Record<string, string> = {
 export function GitLog({ entries, isOpen, onToggle }: GitLogProps) {
   return (
     <>
-      <motion.button
-        onClick={onToggle}
-        className="absolute bottom-4 right-4 flex items-center gap-2 px-3 py-2 rounded-full bg-card border border-border hover:bg-muted transition-colors shadow-lg z-10"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <Terminal className="w-4 h-4 text-muted-foreground" />
-        <span className="text-sm font-bold text-foreground">{entries.length}</span>
-      </motion.button>
+      {/* Button rendered externally now via LessonPage */}
 
       <AnimatePresence>
         {isOpen && (
