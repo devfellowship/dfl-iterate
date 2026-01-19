@@ -187,7 +187,7 @@ export function ProductList({ products }: { products: Product[] }) {
 }`,
     videoConfig: {
       youtubeId: 'ohrTAqng3uo',
-      title: 'Learn useMemo In 10 Minutes',
+      title: 'Arquitetura final do seu E-Commerce de Boxe',
       duration: '10:38',
     },
   },
