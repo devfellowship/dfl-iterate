@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { GitLogEntry } from '@/types';
-import { GitCommit, GitBranch, Wrench, ChevronDown, ChevronUp } from 'lucide-react';
+import { GitCommit, GitBranch, Wrench, ChevronDown, ChevronUp, Terminal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
@@ -26,30 +26,33 @@ const typeColors = {
 
 export function GitLog({ entries, isCollapsed, onToggle }: GitLogProps) {
   return (
-    <div className="border-t border-border bg-card/50">
+    <motion.div 
+      className="shrink-0 border-t border-border bg-card/80 backdrop-blur flex flex-col"
+      animate={{ 
+        height: isCollapsed ? 'auto' : 44,
+        maxHeight: isCollapsed ? 240 : 44 
+      }}
+      transition={{ duration: 0.2, ease: 'easeInOut' }}
+    >
       <Button
         variant="ghost"
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-4 py-3 h-auto"
+        className="shrink-0 w-full flex items-center justify-between px-4 py-3 h-11 rounded-none"
       >
         <div className="flex items-center gap-2">
-          <GitCommit className="w-4 h-4 text-muted-foreground" />
-          <span className="text-sm font-medium">Git Log</span>
-          <span className="text-xs text-muted-foreground">({entries.length} commits)</span>
+          <Terminal className="w-4 h-4 text-primary" />
+          <span className="text-sm font-semibold">Git Log</span>
+          <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{entries.length}</span>
         </div>
         {isCollapsed ? (
-          <ChevronUp className="w-4 h-4 text-muted-foreground" />
-        ) : (
           <ChevronDown className="w-4 h-4 text-muted-foreground" />
+        ) : (
+          <ChevronUp className="w-4 h-4 text-muted-foreground" />
         )}
       </Button>
 
-      <motion.div
-        initial={false}
-        animate={{ height: isCollapsed ? 'auto' : 0, opacity: isCollapsed ? 1 : 0 }}
-        className="overflow-hidden"
-      >
-        <div className="px-4 pb-4 space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+      {isCollapsed && (
+        <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-2 custom-scrollbar">
           {entries.map((entry, index) => {
             const Icon = typeIcons[entry.type];
             const colorClass = typeColors[entry.type];
@@ -84,7 +87,7 @@ export function GitLog({ entries, isCollapsed, onToggle }: GitLogProps) {
             );
           })}
         </div>
-      </motion.div>
-    </div>
+      )}
+    </motion.div>
   );
 }

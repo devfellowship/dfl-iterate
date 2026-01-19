@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AppShell } from '@/components/layout';
 import { 
-  ActivityCard, 
   ActivityHeader,
   QualityReview,
   ConstrainedEdit,
@@ -14,11 +13,10 @@ import { ProjectPreview } from '@/components/preview';
 import { AIResponse } from '@/components/ai';
 import { GitLog } from '@/components/project';
 import { useActivityPage } from '@/hooks';
-import { ActivityType, ProjectStatus } from '@/enums';
+import { ActivityType } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -41,7 +39,6 @@ export default function LessonPage() {
     handleCodeSubmit,
     triggerAIResponse,
     goToNextActivity,
-    goToPreviousActivity,
     goToActivity,
     setProjectBroken,
   } = useActivityPage();
@@ -55,10 +52,10 @@ export default function LessonPage() {
 
   if (!lesson) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground mb-2">Lesson não encontrada</h1>
-          <Button onClick={() => navigate('/')}>Voltar ao início</Button>
+          <Button onClick={() => navigate('/')} className="game-button">Voltar ao início</Button>
         </div>
       </div>
     );
@@ -124,24 +121,21 @@ export default function LessonPage() {
       projectStatus={project.status}
       currentActivity={currentActivityIndex + 1}
       totalActivities={lesson.totalActivities}
+      trackTitle={lesson.title}
       onBack={() => navigate('/')}
     >
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Left Panel - Activity Content */}
-        <div className="flex-1 lg:w-[60%] flex flex-col border-r border-border">
+        <div className="flex-1 lg:w-[55%] flex flex-col border-r border-border overflow-hidden">
           {/* Activity Header */}
-          <div className="p-6 border-b border-border bg-card/30">
+          <div className="shrink-0 p-6 border-b border-border bg-card/30">
             {currentActivity && (
-              <ActivityHeader
-                activity={currentActivity}
-                activityNumber={currentActivityIndex + 1}
-                totalActivities={lesson.totalActivities}
-              />
+              <ActivityHeader activity={currentActivity} />
             )}
           </div>
 
           {/* Scrollable Content Area */}
-          <ScrollArea className="flex-1">
+          <div className="flex-1 overflow-y-auto custom-scrollbar">
             <div className="p-6 space-y-6">
               {/* Activity Cards Progress */}
               <div className="flex gap-2 overflow-x-auto pb-2">
@@ -149,17 +143,17 @@ export default function LessonPage() {
                   <motion.button
                     key={activity.id}
                     onClick={() => goToActivity(index)}
-                    className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-sm transition-all ${
+                    className={`shrink-0 w-11 h-11 rounded-xl flex items-center justify-center font-bold text-sm transition-all border-2 ${
                       index === currentActivityIndex
-                        ? 'bg-primary text-primary-foreground'
+                        ? 'bg-primary text-primary-foreground border-primary shadow-[0_4px_0_0_hsl(var(--primary)/0.5)]'
                         : activity.status === 'completed'
-                        ? 'bg-success/20 text-success'
+                        ? 'bg-success/20 text-success border-success/30 shadow-[0_4px_0_0_hsl(var(--success)/0.3)]'
                         : activity.status === 'locked'
-                        ? 'bg-muted text-muted-foreground opacity-50'
-                        : 'bg-muted text-muted-foreground'
+                        ? 'bg-muted text-muted-foreground border-border opacity-50'
+                        : 'bg-muted text-muted-foreground border-border shadow-[0_4px_0_0_hsl(var(--border))]'
                     }`}
                     whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileTap={{ scale: 0.95, y: 2 }}
                   >
                     {index + 1}
                   </motion.button>
@@ -191,9 +185,9 @@ export default function LessonPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex justify-end"
                 >
-                  <Button onClick={goToNextActivity} size="lg" className="gap-2">
+                  <Button onClick={goToNextActivity} className="game-button">
                     Próxima Activity
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-5 h-5" />
                   </Button>
                 </motion.div>
               )}
@@ -203,24 +197,24 @@ export default function LessonPage() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="text-center p-8 rounded-xl bg-success/10 border border-success/30"
+                  className="text-center p-8 rounded-xl bg-success/10 border-2 border-success/30"
                 >
-                  <span className="text-4xl mb-4 block">🎉</span>
-                  <h3 className="text-xl font-bold text-success mb-2">
+                  <span className="text-5xl mb-4 block">🎉</span>
+                  <h3 className="text-2xl font-bold text-success mb-2">
                     Parabéns! Você completou esta lesson!
                   </h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-muted-foreground mb-6 text-lg">
                     Você construiu o {lesson.projectName} e tomou decisões técnicas reais.
                   </p>
-                  <Button onClick={() => navigate('/')} variant="outline">
+                  <Button onClick={() => navigate('/')} className="game-button-outline">
                     Voltar ao início
                   </Button>
                 </motion.div>
               )}
             </div>
-          </ScrollArea>
+          </div>
 
-          {/* Git Log */}
+          {/* Git Log - Expands upward */}
           <GitLog
             entries={gitLog}
             isCollapsed={gitLogOpen}
@@ -228,8 +222,8 @@ export default function LessonPage() {
           />
         </div>
 
-        {/* Right Panel - Preview */}
-        <div className="hidden lg:flex lg:w-[40%] p-4">
+        {/* Right Panel - Preview (Full width of column) */}
+        <div className="hidden lg:flex lg:w-[45%] p-0">
           <ProjectPreview 
             status={project.status} 
             errorMessage={currentActivity?.type === ActivityType.BREAK_AND_FIX 

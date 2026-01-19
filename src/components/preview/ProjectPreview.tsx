@@ -12,9 +12,9 @@ export function ProjectPreview({ status, errorMessage }: ProjectPreviewProps) {
   const isBroken = status === ProjectStatus.BROKEN;
 
   return (
-    <div className="h-full flex flex-col bg-card border border-border rounded-xl overflow-hidden">
+    <div className="h-full w-full flex flex-col bg-card border border-border rounded-xl overflow-hidden">
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/30">
+      <div className="shrink-0 flex items-center justify-between px-4 py-2 border-b border-border bg-muted/30">
         <div className="flex items-center gap-2">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-destructive/60" />
@@ -33,8 +33,8 @@ export function ProjectPreview({ status, errorMessage }: ProjectPreviewProps) {
         </div>
       </div>
 
-      {/* Preview Content */}
-      <div className="flex-1 bg-white relative overflow-hidden">
+      {/* Preview Content - Full width */}
+      <div className="flex-1 bg-white relative overflow-auto">
         {isBroken ? (
           <motion.div 
             className="absolute inset-0 flex flex-col items-center justify-center bg-red-50 p-6"
@@ -59,10 +59,10 @@ export function ProjectPreview({ status, errorMessage }: ProjectPreviewProps) {
 
 function MockPreview() {
   return (
-    <div className="h-full">
+    <div className="min-h-full">
       {/* Mock Header */}
       <div className="bg-white border-b border-gray-100 px-6 py-4">
-        <div className="flex items-center justify-between max-w-6xl mx-auto">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🥊</span>
             <span className="font-bold text-gray-900 text-lg">BoxShop</span>
@@ -76,7 +76,7 @@ function MockPreview() {
       </div>
 
       {/* Mock Product Grid */}
-      <div className="p-6 max-w-6xl mx-auto">
+      <div className="p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-6">Equipamentos de Boxe</h2>
         <div className="grid grid-cols-2 gap-4">
           {[

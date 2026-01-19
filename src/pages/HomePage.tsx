@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Lesson } from '@/types';
 import { lessonsData } from '@/test-utils/lessons.dummy';
-import { Clock, Layers, ArrowRight, Sparkles } from 'lucide-react';
+import { Clock, Layers, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function HomePage() {
@@ -13,79 +13,63 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <header className="border-b border-border">
+    <div className="h-screen bg-background flex flex-col overflow-hidden">
+      {/* Header */}
+      <header className="shrink-0 border-b border-border">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl font-bold text-gradient">iterate</span>
-              <span className="text-sm text-muted-foreground">by DevFellowship</span>
-            </div>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Sparkles className="w-4 h-4" />
-              GitHub
-            </Button>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl font-bold text-gradient">iterate</span>
+            <span className="text-sm text-muted-foreground">by DevFellowship</span>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-16">
-        {/* Hero Text */}
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Aprenda construindo
-            <br />
-            <span className="text-gradient">projetos reais</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Microatividades que transformam você em um desenvolvedor melhor.
-            Cada decisão importa. Cada linha de código tem propósito.
-          </p>
-        </motion.div>
+      <main className="flex-1 overflow-auto">
+        <div className="container mx-auto px-4 py-16">
+          {/* Hero Text */}
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Aprenda construindo
+              <br />
+              <span className="text-gradient">projetos reais</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Microatividades que transformam você em um desenvolvedor melhor.
+              Cada decisão importa. Cada linha de código tem propósito.
+            </p>
+          </motion.div>
 
-        {/* Lessons Grid */}
-        <motion.div 
-          className="max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h2 className="text-lg font-semibold text-muted-foreground mb-6 text-center">
-            Escolha uma trilha para começar
-          </h2>
-          
-          <div className="grid gap-6">
-            {lessonsData.map((lesson, index) => (
-              <LessonCard
-                key={lesson.id}
-                lesson={lesson}
-                index={index}
-                onStart={() => handleStartLesson(lesson.id)}
-              />
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Coming Soon */}
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <p className="text-sm text-muted-foreground">
-            Mais trilhas em breve • API Integration • Full-Stack Apps • System Design
-          </p>
-        </motion.div>
+          {/* Lessons Grid */}
+          <motion.div 
+            className="max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h2 className="text-lg font-semibold text-muted-foreground mb-6 text-center">
+              Escolha uma trilha para começar
+            </h2>
+            
+            <div className="grid gap-6">
+              {lessonsData.map((lesson, index) => (
+                <LessonCard
+                  key={lesson.id}
+                  lesson={lesson}
+                  index={index}
+                  onStart={() => handleStartLesson(lesson.id)}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-auto">
+      <footer className="shrink-0 border-t border-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <span>Feito com</span>
@@ -142,10 +126,10 @@ function LessonCard({ lesson, index, onStart }: LessonCardProps) {
           </div>
         </div>
 
-        {/* CTA */}
-        <Button onClick={onStart} size="lg" className="gap-2 shrink-0">
+        {/* CTA - Game Button */}
+        <Button onClick={onStart} className="game-button shrink-0">
           Começar Projeto
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-5 h-5" />
         </Button>
       </div>
     </motion.div>

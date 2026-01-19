@@ -1,14 +1,11 @@
-import { ArrowLeft, Circle } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { ProjectStatus } from '@/enums';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 
 interface HeaderProps {
   projectName: string;
   projectStatus: ProjectStatus;
-  progress: number;
-  currentActivity: number;
-  totalActivities: number;
+  trackTitle?: string;
   onBack?: () => void;
 }
 
@@ -36,17 +33,15 @@ const statusConfig = {
 export function Header({
   projectName,
   projectStatus,
-  progress,
-  currentActivity,
-  totalActivities,
+  trackTitle,
   onBack,
 }: HeaderProps) {
   const status = statusConfig[projectStatus];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex items-center justify-between h-14 px-4 lg:px-6">
-        {/* Left section */}
+    <header className="shrink-0 z-50 border-b border-border bg-background">
+      <div className="flex items-center justify-between h-12 px-4">
+        {/* Left section - Logo */}
         <div className="flex items-center gap-3">
           {onBack && (
             <Button 
@@ -60,27 +55,23 @@ export function Header({
           )}
           
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-foreground">{projectName}</span>
-            <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${status.bg} ${status.color}`}>
-              <span>{status.icon}</span>
-              <span>{status.label}</span>
-            </div>
+            <span className="text-lg font-bold text-gradient">iterate</span>
+            <span className="text-xs text-muted-foreground">by DevFellowship</span>
           </div>
         </div>
 
-        {/* Center - Logo */}
-        <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
-          <span className="text-xl font-bold text-gradient">iterate</span>
-          <span className="text-xs text-muted-foreground">by DevFellowship</span>
-        </div>
-
-        {/* Right section - Progress */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>{currentActivity}/{totalActivities}</span>
+        {/* Center - Track Title */}
+        {trackTitle && (
+          <div className="absolute left-1/2 -translate-x-1/2">
+            <span className="text-sm font-medium text-muted-foreground">{trackTitle}</span>
           </div>
-          <div className="w-32 lg:w-48">
-            <Progress value={progress} className="h-2" />
+        )}
+
+        {/* Right section - Status */}
+        <div className="flex items-center gap-2">
+          <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${status.bg} ${status.color}`}>
+            <span>{status.icon}</span>
+            <span>{status.label}</span>
           </div>
         </div>
       </div>

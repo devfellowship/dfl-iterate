@@ -35,30 +35,31 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
 
   return (
     <div className="space-y-6">
-      {/* Instructions */}
+      {/* Instructions - More prominent */}
       <motion.div 
-        className="p-4 rounded-lg bg-muted/30 border border-border"
+        className="p-5 rounded-xl bg-primary/5 border-2 border-primary/20"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h3 className="font-semibold mb-2 text-foreground">Instruções</h3>
-        <pre className="text-sm text-muted-foreground whitespace-pre-wrap font-sans">
-          {activity.instructions}
-        </pre>
+        <h3 className="text-lg font-bold mb-3 text-foreground">📋 Instruções</h3>
+        <p className="text-base text-muted-foreground leading-relaxed">
+          Revise o código gerado pela IA. Identifique problemas de acessibilidade, 
+          performance e boas práticas. Decida: aprovar, editar ou pedir nova geração.
+        </p>
       </motion.div>
 
-      {/* Code Editor */}
+      {/* Code Editor - Larger */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-muted-foreground">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm font-mono font-semibold text-muted-foreground">
             {activity.targetFiles[0]}
           </span>
           {isEditing && (
-            <span className="text-xs text-primary">Modo de edição ativo</span>
+            <span className="text-sm font-medium text-primary">✏️ Modo de edição ativo</span>
           )}
         </div>
         <CodeEditor
@@ -66,22 +67,23 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
           onChange={setCode}
           language="typescript"
           readOnly={!isEditing}
-          height="300px"
+          height="320px"
+          fontSize={15}
         />
       </motion.div>
 
       {/* Issues Warning */}
       {showWarning && activity.expectedIssues && (
         <motion.div 
-          className="p-4 rounded-lg bg-warning/10 border border-warning/30"
+          className="p-5 rounded-xl bg-warning/10 border-2 border-warning/30"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
         >
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-warning shrink-0 mt-0.5" />
+            <AlertTriangle className="w-6 h-6 text-warning shrink-0 mt-0.5" />
             <div>
-              <h4 className="font-semibold text-warning mb-2">Problemas identificados:</h4>
-              <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+              <h4 className="font-bold text-warning mb-2 text-lg">Problemas identificados:</h4>
+              <ul className="list-disc list-inside space-y-1 text-base text-muted-foreground">
                 {activity.expectedIssues.map((issue, i) => (
                   <li key={i}>{issue}</li>
                 ))}
@@ -91,36 +93,36 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
         </motion.div>
       )}
 
-      {/* Actions */}
+      {/* Actions - Game Buttons */}
       <motion.div 
-        className="flex flex-wrap gap-3"
+        className="flex flex-wrap gap-4"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
         {isEditing ? (
           <>
-            <Button onClick={handleSaveEdit} className="gap-2">
-              <Check className="w-4 h-4" />
+            <Button onClick={handleSaveEdit} className="game-button">
+              <Check className="w-5 h-5" />
               Salvar Edições
             </Button>
-            <Button variant="outline" onClick={() => setIsEditing(false)}>
+            <Button variant="outline" onClick={() => setIsEditing(false)} className="game-button-outline">
               Cancelar
             </Button>
           </>
         ) : (
           <>
-            <Button onClick={handleApprove} variant="default" className="gap-2">
-              <Check className="w-4 h-4" />
+            <Button onClick={handleApprove} className="game-button">
+              <Check className="w-5 h-5" />
               Aprovar Código
             </Button>
-            <Button onClick={handleEdit} variant="outline" className="gap-2">
-              <Edit3 className="w-4 h-4" />
+            <Button onClick={handleEdit} className="game-button-outline">
+              <Edit3 className="w-5 h-5" />
               Editar Manualmente
             </Button>
-            <Button onClick={onRegenerate} variant="ghost" className="gap-2">
-              <RefreshCw className="w-4 h-4" />
-              Pedir Nova Geração
+            <Button onClick={onRegenerate} variant="ghost" className="game-button-ghost">
+              <RefreshCw className="w-5 h-5" />
+              Nova Geração
             </Button>
           </>
         )}

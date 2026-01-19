@@ -1,5 +1,4 @@
 import Editor from '@monaco-editor/react';
-import { cn } from '@/lib/utils';
 
 interface CodeEditorProps {
   value: string;
@@ -8,6 +7,7 @@ interface CodeEditorProps {
   readOnly?: boolean;
   height?: string;
   highlightLines?: number[];
+  fontSize?: number;
 }
 
 export function CodeEditor({
@@ -17,6 +17,7 @@ export function CodeEditor({
   readOnly = false,
   height = '400px',
   highlightLines = [],
+  fontSize = 15,
 }: CodeEditorProps) {
   const handleEditorChange = (newValue: string | undefined) => {
     if (onChange && newValue !== undefined) {
@@ -35,23 +36,26 @@ export function CodeEditor({
         options={{
           readOnly,
           minimap: { enabled: false },
-          fontSize: 14,
+          fontSize,
+          lineHeight: fontSize * 1.6,
           fontFamily: "'JetBrains Mono', monospace",
+          fontLigatures: true,
           lineNumbers: 'on',
           scrollBeyondLastLine: false,
           wordWrap: 'on',
           padding: { top: 16, bottom: 16 },
           renderLineHighlight: 'all',
           cursorBlinking: 'smooth',
+          cursorSmoothCaretAnimation: 'on',
+          smoothScrolling: true,
           automaticLayout: true,
           tabSize: 2,
           bracketPairColorization: { enabled: true },
           scrollbar: {
             vertical: 'auto',
-            horizontal: 'auto',
+            horizontal: 'hidden',
             useShadows: false,
             verticalScrollbarSize: 8,
-            horizontalScrollbarSize: 8,
           },
         }}
         beforeMount={(monaco) => {
@@ -61,19 +65,20 @@ export function CodeEditor({
             inherit: true,
             rules: [
               { token: 'comment', foreground: '6A9955' },
-              { token: 'keyword', foreground: 'C586C0' },
+              { token: 'keyword', foreground: 'F39325' },
               { token: 'string', foreground: 'CE9178' },
               { token: 'number', foreground: 'B5CEA8' },
               { token: 'type', foreground: '4EC9B0' },
             ],
             colors: {
-              'editor.background': '#1e1e1e',
-              'editor.foreground': '#d4d4d4',
-              'editor.lineHighlightBackground': '#2a2a2a',
-              'editorLineNumber.foreground': '#858585',
+              'editor.background': '#0a0a0a',
+              'editor.foreground': '#fafafa',
+              'editor.lineHighlightBackground': '#1a1a1a',
+              'editorLineNumber.foreground': '#6b7280',
               'editorLineNumber.activeForeground': '#f39325',
-              'editor.selectionBackground': '#f3932540',
+              'editor.selectionBackground': '#f3932544',
               'editor.inactiveSelectionBackground': '#f3932520',
+              'editorCursor.foreground': '#f39325',
             },
           });
         }}
