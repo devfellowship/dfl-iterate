@@ -59,10 +59,10 @@ export function BreakAndFix({ activity, errorMessage, onFix, onRequestHint }: Br
         </>
       }
     >
-      <div className="h-full flex flex-col gap-4">
+      <div className="flex-1 flex flex-col gap-4 overflow-hidden">
         {/* Error Console - Compact */}
         <motion.div 
-          className="terminal"
+          className="terminal shrink-0"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -76,12 +76,11 @@ export function BreakAndFix({ activity, errorMessage, onFix, onRequestHint }: Br
         </motion.div>
 
         {/* Code Editor */}
-        <div className="flex-1 min-h-[250px]">
+        <div className="flex-1 overflow-hidden">
           <CodeEditor
             value={code}
             onChange={setCode}
             language="typescript"
-            height="100%"
             fontSize={14}
           />
         </div>
@@ -89,7 +88,7 @@ export function BreakAndFix({ activity, errorMessage, onFix, onRequestHint }: Br
         {/* Test Result */}
         {testResult !== 'pending' && (
           <motion.div 
-            className={`p-3 rounded-xl text-center font-bold ${
+            className={`p-3 rounded-xl text-center font-bold shrink-0 ${
               testResult === 'success' 
                 ? 'bg-success/10 border-2 border-success/30 text-success' 
                 : 'bg-destructive/10 border-2 border-destructive/30 text-destructive'

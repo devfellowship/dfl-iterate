@@ -62,8 +62,8 @@ export function ActivityGameCard({ type, title, question, children, actions }: A
         </h1>
       </div>
 
-      {/* Main content area - must have min-h-0 for flex child to shrink properly */}
-      <div className="flex-1 min-h-0">
+      {/* Main content area - explicit flex-1 with overflow */}
+      <div className="flex-1 overflow-hidden flex flex-col">
         {children}
       </div>
 

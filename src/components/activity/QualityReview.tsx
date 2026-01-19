@@ -64,15 +64,14 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
         )
       }
     >
-      <div className="h-full flex flex-col gap-4">
-        {/* Code Editor - Main focus - needs explicit height for Monaco */}
-        <div className="flex-1 min-h-[300px]">
+      <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+        {/* Code Editor - Main focus */}
+        <div className="flex-1 overflow-hidden">
           <CodeEditor
             value={code}
             onChange={setCode}
             language="typescript"
             readOnly={!isEditing}
-            height="100%"
             fontSize={14}
           />
         </div>

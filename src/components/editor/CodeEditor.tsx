@@ -5,7 +5,6 @@ interface CodeEditorProps {
   onChange?: (value: string) => void;
   language?: string;
   readOnly?: boolean;
-  height?: string;
   highlightLines?: number[];
   fontSize?: number;
 }
@@ -15,9 +14,8 @@ export function CodeEditor({
   onChange,
   language = 'typescript',
   readOnly = false,
-  height = '400px',
   highlightLines = [],
-  fontSize = 15,
+  fontSize = 14,
 }: CodeEditorProps) {
   const handleEditorChange = (newValue: string | undefined) => {
     if (onChange && newValue !== undefined) {
@@ -26,9 +24,9 @@ export function CodeEditor({
   };
 
   return (
-    <div className="editor-container">
+    <div className="editor-container h-full" style={{ minHeight: '300px' }}>
       <Editor
-        height={height}
+        height="100%"
         language={language === 'typescript' ? 'typescript' : language}
         value={value}
         onChange={handleEditorChange}
@@ -59,7 +57,6 @@ export function CodeEditor({
           },
         }}
         beforeMount={(monaco) => {
-          // Define custom theme
           monaco.editor.defineTheme('iterate-dark', {
             base: 'vs-dark',
             inherit: true,
@@ -85,7 +82,6 @@ export function CodeEditor({
         onMount={(editor, monaco) => {
           monaco.editor.setTheme('iterate-dark');
           
-          // Highlight specific lines if provided
           if (highlightLines.length > 0) {
             editor.createDecorationsCollection(
               highlightLines.map(line => ({
