@@ -115,6 +115,30 @@ export default function LessonPage() {
     }
   };
 
+  const activityButtons = (
+    <div className="flex gap-2 shrink-0">
+      {activities.map((activity, index) => (
+        <motion.button
+          key={activity.id}
+          onClick={() => goToActivity(index)}
+          className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm transition-all border-2 ${
+            index === currentActivityIndex
+              ? 'bg-primary text-primary-foreground border-primary shadow-[0_3px_0_0_hsl(var(--primary)/0.5)]'
+              : activity.status === 'completed'
+              ? 'bg-success/20 text-success border-success/30 shadow-[0_3px_0_0_hsl(var(--success)/0.3)]'
+              : activity.status === 'locked'
+              ? 'bg-muted text-muted-foreground border-border opacity-50'
+              : 'bg-muted text-muted-foreground border-border shadow-[0_3px_0_0_hsl(var(--border))]'
+          }`}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95, y: 2 }}
+        >
+          {index + 1}
+        </motion.button>
+      ))}
+    </div>
+  );
+
   return (
     <AppShell
       projectName={lesson.projectName}
@@ -123,12 +147,13 @@ export default function LessonPage() {
       totalActivities={lesson.totalActivities}
       trackTitle={lesson.title}
       onBack={() => navigate('/')}
+      activityButtons={activityButtons}
     >
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Left Panel - Activity Content */}
         <div className="flex-1 lg:w-[55%] flex flex-col border-r border-border overflow-hidden">
-          {/* Activity Header */}
-          <div className="shrink-0 p-6 border-b border-border bg-card/30">
+          {/* Activity Header - Compact */}
+          <div className="shrink-0 px-6 py-4 border-b border-border bg-card/30">
             {currentActivity && (
               <ActivityHeader activity={currentActivity} />
             )}
@@ -137,29 +162,6 @@ export default function LessonPage() {
           {/* Scrollable Content Area */}
           <div className="flex-1 overflow-y-auto custom-scrollbar">
             <div className="p-6 space-y-6">
-              {/* Activity Cards Progress */}
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {activities.map((activity, index) => (
-                  <motion.button
-                    key={activity.id}
-                    onClick={() => goToActivity(index)}
-                    className={`shrink-0 w-11 h-11 rounded-xl flex items-center justify-center font-bold text-sm transition-all border-2 ${
-                      index === currentActivityIndex
-                        ? 'bg-primary text-primary-foreground border-primary shadow-[0_4px_0_0_hsl(var(--primary)/0.5)]'
-                        : activity.status === 'completed'
-                        ? 'bg-success/20 text-success border-success/30 shadow-[0_4px_0_0_hsl(var(--success)/0.3)]'
-                        : activity.status === 'locked'
-                        ? 'bg-muted text-muted-foreground border-border opacity-50'
-                        : 'bg-muted text-muted-foreground border-border shadow-[0_4px_0_0_hsl(var(--border))]'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95, y: 2 }}
-                  >
-                    {index + 1}
-                  </motion.button>
-                ))}
-              </div>
-
               {/* Activity Content */}
               <AnimatePresence mode="wait">
                 <motion.div
@@ -213,23 +215,26 @@ export default function LessonPage() {
               )}
             </div>
           </div>
+        </div>
 
-          {/* Git Log - Expands upward */}
+        {/* Right Panel - Preview + GitLog */}
+        <div className="hidden lg:flex lg:w-[45%] flex-col overflow-hidden">
+          {/* Preview with padding */}
+          <div className="flex-1 p-4 overflow-hidden">
+            <ProjectPreview 
+              status={project.status} 
+              errorMessage={currentActivity?.type === ActivityType.BREAK_AND_FIX 
+                ? "TypeError: Cannot read property 'map' of undefined" 
+                : undefined
+              }
+            />
+          </div>
+          
+          {/* GitLog at bottom */}
           <GitLog
             entries={gitLog}
             isCollapsed={gitLogOpen}
             onToggle={() => setGitLogOpen(!gitLogOpen)}
-          />
-        </div>
-
-        {/* Right Panel - Preview (Full width of column) */}
-        <div className="hidden lg:flex lg:w-[45%] p-0">
-          <ProjectPreview 
-            status={project.status} 
-            errorMessage={currentActivity?.type === ActivityType.BREAK_AND_FIX 
-              ? "TypeError: Cannot read property 'map' of undefined" 
-              : undefined
-            }
           />
         </div>
       </div>
