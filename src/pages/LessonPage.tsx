@@ -260,12 +260,11 @@ export default function LessonPage() {
         </div>
       </div>
 
-      {/* Footer Buttons - Fixed Position */}
-      <div className="fixed bottom-5 left-5 z-40">
+      {/* Footer Buttons - inside preview panel, next to GitLog */}
+      <div className="hidden lg:block fixed bottom-5 right-24 z-40">
         <AIHistoryButton
           messageCount={aiMessages.length}
           onClick={() => setAiHistoryOpen(true)}
-          hasUnread={aiMessages.length > 0 && !showResult}
         />
       </div>
 
