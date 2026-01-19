@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ActivityType } from '@/enums';
-import { Search, Scissors, GitBranch, Wrench } from 'lucide-react';
+import { Search, Scissors, GitBranch, Wrench, Video, Palette } from 'lucide-react';
 
 interface ActivityGameCardProps {
   type: ActivityType;
@@ -31,6 +31,16 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     icon: Wrench, 
     label: 'BREAK & FIX',
     color: 'text-destructive'
+  },
+  [ActivityType.VIDEO_CHALLENGE]: { 
+    icon: Video, 
+    label: 'VIDEO CHALLENGE',
+    color: 'text-purple-400'
+  },
+  [ActivityType.VISUAL_IMPLEMENTATION]: { 
+    icon: Palette, 
+    label: 'VISUAL IMPLEMENTATION',
+    color: 'text-cyan-400'
   },
 };
 

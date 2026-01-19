@@ -23,6 +23,19 @@ export interface EditableRegion {
   hint?: string;
 }
 
+export interface VideoConfig {
+  youtubeId: string;
+  title: string;
+  duration: string;
+  thumbnailUrl?: string;
+}
+
+export interface VisualConfig {
+  imageUrl: string;
+  caption?: string;
+  expectedOutput?: string;
+}
+
 export interface Activity {
   id: string;
   lessonId: string;
@@ -37,6 +50,8 @@ export interface Activity {
   aiGeneratedCode?: string;
   expectedIssues?: string[];
   editableRegions?: EditableRegion[];
+  videoConfig?: VideoConfig;
+  visualConfig?: VisualConfig;
 }
 
 export interface ProjectFile {

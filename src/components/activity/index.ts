@@ -4,3 +4,7 @@ export { QualityReview } from './QualityReview';
 export { ConstrainedEdit } from './ConstrainedEdit';
 export { DecisionFork } from './DecisionFork';
 export { BreakAndFix } from './BreakAndFix';
+export { VideoChallenge } from './VideoChallenge';
+export { VisualImplementation } from './VisualImplementation';
+export { VideoModal } from './VideoModal';
+export { ImageZoomModal } from './ImageZoomModal';
