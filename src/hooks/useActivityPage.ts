@@ -137,6 +137,10 @@ export function useActivityPage() {
     setStatus(ProjectStatus.BROKEN);
   }, [setStatus]);
 
+  const setProjectOK = useCallback(() => {
+    setStatus(ProjectStatus.OK);
+  }, [setStatus]);
+
   return {
     currentActivity,
     activities,
@@ -154,6 +158,7 @@ export function useActivityPage() {
     goToPreviousActivity,
     goToActivity,
     setProjectBroken,
+    setProjectOK,
     resetAI,
   };
 }

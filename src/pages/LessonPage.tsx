@@ -70,6 +70,7 @@ export default function LessonPage() {
     goToNextActivity,
     goToActivity,
     setProjectBroken,
+    setProjectOK,
   } = useActivityPage();
 
   // Compute completed activities for preview state
@@ -176,12 +177,19 @@ export default function LessonPage() {
     );
   }
 
-  // Set project broken when on Break & Fix activity
+  // Set project broken only when on Break & Fix activity (and reset when leaving)
   useEffect(() => {
     if (currentActivity?.type === ActivityType.BREAK_AND_FIX) {
-      setProjectBroken();
+      // Only set broken if activity is not completed yet
+      const isCompleted = completedActivities.includes(currentActivityIndex);
+      if (!isCompleted) {
+        setProjectBroken();
+      }
+    } else {
+      // Reset to OK when not on Break & Fix
+      setProjectOK();
     }
-  }, [currentActivity, setProjectBroken]);
+  }, [currentActivity, currentActivityIndex, completedActivities, setProjectBroken, setProjectOK]);
 
   if (!lesson) {
     return (
