@@ -66,7 +66,11 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
     >
       <div className="flex-1 flex flex-col gap-4 overflow-hidden">
         {/* Code Editor - Main focus */}
-        <div className="flex-1 overflow-hidden">
+        {/* Click on editor activates edit mode for better UX */}
+        <div 
+          className="flex-1 overflow-hidden"
+          onClick={() => !isEditing && setIsEditing(true)}
+        >
           <CodeEditor
             value={code}
             onChange={setCode}
