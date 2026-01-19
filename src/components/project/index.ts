@@ -1,0 +1,1 @@
+export { GitLog } from './GitLog';

@@ -1,0 +1,244 @@
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AppShell } from '@/components/layout';
+import { 
+  ActivityCard, 
+  ActivityHeader,
+  QualityReview,
+  ConstrainedEdit,
+  DecisionFork,
+  BreakAndFix
+} from '@/components/activity';
+import { ProjectPreview } from '@/components/preview';
+import { AIResponse } from '@/components/ai';
+import { GitLog } from '@/components/project';
+import { useActivityPage } from '@/hooks';
+import { ActivityType, ProjectStatus } from '@/enums';
+import { lessonsData } from '@/test-utils/lessons.dummy';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+export default function LessonPage() {
+  const { lessonId } = useParams<{ lessonId: string }>();
+  const navigate = useNavigate();
+  const [gitLogOpen, setGitLogOpen] = useState(false);
+
+  const lesson = lessonsData.find(l => l.id === lessonId);
+
+  const {
+    currentActivity,
+    activities,
+    currentActivityIndex,
+    project,
+    gitLog,
+    isAIStreaming,
+    aiResponse,
+    canAdvance,
+    handleActivityComplete,
+    handleDecision,
+    handleCodeSubmit,
+    triggerAIResponse,
+    goToNextActivity,
+    goToPreviousActivity,
+    goToActivity,
+    setProjectBroken,
+  } = useActivityPage();
+
+  // Set project broken when on Break & Fix activity
+  useEffect(() => {
+    if (currentActivity?.type === ActivityType.BREAK_AND_FIX) {
+      setProjectBroken();
+    }
+  }, [currentActivity, setProjectBroken]);
+
+  if (!lesson) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-foreground mb-2">Lesson não encontrada</h1>
+          <Button onClick={() => navigate('/')}>Voltar ao início</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const renderActivityContent = () => {
+    if (!currentActivity) return null;
+
+    switch (currentActivity.type) {
+      case ActivityType.QUALITY_REVIEW:
+        return (
+          <QualityReview
+            activity={currentActivity}
+            onApprove={() => handleActivityComplete(currentActivity.id, 'act-1-feedback-approve')}
+            onRegenerate={() => triggerAIResponse('act-1-generate')}
+            onEdit={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-1-feedback-edit');
+            }}
+          />
+        );
+      
+      case ActivityType.CONSTRAINED_EDIT:
+        return (
+          <ConstrainedEdit
+            activity={currentActivity}
+            onSubmit={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-2-success');
+            }}
+          />
+        );
+      
+      case ActivityType.DECISION_FORK:
+        return (
+          <DecisionFork
+            activity={currentActivity}
+            onDecide={handleDecision}
+          />
+        );
+      
+      case ActivityType.BREAK_AND_FIX:
+        return (
+          <BreakAndFix
+            activity={currentActivity}
+            errorMessage="TypeError: Cannot read property 'map' of undefined
+    at CheckoutPage (CheckoutPage.tsx:7:18)
+    at renderWithHooks (react-dom.development.js:14985:18)
+    at mountIndeterminateComponent (react-dom.development.js:17811:13)"
+            onFix={(code) => handleCodeSubmit(code, currentActivity.targetFiles[0])}
+            onRequestHint={() => triggerAIResponse('act-4-hint')}
+          />
+        );
+      
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <AppShell
+      projectName={lesson.projectName}
+      projectStatus={project.status}
+      currentActivity={currentActivityIndex + 1}
+      totalActivities={lesson.totalActivities}
+      onBack={() => navigate('/')}
+    >
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+        {/* Left Panel - Activity Content */}
+        <div className="flex-1 lg:w-[60%] flex flex-col border-r border-border">
+          {/* Activity Header */}
+          <div className="p-6 border-b border-border bg-card/30">
+            {currentActivity && (
+              <ActivityHeader
+                activity={currentActivity}
+                activityNumber={currentActivityIndex + 1}
+                totalActivities={lesson.totalActivities}
+              />
+            )}
+          </div>
+
+          {/* Scrollable Content Area */}
+          <ScrollArea className="flex-1">
+            <div className="p-6 space-y-6">
+              {/* Activity Cards Progress */}
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {activities.map((activity, index) => (
+                  <motion.button
+                    key={activity.id}
+                    onClick={() => goToActivity(index)}
+                    className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-sm transition-all ${
+                      index === currentActivityIndex
+                        ? 'bg-primary text-primary-foreground'
+                        : activity.status === 'completed'
+                        ? 'bg-success/20 text-success'
+                        : activity.status === 'locked'
+                        ? 'bg-muted text-muted-foreground opacity-50'
+                        : 'bg-muted text-muted-foreground'
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {index + 1}
+                  </motion.button>
+                ))}
+              </div>
+
+              {/* Activity Content */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentActivity?.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {renderActivityContent()}
+                </motion.div>
+              </AnimatePresence>
+
+              {/* AI Response */}
+              {(aiResponse || isAIStreaming) && (
+                <AIResponse text={aiResponse} isStreaming={isAIStreaming} />
+              )}
+
+              {/* Navigation */}
+              {canAdvance && currentActivityIndex < activities.length - 1 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex justify-end"
+                >
+                  <Button onClick={goToNextActivity} size="lg" className="gap-2">
+                    Próxima Activity
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </motion.div>
+              )}
+
+              {/* Completion Message */}
+              {currentActivityIndex === activities.length - 1 && canAdvance && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center p-8 rounded-xl bg-success/10 border border-success/30"
+                >
+                  <span className="text-4xl mb-4 block">🎉</span>
+                  <h3 className="text-xl font-bold text-success mb-2">
+                    Parabéns! Você completou esta lesson!
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Você construiu o {lesson.projectName} e tomou decisões técnicas reais.
+                  </p>
+                  <Button onClick={() => navigate('/')} variant="outline">
+                    Voltar ao início
+                  </Button>
+                </motion.div>
+              )}
+            </div>
+          </ScrollArea>
+
+          {/* Git Log */}
+          <GitLog
+            entries={gitLog}
+            isCollapsed={gitLogOpen}
+            onToggle={() => setGitLogOpen(!gitLogOpen)}
+          />
+        </div>
+
+        {/* Right Panel - Preview */}
+        <div className="hidden lg:flex lg:w-[40%] p-4">
+          <ProjectPreview 
+            status={project.status} 
+            errorMessage={currentActivity?.type === ActivityType.BREAK_AND_FIX 
+              ? "TypeError: Cannot read property 'map' of undefined" 
+              : undefined
+            }
+          />
+        </div>
+      </div>
+    </AppShell>
+  );
+}
