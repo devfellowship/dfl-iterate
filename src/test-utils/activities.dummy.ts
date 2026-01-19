@@ -142,4 +142,84 @@ export function CheckoutPage() {
   );
 }`,
   },
+  {
+    id: 'act-5',
+    lessonId: 'lesson-1',
+    order: 5,
+    type: ActivityType.VIDEO_CHALLENGE,
+    title: 'Aprenda useMemo na Prática',
+    objective: 'Assista como um dev sênior otimiza performance e aplique o mesmo pattern.',
+    instructions: 'Após assistir o vídeo, implemente useMemo no componente para evitar recálculos desnecessários.',
+    targetFiles: ['src/components/ProductList.tsx'],
+    status: ActivityStatus.LOCKED,
+    aiGeneratedCode: `import { useState } from 'react';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  category: string;
+}
+
+export function ProductList({ products }: { products: Product[] }) {
+  const [filter, setFilter] = useState('');
+  
+  // TODO: Otimize com useMemo
+  const filteredProducts = products.filter(p => 
+    p.name.toLowerCase().includes(filter.toLowerCase())
+  );
+  
+  const total = filteredProducts.reduce((sum, p) => sum + p.price, 0);
+
+  return (
+    <div>
+      <input 
+        value={filter} 
+        onChange={e => setFilter(e.target.value)}
+        placeholder="Filtrar produtos..."
+      />
+      <p>Total: R$ {total.toFixed(2)}</p>
+      {filteredProducts.map(p => (
+        <div key={p.id}>{p.name} - R$ {p.price}</div>
+      ))}
+    </div>
+  );
+}`,
+    videoConfig: {
+      youtubeId: 'THL1OPn72vo',
+      title: 'Performance com useMemo - Na Prática',
+      duration: '3:42',
+    },
+  },
+  {
+    id: 'act-6',
+    lessonId: 'lesson-1',
+    order: 6,
+    type: ActivityType.VISUAL_IMPLEMENTATION,
+    title: 'Implemente o Badge de Promoção',
+    objective: 'Veja o design do badge de "PROMOÇÃO" e implemente o CSS.',
+    instructions: 'A imagem mostra como o badge deve ficar. Escreva o CSS/JSX para replicar o design.',
+    targetFiles: ['src/components/PromoBadge.tsx'],
+    status: ActivityStatus.LOCKED,
+    aiGeneratedCode: `// Implemente o badge de promoção
+export function PromoBadge() {
+  return (
+    <span className="promo-badge">
+      {/* TODO: Estilize para parecer com a referência */}
+      PROMOÇÃO
+    </span>
+  );
+}
+
+// CSS esperado:
+// - Fundo vermelho vibrante
+// - Texto branco em caps
+// - Sombra suave
+// - Animação pulse sutil`,
+    visualConfig: {
+      imageUrl: 'https://placehold.co/400x120/dc2626/ffffff?text=🔥+PROMOÇÃO+-50%25&font=montserrat',
+      caption: 'Badge de promoção - Design aprovado',
+      expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
+    },
+  },
 ];

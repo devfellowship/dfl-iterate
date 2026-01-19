@@ -6,7 +6,7 @@ export const lessonsData: Lesson[] = [
     title: 'E-commerce Frontend com AI',
     description: 'Construa o frontend de um e-commerce de artigos esportivos de boxe, usando AI para acelerar o desenvolvimento.',
     projectName: 'BoxShop',
-    totalActivities: 4,
-    estimatedMinutes: 40,
+    totalActivities: 6,
+    estimatedMinutes: 50,
   },
 ];
