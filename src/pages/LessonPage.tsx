@@ -216,6 +216,9 @@ export default function LessonPage() {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
               handleActivityComplete(currentActivity.id, 'act-4-success', true);
             }}
+            onError={() => {
+              handleActivityComplete(currentActivity.id, 'act-4-wrong', false);
+            }}
             onRequestHint={() => triggerAIResponse('act-4-hint')}
           />
         );
