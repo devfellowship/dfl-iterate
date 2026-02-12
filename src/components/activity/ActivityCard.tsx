@@ -80,7 +80,7 @@ export function ActivityCard({ activity, index, onClick, isActive }: ActivityCar
             {activity.title}
           </h3>
           <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-            {activity.objective}
+            {activity.objective + 'olá'}
           </p>
         </div>
       </div>
