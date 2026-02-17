@@ -12,36 +12,41 @@ interface ActivityGameCardProps {
 }
 
 const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; color: string }> = {
-  [ActivityType.QUALITY_REVIEW]: { 
-    icon: Search, 
+  [ActivityType.QUALITY_REVIEW]: {
+    icon: Search,
     label: 'QUALITY REVIEW',
     color: 'text-primary'
   },
-  [ActivityType.CONSTRAINED_EDIT]: { 
-    icon: Scissors, 
+  [ActivityType.CONSTRAINED_EDIT]: {
+    icon: Scissors,
     label: 'CONSTRAINED EDIT',
     color: 'text-warning'
   },
-  [ActivityType.DECISION_FORK]: { 
-    icon: GitBranch, 
+  [ActivityType.DECISION_FORK]: {
+    icon: GitBranch,
     label: 'DECISION FORK',
     color: 'text-success'
   },
-  [ActivityType.BREAK_AND_FIX]: { 
-    icon: Wrench, 
+  [ActivityType.BREAK_AND_FIX]: {
+    icon: Wrench,
     label: 'BREAK & FIX',
     color: 'text-destructive'
   },
-  [ActivityType.VIDEO_CHALLENGE]: { 
-    icon: Video, 
+  [ActivityType.VIDEO_CHALLENGE]: {
+    icon: Video,
     label: 'VIDEO CHALLENGE',
     color: 'text-purple-400'
   },
-  [ActivityType.VISUAL_IMPLEMENTATION]: { 
-    icon: Palette, 
+  [ActivityType.VISUAL_IMPLEMENTATION]: {
+    icon: Palette,
     label: 'VISUAL IMPLEMENTATION',
     color: 'text-cyan-400'
   },
+  [ActivityType.READ_AND_CHOOSE]: {
+    icon: Search,
+    label: 'READ AND CHOOSE',
+    color: 'text-primary'
+  }
 };
 
 export function ActivityGameCard({ type, title, question, children, actions }: ActivityGameCardProps) {

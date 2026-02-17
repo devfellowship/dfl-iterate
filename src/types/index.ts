@@ -17,6 +17,13 @@ export interface DecisionOption {
   impact: string;
 }
 
+export interface ChooseOption {
+  id: string;
+  label: string;
+  description: string;
+
+}
+
 export interface EditableRegion {
   startLine: number;
   endLine: number;
@@ -47,6 +54,7 @@ export interface Activity {
   targetFiles: string[];
   status: ActivityStatus;
   options?: DecisionOption[];
+  choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
   editableRegions?: EditableRegion[];
