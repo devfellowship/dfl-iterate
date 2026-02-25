@@ -6,6 +6,9 @@ import { cn } from '@/lib/utils';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game';
 import { CodeEditor } from '@/components/editor/CodeEditor';
+import { ChooseCard } from '@/components/atoms/ChooseCard';
+import { useReadAndChoose } from '@/hooks/useReadAndChoose';
+
 
 interface ReadAndChooseProps {
   activity: Activity;
@@ -13,19 +16,9 @@ interface ReadAndChooseProps {
 }
 
 export function ReadAndChoose({ activity, onDecide }: ReadAndChooseProps) {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [isConfirming, setIsConfirming] = useState(false);
   const code = activity.aiGeneratedCode || '';
-
-  const handleConfirm = () => {
-    if (selectedOption) {
-      setIsConfirming(true);
-      setTimeout(() => {
-        onDecide(selectedOption);
-        setIsConfirming(false);
-      }, 500);
-    }
-  };
+  const { selectedOption, setSelectedOption, isConfirming, handleConfirm} =
+  useReadAndChoose({ onDecide});
 
   return (
     <ActivityGameCard
@@ -69,51 +62,6 @@ export function ReadAndChoose({ activity, onDecide }: ReadAndChooseProps) {
         </div>
       </div>
     </ActivityGameCard>
-  );
-}
-
-interface ChooseCardProps {
-  choice: ChooseOption;
-  index: number;
-  isSelected: boolean;
-  onSelect: () => void;
-  disabled: boolean;
-}
-
-function ChooseCard({ choice, index, isSelected, onSelect, disabled }: ChooseCardProps) {
-  return (
-    <motion.button
-      onClick={onSelect}
-      disabled={disabled}
-      className={cn(
-        "relative p-4 rounded-2xl border-2 flex flex-col items-center justify-center transition-all duration-200",
-        "bg-card hover:bg-card/80",
-        isSelected 
-          ? "border-primary ring-4 ring-primary/20 shadow-lg" 
-          : "border-border hover:border-primary/40"
-      )}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 * index }}
-    >
-      {/* Selection indicator */}
-      {isSelected && (
-        <motion.div 
-          className="absolute top-3 right-3 w-7 h-7 rounded-full bg-primary flex items-center justify-center"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-        >
-          <Check className="w-4 h-4 text-primary-foreground" />
-        </motion.div>
-      )}
-
-      <h3 className="font-display font-bold text-md text-center text-foreground mb-2 pr-8">
-        {choice.description}
-      </h3>
-      
-      {/* <p className="text-sm text-muted-foreground mb-4">
-        {choice.description}
-      </p> */}
-    </motion.button>
+    
   );
 }

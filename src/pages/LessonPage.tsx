@@ -23,7 +23,7 @@ import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from 
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
-import { ReadAndChoose } from '@/components/activity/ReadAndChoose';
+import { ReadAndChoose } from '@/components/molecules/readAndChoose/ReadAndChoose';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -161,6 +161,20 @@ export default function LessonPage() {
     setResultData(null);
   };
 
+  // Set project broken only when on Break & Fix activity (and reset when leaving)
+  useEffect(() => {
+    if (currentActivity?.type === ActivityType.BREAK_AND_FIX) {
+      // Only set broken if activity is not completed yet
+      const isCompleted = completedActivities.includes(currentActivityIndex);
+      if (!isCompleted) {
+        setProjectBroken();
+      }
+    } else {
+      // Reset to OK when not on Break & Fix
+      setProjectOK();
+    }
+  }, [currentActivity, currentActivityIndex, completedActivities, setProjectBroken, setProjectOK]);
+
   // Handle lesson complete
   if (showLessonComplete) {
     return (
@@ -178,20 +192,6 @@ export default function LessonPage() {
       />
     );
   }
-
-  // Set project broken only when on Break & Fix activity (and reset when leaving)
-  useEffect(() => {
-    if (currentActivity?.type === ActivityType.BREAK_AND_FIX) {
-      // Only set broken if activity is not completed yet
-      const isCompleted = completedActivities.includes(currentActivityIndex);
-      if (!isCompleted) {
-        setProjectBroken();
-      }
-    } else {
-      // Reset to OK when not on Break & Fix
-      setProjectOK();
-    }
-  }, [currentActivity, currentActivityIndex, completedActivities, setProjectBroken, setProjectOK]);
 
   if (!lesson) {
     return (
