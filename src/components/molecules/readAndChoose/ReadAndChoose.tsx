@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game';
 import { CodeEditor } from '@/components/editor/CodeEditor';
-import { ChooseCard } from '@/components/atoms/ChooseCard';
+import { ChooseCard } from '@/components/atoms/chooseCard/ChooseCard';
 import { useReadAndChoose } from '@/hooks/useReadAndChoose';
 
 
