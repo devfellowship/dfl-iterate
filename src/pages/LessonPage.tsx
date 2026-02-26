@@ -23,7 +23,7 @@ import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from 
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
-import { ReadAndChoose } from '@/components/molecules/readAndChoose/ReadAndChoose';
+import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
