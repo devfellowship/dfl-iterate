@@ -143,6 +143,13 @@ Você replicou o visual de referência:
 
 Transformar design em código é uma habilidade essencial. Você está evoluindo!`,
   },
+  // Fix the Code - Sucesso
+  'act-7-fix-code-success': {
+    isSuccess: true,
+    message: `Ótimo trabalho! Você corrigiu o algoritmo e os testes passaram.
+
+Sempre escreva casos de teste para código crítico – isso ajuda a encontrar bugs cedo!`,
+  },
 
   // Default success
   'default-success': {

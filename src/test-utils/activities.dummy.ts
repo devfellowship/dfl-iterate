@@ -259,4 +259,32 @@ export function PromoBadge() {
       expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
     },
   },
+  {
+    id: 'act-8',
+    lessonId: 'lesson-1',
+    order: 8,
+    type: ActivityType.FIX_THE_CODE,
+    title: 'Corrigindo FizzBuzz',
+    objective: 'O código a seguir deveria retornar a string correta para FizzBuzz, mas está incompleto.',
+    instructions: `A função abaixo deveria:
+- retornar "Fizz" quando o número for múltiplo de 3
+- retornar "Buzz" quando múltiplo de 5
+- retornar "FizzBuzz" quando múltiplo de 15
+- retornar o próprio número como string nos demais casos
+
+Corrija o algoritmo para que todos os testes passem.`,
+    targetFiles: ['src/utils/fizzbuzz.ts'],
+    status: ActivityStatus.LOCKED,
+    aiGeneratedCode: `export function fizzbuzz(n: number): string {
+  let result = '';
+  if (n % 3 === 0) result += 'Fizz';
+  if (n % 5 === 0) result += 'Buzz';
+  return result;
+}`,
+    testCases: [
+      { description: 'n=3 retorna Fizz', input: '3', expectedOutput: 'Fizz' },
+      { description: 'n=5 retorna Buzz', input: '5', expectedOutput: 'Buzz' },
+      { description: 'n=15 retorna FizzBuzz', input: '15', expectedOutput: 'FizzBuzz' },
+    ],
+  },
 ];

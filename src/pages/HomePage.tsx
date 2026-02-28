@@ -64,6 +64,11 @@ export default function HomePage() {
                 />
               ))}
             </div>
+            <div className="mt-8 text-center">
+              <Button variant="outline" onClick={() => navigate('/fix-the-code')}>
+                Ver demo Fix The Code
+              </Button>
+            </div>
           </motion.div>
         </div>
       </main>
