@@ -2,6 +2,42 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
+    {
+      id: 'act-fix-1',
+      lessonId: 'lesson-1',
+      order: 1,
+      type: ActivityType.FIX_THE_CODE,
+      title: 'Corrigir CheckoutPage',
+      objective: 'Resolver erro de undefined',
+      instructions: 'Escolha a melhor correção.',
+      status: ActivityStatus.CURRENT,
+      targetFiles: ['CheckoutPage.tsx'],
+      aiGeneratedCode: `
+    const items = cart.items;
+    return items.map(item => <Item key={item.id} />);
+      `,
+      fixOptions: [
+        {
+          id: 'fix-1',
+          code: 'const items = cart?.items;',
+          explanation: 'Evita crash mas não garante array.',
+          isCorrect: false,
+        },
+        {
+          id: 'fix-2',
+          code: 'const items = cart?.items ?? [];',
+          explanation: 'Garante array seguro mesmo se undefined.',
+          isCorrect: true,
+        },
+        {
+          id: 'fix-3',
+          code: 'try { ... } catch {}',
+          explanation: 'Esconde o erro.',
+          isCorrect: false,
+        }
+      ]
+    },
+  
   {
     id: 'act-1',
     lessonId: 'lesson-1',
@@ -18,7 +54,7 @@ Sua missão:
 
 Dica: Preste atenção em hardcoded values e falta de tipagem.`,
     targetFiles: ['src/components/Header.tsx'],
-    status: ActivityStatus.CURRENT,
+    status: ActivityStatus.LOCKED,
     aiGeneratedCode: `import React from 'react';
 
 function Header() {

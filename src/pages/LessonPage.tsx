@@ -23,6 +23,7 @@ import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from 
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
+import { FixTheCode } from '@/components/activity/FixTheCode';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -290,6 +291,27 @@ export default function LessonPage() {
       
       default:
         return null;
+
+      case ActivityType.FIX_THE_CODE:
+        return (
+          <FixTheCode
+            activity={currentActivity}
+            onSubmit={(selectedId) => {
+              const selected = currentActivity.fixOptions?.find(
+                f => f.id === selectedId
+              );
+
+              console.log('Current Activity:', currentActivity);
+              console.log('Activity Type:', currentActivity?.type);
+
+              handleActivityComplete(
+                currentActivity.id,
+                selected?.isCorrect ? 'act-fix-success' : 'act-fix-wrong',
+                selected?.isCorrect
+              );
+            }}
+          />
+        );
     }
   };
 

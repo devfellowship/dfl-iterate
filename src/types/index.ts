@@ -52,6 +52,12 @@ export interface Activity {
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
+  fixOptions?: {
+    id: string;
+    code: string;
+    explanation: string;
+    isCorrect: boolean;
+  }[];
 }
 
 export interface ProjectFile {

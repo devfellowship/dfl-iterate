@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ActivityType } from '@/enums';
-import { Search, Scissors, GitBranch, Wrench, Video, Palette } from 'lucide-react';
+import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug } from 'lucide-react';
 
 interface ActivityGameCardProps {
   type: ActivityType;
@@ -42,6 +42,13 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'VISUAL IMPLEMENTATION',
     color: 'text-cyan-400'
   },
+
+  [ActivityType.FIX_THE_CODE]: {
+    icon: Bug,
+    label: 'FIX THE CODE',
+    color: 'text-red-400'
+  },
+
 };
 
 export function ActivityGameCard({ type, title, question, children, actions }: ActivityGameCardProps) {

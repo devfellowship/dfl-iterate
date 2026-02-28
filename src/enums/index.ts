@@ -1,6 +1,7 @@
 export enum ActivityType {
   QUALITY_REVIEW = 'quality_review',
   CONSTRAINED_EDIT = 'constrained_edit',
+  FIX_THE_CODE = 'fix_the_code',
   DECISION_FORK = 'decision_fork',
   BREAK_AND_FIX = 'break_and_fix',
   VIDEO_CHALLENGE = 'video_challenge',
