@@ -6,7 +6,7 @@ export const activitiesData: Activity[] = [
       id: 'act-fix-1',
       lessonId: 'lesson-1',
       order: 1,
-      type: ActivityType.FIX_THE_CODE,
+      type: ActivityType.FIX_WITH_CHOICES,
       title: 'Corrigir CheckoutPage',
       objective: 'Resolver erro de undefined',
       instructions: 'Escolha a melhor correção.',

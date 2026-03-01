@@ -3,17 +3,17 @@ import { ActivityType } from '@/enums';
 import { Activity } from '@/types';
 import { ActivityGameCard, GameButton } from '@/components/game';
 
-interface FixTheCodeProps {
+interface FixWithChoicesProps {
   activity: Activity;
   onSubmit: (selectedFixId: string) => void;
 }
 
-export function FixTheCode({ activity, onSubmit }: FixTheCodeProps) {
+export function FixWithChoices({ activity, onSubmit }: FixWithChoicesProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
 
-  if (activity.type !== ActivityType.FIX_THE_CODE) return null;
+  if (activity.type !== ActivityType.FIX_WITH_CHOICES) return null;
 
   const selectedFix = activity.fixOptions.find(f => f.id === selectedId);
 
@@ -23,7 +23,7 @@ export function FixTheCode({ activity, onSubmit }: FixTheCodeProps) {
     onSubmit(selectedId);
   };
 
-  console.log('FixTheCode renderizou', activity);
+  console.log('FixWithChoices renderizou', activity);
 
   return (
     <ActivityGameCard

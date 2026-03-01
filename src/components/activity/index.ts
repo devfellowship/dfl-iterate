@@ -8,4 +8,4 @@ export { VideoChallenge } from './VideoChallenge';
 export { VisualImplementation } from './VisualImplementation';
 export { VideoModal } from './VideoModal';
 export { ImageZoomModal } from './ImageZoomModal';
-export { FixTheCode } from './FixTheCode';
+export { FixWithChoices } from './FixWithChoices';

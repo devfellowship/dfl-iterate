@@ -23,7 +23,7 @@ import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from 
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
-import { FixTheCode } from '@/components/activity/FixTheCode';
+import { FixWithChoices } from '@/components/activity/FixWithChoices';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -292,9 +292,9 @@ export default function LessonPage() {
       default:
         return null;
 
-      case ActivityType.FIX_THE_CODE:
+      case ActivityType.FIX_WITH_CHOICES:
         return (
-          <FixTheCode
+          <FixWithChoices
             activity={currentActivity}
             onSubmit={(selectedId) => {
               const selected = currentActivity.fixOptions?.find(
