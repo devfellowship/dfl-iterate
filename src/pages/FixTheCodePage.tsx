@@ -36,7 +36,7 @@ export default function FixTheCodePage() {
   };
 
   const runTests = async (code: string): Promise<TestResult[]> => {
-    // naive implementation that checks if expectedOutput appears in code
+    
     return sampleActivity.testCases!.map(tc => ({
       description: tc.description,
       passed: code.includes(tc.expectedOutput),

@@ -47,7 +47,7 @@ describe('FixTheCode component', () => {
     const runButton = screen.getByRole('button', { name: /Run Tests/i });
     fireEvent.click(runButton);
 
-    // wait for result
+    
     const passed = await screen.findByText('always pass');
     expect(passed).toBeInTheDocument();
   });

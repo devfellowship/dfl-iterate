@@ -10,10 +10,7 @@ import { GameButton } from '@/components/game';
 export interface FixTheCodeProps {
   activity: Activity;
   onSubmit: (fixedCode: string) => void;
-  /**
-   * Optional handler that runs tests against the current code. If omitted the
-   * component will try to evaluate `activity.testCases` in a very naive way.
-   */
+  
   onRunTests?: (code: string) => Promise<TestResult[]>;
 }
 
@@ -33,13 +30,13 @@ export function FixTheCode({ activity, onSubmit, onRunTests }: FixTheCodeProps) 
         res = [];
       }
     } else {
-      // fallback: basic comparison against expectedOutput string presence
+      
       res = activity.testCases?.map(tc => ({
         description: tc.description,
         passed: code.includes(tc.expectedOutput),
       })) || [];
 
-      // simulate a brief delay
+      
       await new Promise((r) => setTimeout(r, 500));
     }
 
@@ -72,7 +69,7 @@ export function FixTheCode({ activity, onSubmit, onRunTests }: FixTheCodeProps) 
       }
     >
       <div className="flex-1 flex overflow-hidden">
-        {/* editor + output */}
+        
         <div className="w-[70%] flex flex-col overflow-hidden">
           <div className="flex-1 overflow-hidden">
             <CodeEditor
@@ -83,7 +80,7 @@ export function FixTheCode({ activity, onSubmit, onRunTests }: FixTheCodeProps) 
             />
           </div>
 
-          {/* test results / console */}
+         
           <div className="mt-2 overflow-auto max-h-40 bg-card/30 p-2 rounded">
             {results.length === 0 ? (
               <p className="text-sm text-muted-foreground">Nenhum teste executado</p>
@@ -102,7 +99,7 @@ export function FixTheCode({ activity, onSubmit, onRunTests }: FixTheCodeProps) 
           </div>
         </div>
 
-        {/* instructions / console on the right */}
+        
         <div className="w-[30%] pl-4 overflow-auto">
           <div className="text-sm text-muted-foreground whitespace-pre-wrap">
             {activity.instructions}
