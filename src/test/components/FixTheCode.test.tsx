@@ -11,7 +11,7 @@ const dummyActivity: Activity = {
   lessonId: 'test',
   order: 1,
   type: ActivityType.FIX_THE_CODE,
-  title: 'Dummy fix',
+  title: 'Dummy fix 01', 
   objective: '',
   instructions: 'Fix the problem',
   targetFiles: ['file.ts'],
