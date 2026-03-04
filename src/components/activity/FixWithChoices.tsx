@@ -11,11 +11,8 @@ interface FixWithChoicesProps {
 export function FixWithChoices({ activity, onSubmit }: FixWithChoicesProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
 
   if (activity.type !== ActivityType.FIX_WITH_CHOICES) return null;
-
-  const selectedFix = activity.fixOptions.find(f => f.id === selectedId);
 
   const handleSubmit = () => {
     if (!selectedId) return;
@@ -91,25 +88,7 @@ export function FixWithChoices({ activity, onSubmit }: FixWithChoicesProps) {
         ))}
       </div>
 
-      {/* Preview */}
-      {submitted && selectedFix && (
-        <div className="mt-6">
-          <button
-            onClick={() => setShowPreview(p => !p)}
-            className="text-sm text-primary underline"
-          >
-            {showPreview
-              ? 'Ocultar preview'
-              : 'Ver código corrigido completo'}
-          </button>
-
-          {showPreview && (
-            <pre className="mt-3 bg-black text-green-400 p-4 rounded-xl text-sm overflow-auto">
-              <code>{selectedFix.code}</code>
-            </pre>
-          )}
-        </div>
-      )}
+    
     </ActivityGameCard>
   );
 }

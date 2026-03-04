@@ -41,6 +41,23 @@ Você aplicou corretamente:
 
 Performance é crucial em listas grandes. Esses patterns vão te salvar em produção.`,
   },
+
+  'act-fix-success': {
+    isSuccess: true,
+    message: `Excelente! 🎉
+  Você identificou corretamente o problema e aplicou a solução ideal.
+
+  Continue assim!`
+  },
+
+  'act-fix-wrong': {
+    isSuccess: false,
+    message: `Quase lá! 😅
+
+  A correção escolhida não resolve completamente o problema.
+
+  Revise a lógica e tente novamente.`
+  },
   
   // Decision Fork - Context
   'act-3-context': {
