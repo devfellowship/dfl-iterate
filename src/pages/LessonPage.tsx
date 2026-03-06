@@ -8,7 +8,8 @@ import {
   DecisionFork,
   BreakAndFix,
   VideoChallenge,
-  VisualImplementation
+  VisualImplementation,
+  FixTheCode,
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
@@ -302,6 +303,26 @@ export default function LessonPage() {
             onComplete={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
               handleActivityComplete(currentActivity.id, 'act-6-success', true);
+            }}
+          />
+        );
+
+      case ActivityType.FIX_THE_CODE:
+        return (
+          <FixTheCode
+            activity={currentActivity}
+            onRunTests={async (code) => {
+              // naive local runner based on testCases
+              return (
+                currentActivity.testCases || []
+              ).map(tc => ({
+                description: tc.description,
+                passed: code.includes(tc.expectedOutput),
+              }));
+            }}
+            onSubmit={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-7-fix-code-success', true);
             }}
           />
         );
