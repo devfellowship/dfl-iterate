@@ -8,7 +8,6 @@ import HomePage from "./pages/HomePage";
 import LessonPage from "./pages/LessonPage";
 import FixTheCodePage from "./pages/FixTheCodePage";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
 
 const App = () => (

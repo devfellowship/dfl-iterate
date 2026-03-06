@@ -1,4 +1,3 @@
-// @ts-nocheck
 /// <reference types="vitest" />
 /// <reference types="react" />
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -31,7 +30,7 @@ describe('FixTheCode component', () => {
       />
     );
 
-    expect(screen.getByText('Dummy fix')).toBeInTheDocument();
+    expect(screen.getByText(/Dummy fix/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Run Tests/i })).toBeEnabled();
     expect(screen.getByRole('button', { name: /Submit/i })).toBeEnabled();
   });

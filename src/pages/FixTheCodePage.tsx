@@ -1,5 +1,3 @@
-// @ts-nocheck
-/// <reference types="react" />
 import { useState } from 'react';
 import { ActivityType, ActivityStatus } from '@/enums';
 import { Activity, TestResult } from '@/types';
@@ -36,7 +34,6 @@ export default function FixTheCodePage() {
   };
 
   const runTests = async (code: string): Promise<TestResult[]> => {
-    
     return sampleActivity.testCases!.map(tc => ({
       description: tc.description,
       passed: code.includes(tc.expectedOutput),
@@ -50,6 +47,7 @@ export default function FixTheCodePage() {
         onSubmit={handleSubmit}
         onRunTests={runTests}
       />
+
       {submitted && (
         <div className="mt-4 p-4 bg-card rounded">
           <h2 className="font-bold">Código submetido</h2>
