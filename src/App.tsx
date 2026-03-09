@@ -7,7 +7,6 @@ import { ObservabilityProvider } from "@/components/observability";
 import HomePage from "./pages/HomePage";
 import LessonPage from "./pages/LessonPage";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
 
 const App = () => (
