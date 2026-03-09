@@ -38,7 +38,8 @@ export default function HomePage() {
               <span className="text-gradient">projetos reais</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Microatividades que transformam você em um desenvolvedor melhor. Cada decisão importa. Cada linha de código tem propósito.
+              Microatividades que transformam você em um desenvolvedor melhor.
+              Cada decisão importa. Cada linha de código tem propósito.
             </p>
           </motion.div>
 
@@ -63,11 +64,7 @@ export default function HomePage() {
                 />
               ))}
             </div>
-            <div className="mt-8 text-center">
-              <Button variant="outline" onClick={() => navigate('/fix-the-code')}>
-                Ver demo Fix The Code
-              </Button>
-            </div>
+
           </motion.div>
         </div>
       </main>
@@ -111,11 +108,13 @@ function LessonCard({ lesson, index, onStart }: LessonCardProps) {
         <div className="flex-1">
           <h3 className="text-xl font-bold text-foreground mb-2">{lesson.title}</h3>
           <p className="text-muted-foreground mb-4">{lesson.description}</p>
+
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <Clock className="w-4 h-4" />
               <span>{lesson.estimatedMinutes} min</span>
             </div>
+
             <div className="flex items-center gap-1.5">
               <Layers className="w-4 h-4" />
               <span>{lesson.totalActivities} atividades</span>

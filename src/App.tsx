@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ObservabilityProvider } from "@/components/observability";
 import HomePage from "./pages/HomePage";
 import LessonPage from "./pages/LessonPage";
-import FixTheCodePage from "./pages/FixTheCodePage";
 import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
@@ -20,7 +19,6 @@ const App = () => (
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/lesson/:lessonId" element={<LessonPage />} />
-            <Route path="/fix-the-code" element={<FixTheCodePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
