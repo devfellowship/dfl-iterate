@@ -1,11 +1,12 @@
 export enum ActivityType {
-  QUALITY_REVIEW = 'quality_review',
-  CONSTRAINED_EDIT = 'constrained_edit',
-  DECISION_FORK = 'decision_fork',
-  BREAK_AND_FIX = 'break_and_fix',
-  VIDEO_CHALLENGE = 'video_challenge',
-  VISUAL_IMPLEMENTATION = 'visual_implementation',
-  READ_AND_CHOOSE = "read_and_choose",
+  READ_AND_CHOOSE = 'READ_AND_CHOOSE',
+  SPOT_THE_BUG = 'SPOT_THE_BUG',
+  QUALITY_REVIEW = 'QUALITY_REVIEW',
+  CONSTRAINED_EDIT = 'CONSTRAINED_EDIT',
+  DECISION_FORK = 'DECISION_FORK',
+  BREAK_AND_FIX = 'BREAK_AND_FIX',
+  VIDEO_CHALLENGE = 'VIDEO_CHALLENGE',
+  VISUAL_IMPLEMENTATION = 'VISUAL_IMPLEMENTATION',
 }
 
 export enum ProjectStatus {

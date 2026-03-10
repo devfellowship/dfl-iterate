@@ -8,6 +8,7 @@ export interface Lesson {
   totalActivities: number;
   estimatedMinutes: number;
   thumbnail?: string;
+  activities?: string[];
 }
 
 export interface DecisionOption {
@@ -57,6 +58,8 @@ export interface Activity {
   choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
+  bugLine?: number;
+  xpReward?: number;
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;

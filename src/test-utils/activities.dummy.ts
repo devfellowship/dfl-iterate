@@ -2,17 +2,28 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
+  {
+    id: 'act-spot-bug',
+    lessonId: 'lesson-1',
+    order: 1,
+    type: ActivityType.SPOT_THE_BUG,
+    title: 'Spot the Bug',
+    objective: 'Identify the line that contains a bug in the code.',
+    instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
+    targetFiles: ['src/components/'],
+    status: ActivityStatus.CURRENT,
+  },
 
   {
     id: 'act-1',
     lessonId: 'lesson-1',
-    order: 1,
+    order: 2,
     type: ActivityType.READ_AND_CHOOSE,
     title: 'O que esse trecho de código faz?',
     objective: '',
     instructions: `É um trecho.`,
     targetFiles: ['src/context/', 'src/hooks/'],
-    status: ActivityStatus.CURRENT,
+    status: ActivityStatus.LOCKED,
     aiGeneratedCode: `const products = [
     { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
     { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
@@ -38,11 +49,10 @@ export const activitiesData: Activity[] = [
     ],
   },
 
-
   {
     id: 'act-2',
     lessonId: 'lesson-1',
-    order: 2,
+    order: 3,
     type: ActivityType.QUALITY_REVIEW,
     title: 'Revisão do Header Gerado',
     objective: 'A IA gerou um componente Header para o BoxShop. Avalie se está pronto para produção.',
@@ -79,11 +89,13 @@ export default Header;`,
       'Número do carrinho hardcoded',
       'Sem TypeScript types',
     ],
+    bugLine: 14,
+    xpReward: 25,
   },
   {
     id: 'act-3',
     lessonId: 'lesson-1',
-    order: 3,
+    order: 4,
     type: ActivityType.CONSTRAINED_EDIT,
     title: 'Refatorando o ProductCard',
     objective: 'O ProductCard funciona, mas tem problemas de performance. Melhore sem alterar a estrutura.',
@@ -105,7 +117,7 @@ Restrição: Você só pode editar as linhas 8-12 e 18-22.`,
   {
     id: 'act-4',
     lessonId: 'lesson-1',
-    order: 4,
+    order: 5,
     type: ActivityType.DECISION_FORK,
     title: 'Arquitetura de Estado',
     objective: 'O projeto vai crescer. Escolha como gerenciar o estado do carrinho.',
@@ -140,7 +152,7 @@ Não existe resposta "errada" - cada opção tem trade-offs.`,
   {
     id: 'act-5',
     lessonId: 'lesson-1',
-    order: 5,
+    order: 6,
     type: ActivityType.BREAK_AND_FIX,
     title: 'Debug: Checkout Quebrado',
     objective: 'Uma mudança automática quebrou o checkout. Encontre e corrija o problema.',
@@ -182,7 +194,7 @@ export function CheckoutPage() {
   {
     id: 'act-6',
     lessonId: 'lesson-1',
-    order: 6,
+    order: 7,
     type: ActivityType.VIDEO_CHALLENGE,
     title: 'Aprenda useMemo na Prática',
     objective: 'Assista como um dev sênior otimiza performance e aplique o mesmo pattern.',
@@ -231,7 +243,7 @@ export function ProductList({ products }: { products: Product[] }) {
   {
     id: 'act-7',
     lessonId: 'lesson-1',
-    order: 7,
+    order: 8,
     type: ActivityType.VISUAL_IMPLEMENTATION,
     title: 'Implemente o Badge de Promoção',
     objective: 'Veja o design do badge de "PROMOÇÃO" e implemente o CSS.',

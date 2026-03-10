@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ActivityType } from '@/enums';
-import { Search, Scissors, GitBranch, Wrench, Video, Palette } from 'lucide-react';
+import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug } from 'lucide-react';
+import { Activity } from '@/types';
+import { SpotTheBug } from '@/components/molecules/SpotTheBug';
 
 interface ActivityGameCardProps {
   type: ActivityType;
@@ -9,6 +11,8 @@ interface ActivityGameCardProps {
   question: string;
   children: ReactNode;
   actions: ReactNode;
+  activity?: Activity;
+  onSpotTheBugSuccess?: () => void;
 }
 
 const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; color: string }> = {
@@ -46,10 +50,15 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     icon: Search,
     label: 'READ AND CHOOSE',
     color: 'text-primary'
+  },
+  [ActivityType.SPOT_THE_BUG]: {
+    icon: Bug,
+    label: 'SPOT THE BUG',
+    color: 'text-orange-400'
   }
 };
 
-export function ActivityGameCard({ type, title, question, children, actions }: ActivityGameCardProps) {
+export function ActivityGameCard({ type, title, question, children, actions, activity, onSpotTheBugSuccess }: ActivityGameCardProps) {
   const config = typeConfig[type];
   const Icon = config.icon;
 
@@ -79,15 +88,32 @@ export function ActivityGameCard({ type, title, question, children, actions }: A
 
       {/* Main content area - explicit flex-1 with overflow */}
       <div className="flex-1 overflow-hidden flex flex-col">
-        {children}
+        {activity && activity.type === ActivityType.SPOT_THE_BUG ? (
+          <SpotTheBug
+            activity={activity}
+            onSuccess={onSpotTheBugSuccess ?? (() => undefined)}
+            onError={() => {}}
+          />
+        ) : (
+          children
+        )}
       </div>
 
+      {question && (
+        <div className="text-center py-4 shrink-0">
+          <p className="text-lg text-muted-foreground font-medium">
+            {question}
+          </p>
+        </div>
+      )}
       {/* Question */}
-      <div className="text-center py-4 shrink-0">
-        <p className="text-lg text-muted-foreground font-medium">
-          {question}
-        </p>
-      </div>
+      {question && (
+        <div className="text-center py-4 shrink-0">
+          <p className="text-lg text-muted-foreground font-medium">
+            {question}
+          </p>
+        </div>
+      )}
 
       {/* Actions */}
       <div className="flex items-center justify-center gap-3 pb-4 shrink-0">
