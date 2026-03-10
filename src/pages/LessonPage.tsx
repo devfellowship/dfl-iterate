@@ -18,6 +18,7 @@ import {
   ResultModal,
   AIHistoryDrawer,
   LessonCompleteScreen,
+  ActivityGameCard,
 } from '@/components/game';
 import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
@@ -230,15 +231,22 @@ export default function LessonPage() {
 
       case ActivityType.SPOT_THE_BUG:
         return (
-          <SpotTheBug
-            activity={currentActivity}
-            onSuccess={() =>
-              handleActivityComplete(currentActivity.id, 'spot-the-bug-success')
-            }
-            onError={() =>
-              triggerAIResponse('spot-the-bug-fail')
-            }
-          />
+          <ActivityGameCard
+            type={ActivityType.SPOT_THE_BUG}
+            title={currentActivity.title}
+            question={currentActivity.instructions}
+            actions={<></>}
+          >
+            <SpotTheBug
+              activity={currentActivity}
+              onSuccess={() =>
+                handleActivityComplete(currentActivity.id, 'spot-the-bug-success', true)
+              }
+              onError={() =>
+                handleActivityComplete(currentActivity.id, 'spot-the-bug-fail', false)
+              }
+            />
+          </ActivityGameCard>
         );
 
       case ActivityType.QUALITY_REVIEW:
