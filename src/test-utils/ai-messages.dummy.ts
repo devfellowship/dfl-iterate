@@ -144,6 +144,25 @@ Você replicou o visual de referência:
 Transformar design em código é uma habilidade essencial. Você está evoluindo!`,
   },
 
+  // Spot The Bug - Sucesso
+  'spot-the-bug-success': {
+    isSuccess: true,
+    message: `Excelente olho clínico! 🎉 
+    
+Você identificou o erro de lógica no código. No dia a dia, saber ler código alheio e encontrar esses "pequenos vacilos" antes que cheguem em produção economiza horas de debug do time.`,
+  },
+
+  // Spot The Bug - Falha (DICAS)
+  'spot-the-bug-fail': {
+    isSuccess: false,
+    message: `Ops, essa linha parece estar correta. 
+    
+**Dicas para encontrar o bug:**
+• Verifique se as variáveis usadas foram realmente declaradas.
+• Olhe atentamente para os nomes das propriedades (TYPOS são comuns!).
+• Erros de sintaxe ou referências nulas costumam se esconder em operações de Array.`,
+  },
+
   // Default success
   'default-success': {
     isSuccess: true,

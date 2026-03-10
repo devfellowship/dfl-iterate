@@ -232,22 +232,22 @@ export default function LessonPage() {
       case ActivityType.SPOT_THE_BUG:
         return (
           <ActivityGameCard
-            type={ActivityType.SPOT_THE_BUG}
-            title={currentActivity.title}
-            question={currentActivity.instructions}
-            actions={<></>}
-          >
-            <SpotTheBug
-              activity={currentActivity}
-              onSuccess={() =>
-                handleActivityComplete(currentActivity.id, 'spot-the-bug-success', true)
-              }
-              onError={() =>
-                handleActivityComplete(currentActivity.id, 'spot-the-bug-fail', false)
-              }
-            />
-          </ActivityGameCard>
-        );
+      type={ActivityType.SPOT_THE_BUG}
+      title="Encontre a linha que contém um erro."
+      question=""
+      actions={<></>}
+    >
+      <SpotTheBug
+        activity={currentActivity}
+        onSuccess={() => 
+          handleActivityComplete(currentActivity.id, 'spot-the-bug-success', true)
+        }
+        onError={() => 
+          handleActivityComplete(currentActivity.id, 'spot-the-bug-fail', false)
+        }
+      />
+    </ActivityGameCard>
+  );
 
       case ActivityType.QUALITY_REVIEW:
         return (
