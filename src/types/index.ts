@@ -59,7 +59,8 @@ export interface Activity {
   instructions: string;
   targetFiles: string[];
   status: ActivityStatus;
-  options?: DecisionOption[] | FixOption[];
+  options?: DecisionOption[];
+  fixOptions?: FixOption[];
   choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];

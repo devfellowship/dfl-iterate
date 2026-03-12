@@ -262,18 +262,14 @@ export function PromoBadge() {
   {
       id: 'act-10',
       lessonId: 'lesson-1',
-      order: 1,
+      order: 10,
       type: ActivityType.FIX_WITH_CHOICES,
       title: 'Corrigir CheckoutPage',
       objective: 'Resolver erro de undefined',
       instructions: 'Escolha a melhor correção.',
+      targetFiles: ['src/pages/CheckoutPage.tsx'],
       status: ActivityStatus.LOCKED,
-      targetFiles: ['CheckoutPage.tsx'],
-      aiGeneratedCode: `
-    const items = cart.items;
-    return items.map(item => <Item key={item.id} />);
-      `,
-      options: [
+      fixOptions: [
         {
           id: 'fix-1',
           code: 'const items = cart?.items;',

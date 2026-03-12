@@ -51,6 +51,7 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     icon: undefined,
     label: '',
     color: ''
+  },
   [ActivityType.READ_AND_CHOOSE]: {
     icon: Search,
     label: 'READ AND CHOOSE',
@@ -71,7 +72,7 @@ export function ActivityGameCard({ type, title, question, children, actions }: A
     >
       {/* Header with type and title */}
       <div className="text-center mb-4 shrink-0">
-        <motion.div 
+        <motion.div
           className={`inline-flex items-center gap-2 ${config.color} mb-2`}
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
