@@ -262,7 +262,7 @@ export function PromoBadge() {
   {
     id: 'act-8',
     lessonId: 'lesson-1',
-    order: 8,
+    order: 9,
     type: ActivityType.FIX_THE_CODE,
     title: 'Corrigindo FizzBuzz',
     objective: 'O código a seguir deveria retornar a string correta para FizzBuzz, mas está incompleto.',

@@ -8,8 +8,7 @@ import { useFixTheCode } from '@/hooks/useFixTheCode';
 
 export interface FixTheCodeProps {
   activity: Activity;
-  onSubmit: (fixedCode: string) => void;
-  
+  onSubmit: (fixedCode: string) => void;S  
   onRunTests?: (code: string) => Promise<TestResult[]>;
 }
 
@@ -52,7 +51,6 @@ export function FixTheCode({ activity, onSubmit, onRunTests }: FixTheCodeProps) 
             />
           </div>
 
-         
           <div className="mt-2 overflow-auto max-h-40 bg-card/30 p-2 rounded">
             {results.length === 0 ? (
               <p className="text-sm text-muted-foreground">Nenhum teste executado</p>
@@ -70,7 +68,6 @@ export function FixTheCode({ activity, onSubmit, onRunTests }: FixTheCodeProps) 
             )}
           </div>
         </div>
-
         
         <div className="w-[30%] pl-4 overflow-auto">
           <div className="text-sm text-muted-foreground whitespace-pre-wrap">
