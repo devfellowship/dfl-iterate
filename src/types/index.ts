@@ -23,6 +23,12 @@ export type FixOption = {
   explanation: string;
   isCorrect: boolean;
 };
+export interface ChooseOption {
+  id: string;
+  label: string;
+  description: string;
+
+}
 
 export interface EditableRegion {
   startLine: number;
@@ -54,6 +60,7 @@ export interface Activity {
   targetFiles: string[];
   status: ActivityStatus;
   options?: DecisionOption[] | FixOption[];
+  choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
   editableRegions?: EditableRegion[];

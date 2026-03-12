@@ -24,6 +24,7 @@ import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
+import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -93,10 +94,11 @@ export default function LessonPage() {
   ) => {
     const template = responseKey 
       ? aiMessageTemplates[responseKey] 
-      : aiMessageTemplates['default-success'];
+      : aiMessageTemplates['default-success']
+      ?? aiMessageTemplates['default-failure'];
     
     const isSuccess = template?.isSuccess ?? forceSuccess;
-    const feedback = template?.message ?? aiMessageTemplates['default-success'].message;
+    const feedback = template?.message ?? aiMessageTemplates['default-success'].message ?? aiMessageTemplates['default-failure'].message;
     const earnedXP = isSuccess ? 25 : 0;
     const isLastActivity = currentActivityIndex === activities.length - 1;
 
@@ -160,6 +162,20 @@ export default function LessonPage() {
     setResultData(null);
   };
 
+  // Set project broken only when on Break & Fix activity (and reset when leaving)
+  useEffect(() => {
+    if (currentActivity?.type === ActivityType.BREAK_AND_FIX) {
+      // Only set broken if activity is not completed yet
+      const isCompleted = completedActivities.includes(currentActivityIndex);
+      if (!isCompleted) {
+        setProjectBroken();
+      }
+    } else {
+      // Reset to OK when not on Break & Fix
+      setProjectOK();
+    }
+  }, [currentActivity, currentActivityIndex, completedActivities, setProjectBroken, setProjectOK]);
+
   // Handle lesson complete
   if (showLessonComplete) {
     return (
@@ -177,20 +193,6 @@ export default function LessonPage() {
       />
     );
   }
-
-  // Set project broken only when on Break & Fix activity (and reset when leaving)
-  useEffect(() => {
-    if (currentActivity?.type === ActivityType.BREAK_AND_FIX) {
-      // Only set broken if activity is not completed yet
-      const isCompleted = completedActivities.includes(currentActivityIndex);
-      if (!isCompleted) {
-        setProjectBroken();
-      }
-    } else {
-      // Reset to OK when not on Break & Fix
-      setProjectOK();
-    }
-  }, [currentActivity, currentActivityIndex, completedActivities, setProjectBroken, setProjectOK]);
 
   if (!lesson) {
     return (
@@ -212,6 +214,22 @@ export default function LessonPage() {
     if (!currentActivity) return null;
 
     switch (currentActivity.type) {
+
+      case ActivityType.READ_AND_CHOOSE:
+        return (
+          <ReadAndChoose
+            activity={currentActivity}
+            onDecide={(choiceId) => {
+              handleDecision(choiceId);
+              const isCorrect = choiceId === 'opt-list-products';
+              const responseKey = isCorrect ? 'default-success' : 'default-failure';
+              handleActivityComplete(currentActivity.id, responseKey, isCorrect);
+            }}
+          />
+        );
+
+
+
       case ActivityType.QUALITY_REVIEW:
         return (
           <QualityReview

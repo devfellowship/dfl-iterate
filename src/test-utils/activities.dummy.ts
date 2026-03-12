@@ -2,10 +2,47 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
+
   {
     id: 'act-1',
     lessonId: 'lesson-1',
     order: 1,
+    type: ActivityType.READ_AND_CHOOSE,
+    title: 'O que esse trecho de código faz?',
+    objective: '',
+    instructions: `É um trecho.`,
+    targetFiles: ['src/context/', 'src/hooks/'],
+    status: ActivityStatus.CURRENT,
+    aiGeneratedCode: `const products = [
+    { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
+    { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
+    { name: 'Bandagem Elástica', price: 'R$ 29,90', emoji: '🩹' },
+    { name: 'Protetor Bucal', price: 'R$ 49,90', emoji: '😬' },
+  ];`,
+    choices: [
+      {
+        id: 'opt-list-products',
+        label: 'Lista de produtos',
+        description: 'Inicializa uma lista de produtos',
+      },
+      {
+        id: 'opt-add-product',
+        label: 'Adicionar produtos',
+        description: 'Adiciona um novo produto à lista',
+      },
+      {
+        id: 'opt-iterate-products',
+        label: 'Itera sobre a lista de produtos',
+        description: 'Itera sobre a lista de produtos e exibe no console',
+      },
+    ],
+  },
+
+
+  {
+    id: 'act-2',
+    lessonId: 'lesson-1',
+    order: 2,
     type: ActivityType.QUALITY_REVIEW,
     title: 'Revisão do Header Gerado',
     objective: 'A IA gerou um componente Header para o BoxShop. Avalie se está pronto para produção.',
@@ -18,7 +55,7 @@ Sua missão:
 
 Dica: Preste atenção em hardcoded values e falta de tipagem.`,
     targetFiles: ['src/components/Header.tsx'],
-    status: ActivityStatus.CURRENT,
+    status: ActivityStatus.LOCKED,
     aiGeneratedCode: `import React from 'react';
 
 function Header() {
@@ -44,9 +81,9 @@ export default Header;`,
     ],
   },
   {
-    id: 'act-2',
+    id: 'act-3',
     lessonId: 'lesson-1',
-    order: 2,
+    order: 3,
     type: ActivityType.CONSTRAINED_EDIT,
     title: 'Refatorando o ProductCard',
     objective: 'O ProductCard funciona, mas tem problemas de performance. Melhore sem alterar a estrutura.',
@@ -66,9 +103,9 @@ Restrição: Você só pode editar as linhas 8-12 e 18-22.`,
     ],
   },
   {
-    id: 'act-3',
+    id: 'act-4',
     lessonId: 'lesson-1',
-    order: 3,
+    order: 4,
     type: ActivityType.DECISION_FORK,
     title: 'Arquitetura de Estado',
     objective: 'O projeto vai crescer. Escolha como gerenciar o estado do carrinho.',
@@ -101,9 +138,9 @@ Não existe resposta "errada" - cada opção tem trade-offs.`,
     ],
   },
   {
-    id: 'act-4',
+    id: 'act-5',
     lessonId: 'lesson-1',
-    order: 4,
+    order: 5,
     type: ActivityType.BREAK_AND_FIX,
     title: 'Debug: Checkout Quebrado',
     objective: 'Uma mudança automática quebrou o checkout. Encontre e corrija o problema.',
@@ -143,9 +180,9 @@ export function CheckoutPage() {
 }`,
   },
   {
-    id: 'act-5',
+    id: 'act-6',
     lessonId: 'lesson-1',
-    order: 5,
+    order: 6,
     type: ActivityType.VIDEO_CHALLENGE,
     title: 'Aprenda useMemo na Prática',
     objective: 'Assista como um dev sênior otimiza performance e aplique o mesmo pattern.',
@@ -192,9 +229,9 @@ export function ProductList({ products }: { products: Product[] }) {
     },
   },
   {
-    id: 'act-6',
+    id: 'act-7',
     lessonId: 'lesson-1',
-    order: 6,
+    order: 7,
     type: ActivityType.VISUAL_IMPLEMENTATION,
     title: 'Implemente o Badge de Promoção',
     objective: 'Veja o design do badge de "PROMOÇÃO" e implemente o CSS.',

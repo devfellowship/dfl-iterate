@@ -42,7 +42,6 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'VISUAL IMPLEMENTATION',
     color: 'text-cyan-400'
   },
-
   [ActivityType.FIX_WITH_CHOICES]: {
     icon: Bug,
     label: 'FIX WITH CHOICES',
@@ -52,6 +51,10 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     icon: undefined,
     label: '',
     color: ''
+  [ActivityType.READ_AND_CHOOSE]: {
+    icon: Search,
+    label: 'READ AND CHOOSE',
+    color: 'text-primary'
   }
 };
 
