@@ -25,7 +25,7 @@ import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
-import { SpotTheBug } from '@/components/molecules/SpotTheBug';
+import { SpotTheBug } from '@/components/activity/SpotTheBug';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
