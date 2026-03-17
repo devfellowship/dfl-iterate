@@ -14,12 +14,12 @@ type SpotTheBugProps = {
 
 export function SpotTheBug({ activity, onSuccess, onError }: SpotTheBugProps) {
   const { challenge, selectedLine, setSelectedLine, handleConfirm } = useSpotTheBug({
-    activityId: activity.id,
+    activity: activity,
     onSuccess,
     onError
   });
+  if (!challenge) return null;
 
-  // O Prism agora destaca o código do desafio que foi sorteado
   const highlightedLines = useMemo(() => 
     Prism.highlight(challenge.code, Prism.languages.typescript, 'typescript').split('\n'), 
   [challenge]);

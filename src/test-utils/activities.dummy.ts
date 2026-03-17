@@ -3,18 +3,6 @@ import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
   {
-    id: 'act-spot-bug',
-    lessonId: 'lesson-1',
-    order: 1,
-    type: ActivityType.SPOT_THE_BUG,
-    title: 'Spot the Bug',
-    objective: 'Identify the line that contains a bug in the code.',
-    instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
-    targetFiles: ['src/components/'],
-    status: ActivityStatus.CURRENT,
-  },
-
-  {
     id: 'act-1',
     lessonId: 'lesson-1',
     order: 2,
@@ -271,4 +259,54 @@ export function PromoBadge() {
       expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
     },
   },
+  
+  {
+  id: 'act-8',
+  lessonId: 'lesson-1',
+  order: 7,
+  type: ActivityType.SPOT_THE_BUG,
+  title: 'Spot the Bug',
+  objective: 'Identify the line that contains a bug in the code.',
+  instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
+  targetFiles: ['src/components/ReviewManager.tsx'],
+  status: ActivityStatus.CURRENT,
+  BugChallenges: [
+    {
+      code: `import { useState } from 'react';\nexport const FormatData = (): JSX.Element => {\nconst data: number[] = [1, 2, 3];\nif (data = null) return <span>Sem dados</span>;\nreturn <div>{data.join(', ')}</div>;\n};`,
+      bugLine: 4,
+      explanation: 'Atribuição (=) em vez de comparação.',
+      tip: 'Use === para comparar valores em condições.'
+    },
+    {
+      code: `interface User {\nname: string;\nage: number;\n}\nexport const UserCard = (props: { user?: User }): JSX.Element => {\nreturn (\n<div>\n<h2>{props.user.name}</h2>\n<p>{props.user?.age}</p>\n</div>\n);\n};`,
+      bugLine: 8,
+      explanation: 'Acesso a propriedade de objeto possivelmente undefined.',
+      tip: 'Use optional chaining (props.user?.name).'
+    },
+    {
+      code: `export const Sum = (): number => {\nconst a = 5;\nconst b = 3;\nreturn\na + b;\n};`,
+      bugLine: 4,
+      explanation: 'Quebra de linha após o return.',
+      tip: 'O JavaScript encerra o return se houver quebra de linha.'
+    },
+    {
+      code: `export const DoubledList = (): number[] => {\nconst numbers: number[] = [1, 2, 3];\nconst result = numbers.map((n: number): number => {\nn * 2;\n});\nreturn result;\n};`,
+      bugLine: 4,
+      explanation: 'Falta do return dentro do map.',
+      tip: 'Funções com {} precisam de return explícito.'
+    },
+    {
+      code: `import { useState } from 'react';\nexport const Counter = (): JSX.Element => {\nconst [value, setValue] = useState<number>(0);\nconst handleClick = (): void => {\nvalue++;\n};\nreturn <button onClick={handleClick}>{value}</button>;\n};`,
+      bugLine: 5,
+      explanation: 'Mutação direta de estado.',
+      tip: 'Use o setter: setValue(value + 1).'
+    },
+    {
+      code: `interface Props {\nonClick: () => void;\n}\nexport const Button = (props: Props): JSX.Element => {\nreturn (\n<button onClick={props.onClick()}>\nClick\n</button>\n);\n};`,
+      bugLine: 6,
+      explanation: 'Função executada durante a renderização.',
+      tip: 'Passe apenas a referência: onClick={props.onClick}.'
+    }
+  ]
+}
 ];

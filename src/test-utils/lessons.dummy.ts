@@ -9,7 +9,6 @@ export const lessonsData: Lesson[] = [
     totalActivities: 8,
     estimatedMinutes: 50,
     activities: [
-      'act-spot-bug',
       'act-1',
       'act-2',
       'act-3',
@@ -17,6 +16,7 @@ export const lessonsData: Lesson[] = [
       'act-5',
       'act-6',
       'act-7',
+      'act-8',
     ],
   },
 ];
