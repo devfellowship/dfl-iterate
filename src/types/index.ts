@@ -17,6 +17,12 @@ export interface DecisionOption {
   impact: string;
 }
 
+export type FixOption = {
+  id: string;
+  code: string;
+  explanation: string;
+  isCorrect: boolean;
+};
 export interface ChooseOption {
   id: string;
   label: string;
@@ -54,6 +60,7 @@ export interface Activity {
   targetFiles: string[];
   status: ActivityStatus;
   options?: DecisionOption[];
+  fixOptions?: FixOption[];
   choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];

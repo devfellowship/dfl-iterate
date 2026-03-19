@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Bot } from 'lucide-react';
-import { 
+import {
   QualityReview,
   ConstrainedEdit,
   DecisionFork,
@@ -13,9 +13,9 @@ import {
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
-import { 
-  GameHeader, 
-  ProgressPills, 
+import {
+  GameHeader,
+  ProgressPills,
   ResultModal,
   AIHistoryDrawer,
   LessonCompleteScreen,
@@ -24,21 +24,22 @@ import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from 
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
+import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
   const navigate = useNavigate();
-  
+
   // Sound effects
   const { playSuccess, playError, playCelebration } = useSoundEffects();
-  
+
   // Drawer states
   const [gitLogOpen, setGitLogOpen] = useState(false);
   const [aiHistoryOpen, setAiHistoryOpen] = useState(false);
   const [showLessonComplete, setShowLessonComplete] = useState(false);
   const [lastCompletedActivity, setLastCompletedActivity] = useState<number | undefined>();
-  
+
   // Result modal state
   const [showResult, setShowResult] = useState(false);
   const [resultData, setResultData] = useState<{
@@ -76,7 +77,7 @@ export default function LessonPage() {
   } = useActivityPage();
 
   // Compute completed activities for preview state
-  const completedActivities = useMemo(() => 
+  const completedActivities = useMemo(() =>
     activities
       .map((a, i) => a.status === ActivityStatus.COMPLETED ? i : -1)
       .filter(i => i !== -1),
@@ -88,15 +89,15 @@ export default function LessonPage() {
 
   // Handle activity completion with result modal
   const handleActivityComplete = useCallback((
-    activityId: string, 
+    activityId: string,
     responseKey?: string,
     forceSuccess: boolean = true
   ) => {
-    const template = responseKey 
-      ? aiMessageTemplates[responseKey] 
+    const template = responseKey
+      ? aiMessageTemplates[responseKey]
       : aiMessageTemplates['default-success']
       ?? aiMessageTemplates['default-failure'];
-    
+
     const isSuccess = template?.isSuccess ?? forceSuccess;
     const feedback = template?.message ?? aiMessageTemplates['default-success'].message ?? aiMessageTemplates['default-failure'].message;
     const earnedXP = isSuccess ? 25 : 0;
@@ -149,7 +150,7 @@ export default function LessonPage() {
   // Handle result modal continue
   const handleResultContinue = () => {
     setShowResult(false);
-    
+
     if (resultData?.isSuccess) {
       if (resultData.isLastActivity) {
         // Show lesson complete screen
@@ -158,7 +159,7 @@ export default function LessonPage() {
         goToNextActivity();
       }
     }
-    
+
     setResultData(null);
   };
 
@@ -199,8 +200,8 @@ export default function LessonPage() {
       <div className="h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <h1 className="text-2xl font-display font-bold text-foreground mb-4">Lesson não encontrada</h1>
-          <button 
-            onClick={() => navigate('/')} 
+          <button
+            onClick={() => navigate('/')}
             className="px-6 py-3 bg-primary text-primary-foreground rounded-2xl font-bold"
           >
             Voltar ao início
@@ -242,7 +243,7 @@ export default function LessonPage() {
             }}
           />
         );
-      
+
       case ActivityType.CONSTRAINED_EDIT:
         return (
           <ConstrainedEdit
@@ -253,21 +254,21 @@ export default function LessonPage() {
             }}
           />
         );
-      
+
       case ActivityType.DECISION_FORK:
         return (
           <DecisionFork
             activity={currentActivity}
             onDecide={(optionId) => {
               handleDecision(optionId);
-              const responseKey = optionId === 'context' ? 'act-3-context' 
-                : optionId === 'zustand' ? 'act-3-zustand' 
-                : 'act-3-localstorage';
+              const responseKey = optionId === 'context' ? 'act-3-context'
+                : optionId === 'zustand' ? 'act-3-zustand'
+                  : 'act-3-localstorage';
               handleActivityComplete(currentActivity.id, responseKey, true);
             }}
           />
         );
-      
+
       case ActivityType.BREAK_AND_FIX:
         return (
           <BreakAndFix
@@ -284,7 +285,7 @@ export default function LessonPage() {
             onRequestHint={() => triggerAIResponse('act-4-hint')}
           />
         );
-      
+
       case ActivityType.VIDEO_CHALLENGE:
         return (
           <VideoChallenge
@@ -295,7 +296,7 @@ export default function LessonPage() {
             }}
           />
         );
-      
+
       case ActivityType.VISUAL_IMPLEMENTATION:
         return (
           <VisualImplementation
@@ -329,13 +330,34 @@ export default function LessonPage() {
       
       default:
         return null;
+
+      case ActivityType.FIX_WITH_CHOICES:
+        return (
+          <FixWithChoices
+            activity={currentActivity}
+            onSubmit={(selectedId) => {
+              const selected = currentActivity.fixOptions?.find(
+                f => f.id === selectedId
+              );
+
+              console.log('Current Activity:', currentActivity);
+              console.log('Activity Type:', currentActivity?.type);
+
+              handleActivityComplete(
+                currentActivity.id,
+                selected?.isCorrect ? 'act-fix-success' : 'act-fix-wrong',
+                selected?.isCorrect
+              );
+            }}
+          />
+        );
     }
   };
 
   return (
     <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* Game Header */}
-      <GameHeader 
+      <GameHeader
         lives={lives}
         streak={streak}
         xp={xp}
@@ -370,16 +392,16 @@ export default function LessonPage() {
 
         {/* Right Panel - Preview */}
         <div className="hidden lg:flex lg:w-[45%] flex-col p-4 relative">
-          <DynamicPreview 
-            status={project.status} 
+          <DynamicPreview
+            status={project.status}
             previewState={previewState}
             lastCompletedActivity={lastCompletedActivity}
             errorMessage={currentActivity?.type === ActivityType.BREAK_AND_FIX && project.status === ProjectStatus.BROKEN
-              ? "TypeError: Cannot read property 'map' of undefined" 
+              ? "TypeError: Cannot read property 'map' of undefined"
               : undefined
             }
           />
-          
+
           {/* Git Log Drawer */}
           <GitLog
             entries={gitLog}
