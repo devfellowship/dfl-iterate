@@ -9,3 +9,4 @@ export { VisualImplementation } from './VisualImplementation';
 export { VideoModal } from './VideoModal';
 export { ImageZoomModal } from './ImageZoomModal';
 export { FixWithChoices } from './FixWithChoices';
+export { PredictOutput } from './PredictOutput';

@@ -8,7 +8,8 @@ import {
   DecisionFork,
   BreakAndFix,
   VideoChallenge,
-  VisualImplementation
+  VisualImplementation,
+  PredictOutput,
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
@@ -330,8 +331,13 @@ export default function LessonPage() {
             }}
           />
         );
+      case ActivityType.PREDICT_OUTPUT:
+        return (
+          <PredictOutput />
+        );
     }
   };
+  
 
   return (
     <div className="h-screen bg-background flex flex-col overflow-hidden">

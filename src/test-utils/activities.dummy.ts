@@ -2,7 +2,17 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
-
+  {
+    id: 'act-11',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.PREDICT_OUTPUT,
+    title: 'Predict Output',
+    objective: 'Predict the output of the code',
+    instructions: 'Predict the output of the code',
+    targetFiles: ['src/pages/CheckoutPage.tsx'],
+    status: ActivityStatus.CURRENT,
+  },
   {
     id: 'act-1',
     lessonId: 'lesson-1',
@@ -12,7 +22,7 @@ export const activitiesData: Activity[] = [
     objective: '',
     instructions: `É um trecho.`,
     targetFiles: ['src/context/', 'src/hooks/'],
-    status: ActivityStatus.CURRENT,
+    status: ActivityStatus.LOCKED,
     aiGeneratedCode: `const products = [
     { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
     { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
@@ -289,5 +299,6 @@ export function PromoBadge() {
           isCorrect: false,
         }
       ]
-    }
+    },
+    
 ];

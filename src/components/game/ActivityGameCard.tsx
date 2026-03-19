@@ -56,7 +56,12 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     icon: Search,
     label: 'READ AND CHOOSE',
     color: 'text-primary'
-  }
+  },
+  [ActivityType.PREDICT_OUTPUT]: {
+    icon: Wrench,
+    label: 'PREDICT OUTPUT',
+    color: 'text-primary'
+  },
 };
 
 export function ActivityGameCard({ type, title, question, children, actions }: ActivityGameCardProps) {
