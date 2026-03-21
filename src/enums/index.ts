@@ -6,6 +6,11 @@ export enum ActivityType {
   VIDEO_CHALLENGE = 'video_challenge',
   VISUAL_IMPLEMENTATION = 'visual_implementation',
   FIX_WITH_CHOICES = "fix_with_choices",
+<<<<<<< HEAD
+=======
+  READ_AND_CHOOSE = "read_and_choose",
+  FIX_THE_CODE = 'fix_the_code',
+>>>>>>> 790e0a2299f0d55491a278569f49f7b5f712e3a6
 }
 
 export enum ProjectStatus {

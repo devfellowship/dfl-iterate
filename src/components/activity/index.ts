@@ -7,5 +7,6 @@ export { BreakAndFix } from './BreakAndFix';
 export { VideoChallenge } from './VideoChallenge';
 export { VisualImplementation } from './VisualImplementation';
 export { VideoModal } from './VideoModal';
+export { FixTheCode } from './FixTheCode';
 export { ImageZoomModal } from './ImageZoomModal';
 export { FixWithChoices } from './FixWithChoices';

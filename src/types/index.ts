@@ -23,6 +23,15 @@ export type FixOption = {
   explanation: string;
   isCorrect: boolean;
 };
+<<<<<<< HEAD
+=======
+export interface ChooseOption {
+  id: string;
+  label: string;
+  description: string;
+
+}
+>>>>>>> 790e0a2299f0d55491a278569f49f7b5f712e3a6
 
 export interface EditableRegion {
   startLine: number;
@@ -53,12 +62,24 @@ export interface Activity {
   instructions: string;
   targetFiles: string[];
   status: ActivityStatus;
+<<<<<<< HEAD
   options?: DecisionOption[] | FixOption[];
+=======
+  options?: DecisionOption[];
+  fixOptions?: FixOption[];
+  choices?: ChooseOption[];
+>>>>>>> 790e0a2299f0d55491a278569f49f7b5f712e3a6
   aiGeneratedCode?: string;
   expectedIssues?: string[];
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
+  /** only applies when type === ActivityType.FIX_THE_CODE */
+  testCases?: {
+    input: string;
+    expectedOutput: string;
+    description: string;
+  }[];
 }
 
 export interface ProjectFile {
@@ -92,4 +113,11 @@ export interface GitLogEntry {
   timestamp: Date;
   filesChanged: string[];
   type: 'activity_complete' | 'decision' | 'fix';
+}
+
+/** result from executing a test case */
+export interface TestResult {
+  description: string;
+  passed: boolean;
+  output?: string;
 }
