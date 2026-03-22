@@ -67,6 +67,7 @@ export interface Activity {
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
+  codeBlocks?: CodeBlock[];
 }
 
 export interface ProjectFile {
@@ -100,4 +101,11 @@ export interface GitLogEntry {
   timestamp: Date;
   filesChanged: string[];
   type: 'activity_complete' | 'decision' | 'fix';
+}
+
+export interface CodeBlock {
+  id: string;
+  code: string;
+  indentLevel?: number;
+  isDistractor?: boolean;
 }

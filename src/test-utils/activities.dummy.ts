@@ -2,11 +2,22 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
-
   {
-    id: 'act-1',
+    id: 'act-8',
     lessonId: 'lesson-1',
     order: 1,
+    type: ActivityType.PARSONS_PROBLEM,
+    title: 'Organize o Código do ProductCard',
+    objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
+    instructions: 'Os blocos de código estão embaralhados. Organize-os na ordem correta para criar um componente ProductCard funcional.',
+    targetFiles: [],
+    status: ActivityStatus.LOCKED
+  },
+  {
+    
+    id: 'act-1',
+    lessonId: 'lesson-1',
+    order: 8,
     type: ActivityType.READ_AND_CHOOSE,
     title: 'O que esse trecho de código faz?',
     objective: '',
@@ -258,6 +269,17 @@ export function PromoBadge() {
       caption: 'Badge de promoção - Design aprovado',
       expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
     },
+  },
+  {
+    id: 'act-8',
+    lessonId: 'lesson-1',
+    order: 1,
+    type: ActivityType.PARSONS_PROBLEM,
+    title: 'Organize o Código do ProductCard',
+    objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
+    instructions: 'Os blocos de código estão embaralhados. Organize-os na ordem correta para criar um componente ProductCard funcional.',
+    targetFiles: [],
+    status: ActivityStatus.LOCKED
   },
   {
       id: 'act-10',

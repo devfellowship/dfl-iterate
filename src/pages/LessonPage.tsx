@@ -330,6 +330,17 @@ export default function LessonPage() {
             }}
           />
         );
+      case ActivityType.PARSONS_PROBLEM:
+        return (
+          <div className="p-4 bg-card rounded-lg shadow">
+            <h2 className="text-xl font-bold mb-4">{currentActivity.title}</h2>
+            <p className="mb-4">{currentActivity.instructions}</p>
+            {/* Parsons problem UI would go here */}
+            <div className="p-4 bg-muted rounded">
+              <p className="text-sm text-muted-foreground">Parsons Problem UI Placeholder</p>
+            </div>
+          </div>
+        );
     }
   };
 
