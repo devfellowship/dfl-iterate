@@ -1,4 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
+import Prism from 'prismjs';
+import 'prismjs/components/prism-typescript';
+
 import { Activity } from "@/types";
 
 interface UseSpotTheBugParams {
@@ -12,19 +15,27 @@ export function useSpotTheBug({ activity, onSuccess, onError }: UseSpotTheBugPar
   const [challengeIndex, setChallengeIndex] = useState(0);
 
   useEffect(() => {
-  const total = activity.BugChallenges?.length || 0;
+    const total = activity.BugChallenges?.length || 0;
 
-  if (total > 0) {
-    setChallengeIndex(Math.floor(Math.random() * total));
-  }
+    if (total > 0) {
+      setChallengeIndex(Math.floor(Math.random() * total));
+    }
 
-  setSelectedLine(null);
-}, [activity]);
+    setSelectedLine(null);
+  }, [activity]);
 
   const challenge = useMemo(
     () => activity.BugChallenges?.[challengeIndex], 
     [challengeIndex, activity]
   );
+
+  const highlightedLines = useMemo(() => {
+    if (!challenge) return [];
+
+    return Prism
+      .highlight(challenge.code, Prism.languages.typescript, 'typescript')
+      .split('\n');
+  }, [challenge]);
 
   const handleConfirm = () => {
     if (selectedLine === null || !challenge) return; 
@@ -36,5 +47,11 @@ export function useSpotTheBug({ activity, onSuccess, onError }: UseSpotTheBugPar
     }
   };
 
-  return { challenge, selectedLine, setSelectedLine, handleConfirm };
+  return { 
+    challenge, 
+    selectedLine, 
+    setSelectedLine, 
+    handleConfirm,
+    highlightedLines 
+  };
 }

@@ -1,6 +1,3 @@
-import { useMemo } from 'react';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-typescript';
 import 'prismjs/themes/prism-tomorrow.css';
 import { Activity } from '@/types';
 import { GameButton } from '@/components/game';
@@ -13,16 +10,19 @@ type SpotTheBugProps = {
 };
 
 export function SpotTheBug({ activity, onSuccess, onError }: SpotTheBugProps) {
-  const { challenge, selectedLine, setSelectedLine, handleConfirm } = useSpotTheBug({
-    activity: activity,
+  const { 
+    challenge, 
+    selectedLine, 
+    setSelectedLine, 
+    handleConfirm,
+    highlightedLines
+  } = useSpotTheBug({
+    activity,
     onSuccess,
     onError
   });
-  if (!challenge) return null;
 
-  const highlightedLines = useMemo(() => 
-    Prism.highlight(challenge.code, Prism.languages.typescript, 'typescript').split('\n'), 
-  [challenge]);
+  if (!challenge) return null;
 
   return (
     <div className="flex flex-col h-full gap-4">
@@ -33,7 +33,9 @@ export function SpotTheBug({ activity, onSuccess, onError }: SpotTheBugProps) {
             <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
             <span className="h-3 w-3 rounded-full bg-[#28c840]" />
           </div>
-          <div className="text-xs text-zinc-500 font-medium ml-4">src/ReviewManager.tsx</div>
+          <div className="text-xs text-zinc-500 font-medium ml-4">
+            src/ReviewManager.tsx
+          </div>
         </div>
 
         <div className="flex-1 px-6 py-6 font-mono text-[13px] overflow-auto">
@@ -43,11 +45,18 @@ export function SpotTheBug({ activity, onSuccess, onError }: SpotTheBugProps) {
                 key={index}
                 onClick={() => setSelectedLine(index + 1)}
                 className={`flex gap-6 items-baseline rounded-md px-2 py-0.5 cursor-pointer transition-colors ${
-                  selectedLine === index + 1 ? 'bg-orange-500/20' : 'hover:bg-white/5'
+                  selectedLine === index + 1
+                    ? 'bg-orange-500/20'
+                    : 'hover:bg-white/5'
                 }`}
               >
-                <span className="w-8 text-right text-xs text-zinc-500/70 select-none">{index + 1}</span>
-                <span className="whitespace-pre text-zinc-100/90" dangerouslySetInnerHTML={{ __html: line }} />
+                <span className="w-8 text-right text-xs text-zinc-500/70 select-none">
+                  {index + 1}
+                </span>
+                <span
+                  className="whitespace-pre text-zinc-100/90"
+                  dangerouslySetInnerHTML={{ __html: line }}
+                />
               </div>
             ))}
           </div>
@@ -55,7 +64,9 @@ export function SpotTheBug({ activity, onSuccess, onError }: SpotTheBugProps) {
       </div>
 
       <div className="flex justify-center pb-2">
-        <GameButton onClick={handleConfirm} variant="primary">Confirmar</GameButton>
+        <GameButton onClick={handleConfirm} variant="primary">
+          Confirmar
+        </GameButton>
       </div>
     </div>
   );

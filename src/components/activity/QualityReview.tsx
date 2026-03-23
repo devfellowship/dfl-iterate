@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Activity } from '@/types';
 import { CodeEditor } from '@/components/editor/CodeEditor';
-import { ActivityGameCard, GameButton } from '@/components/game';
+import { ActivityGameCard } from '@/components/game';
+import { GameButton } from '@/components/game';
 import { Check, Edit3, RefreshCw, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -37,7 +38,7 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
     <ActivityGameCard
       type={activity.type}
       title={activity.title}
-      question={isEditing ? 'Salve suas edições quando terminar' : 'O código está pronto para produção?'}
+      question={isEditing ? "Salve suas edições quando terminar" : "O código está pronto para produção?"}
       actions={
         isEditing ? (
           <>
@@ -64,7 +65,9 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
       }
     >
       <div className="flex-1 flex flex-col gap-4 overflow-hidden">
-        <div
+        {/* Code Editor - Main focus */}
+        {/* Click on editor activates edit mode for better UX */}
+        <div 
           className="flex-1 overflow-hidden"
           onClick={() => !isEditing && setIsEditing(true)}
         >
@@ -77,8 +80,9 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
           />
         </div>
 
+        {/* Warning - Only if shown */}
         {showWarning && activity.expectedIssues && (
-          <motion.div
+          <motion.div 
             className="p-4 rounded-xl bg-warning/10 border-2 border-warning/30"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -89,7 +93,7 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
                 <h4 className="font-bold text-warning mb-2">Problemas identificados:</h4>
                 <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
                   {activity.expectedIssues.map((issue, i) => (
-                    <li key={issue + i}>{issue}</li>
+                    <li key={i}>{issue}</li>
                   ))}
                 </ul>
               </div>
