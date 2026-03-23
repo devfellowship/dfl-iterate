@@ -25,6 +25,7 @@ import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
+import { ParsonsProblem } from '@/components/activity/ParsonsProblem';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -331,16 +332,7 @@ export default function LessonPage() {
           />
         );
       case ActivityType.PARSONS_PROBLEM:
-        return (
-          <div className="p-4 bg-card rounded-lg shadow">
-            <h2 className="text-xl font-bold mb-4">{currentActivity.title}</h2>
-            <p className="mb-4">{currentActivity.instructions}</p>
-            {/* Parsons problem UI would go here */}
-            <div className="p-4 bg-muted rounded">
-              <p className="text-sm text-muted-foreground">Parsons Problem UI Placeholder</p>
-            </div>
-          </div>
-        );
+        return <ParsonsProblem activity={currentActivity} />;
     }
   };
 
