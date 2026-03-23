@@ -1,14 +1,16 @@
-export type ActivityType = "STEP_THROUGH";
-
 export interface Step {
   lineNumber: number;
   question: string;
   correctAnswer: string;
-  variables?: Record<string, any>;
+  variables?: Record<string, unknown>;
 }
 
 export interface Activity {
   type: ActivityType;
   aiGeneratedCode: string;
   steps: Step[];
+}
+
+export enum ActivityType {
+  STEP_THROUGH = 'STEP_THROUGH',
 }

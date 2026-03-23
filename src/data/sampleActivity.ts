@@ -1,35 +1,26 @@
-import { Activity } from "../types/Activity";
+import { Activity, ActivityType } from '../types/Activity';
 
 export const sampleActivity: Activity = {
-  type: "STEP_THROUGH",
-
-  aiGeneratedCode: `
-let x = 5
-let y = 2
-x = x + y
-console.log(x)
-`.trim(),
-
+  type: ActivityType.STEP_THROUGH,
+  aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
   steps: [
     {
       lineNumber: 1,
-      question: "Qual o valor de x após esta linha?",
+      question: "Qual o valor de X agora?",
       correctAnswer: "5",
-      variables: { x: 5 }
+      variables: { x: 5, y: 0, z: 0 },
     },
-
     {
       lineNumber: 2,
-      question: "Qual o valor de y agora?",
-      correctAnswer: "2",
-      variables: { x: 5, y: 2 }
+      question: "Qual o valor de Y agora?",
+      correctAnswer: "10",
+      variables: { x: 5, y: 10, z: 0 },
     },
-
     {
       lineNumber: 3,
-      question: "Qual o valor de x agora?",
-      correctAnswer: "7",
-      variables: { x: 7, y: 2 }
-    }
-  ]
+      question: "Qual o valor de Z agora?",
+      correctAnswer: "15",
+      variables: { x: 5, y: 10, z: 15 },
+    },
+  ],
 };
