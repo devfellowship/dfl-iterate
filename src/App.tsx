@@ -1,21 +1,23 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { ObservabilityProvider } from "@/components/observability";
-import HomePage from "./pages/HomePage";
-import LessonPage from "./pages/LessonPage";
-import NotFound from "./pages/NotFound";
-import StepThrough from "./components/StepThrough";
-import { sampleActivity } from "./data/sampleActivity";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Sonner } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { ObservabilityProvider } from '@/components/observability';
+import HomePage from './pages/HomePage';
+import Home from './pages/Home'; 
+import LessonPage from './pages/LessonPage';
+import NotFound from './pages/NotFound';
+import StepThrough from './components/activity/StepThrough';
+import { sampleActivity } from './data/sampleActivity';
 
+// Instanciando o QueryClient
 const queryClient = new QueryClient();
 
-const App = () => {
+const App: React.FC = () => {
   const handleSubmit = (answers: Record<number, string>) => {
-    console.log("Respostas do aluno:", answers);
+    console.log('Respostas enviadas:', answers);
   };
 
   return (
@@ -24,23 +26,20 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <Router>
             <Routes>
+              {/* Rotas do segundo código */}
               <Route path="/" element={<HomePage />} />
               <Route path="/lesson/:lessonId" element={<LessonPage />} />
-              <Route path="*" element={<NotFound />} />
-              {/* Você pode adicionar a StepThrough como rota ou componente isolado */}
+              <Route path="*" element={<NotFound />} />  
               <Route
                 path="/stepthrough"
-                element={
-                  <StepThrough
-                    activity={sampleActivity}
-                    onSubmit={handleSubmit}
-                  />
-                }
+                element={<StepThrough activity={sampleActivity} onSubmit={handleSubmit} />}
               />
+              {/* Rota do primeiro código */}
+              <Route path="/home" element={<Home />} />
             </Routes>
-          </BrowserRouter>
+          </Router>
         </TooltipProvider>
       </QueryClientProvider>
     </ObservabilityProvider>
