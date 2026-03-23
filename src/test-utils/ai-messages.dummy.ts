@@ -149,7 +149,7 @@ Transformar design em código é uma habilidade essencial. Você está evoluindo
     isSuccess: true,
     message: `Excelente olho clínico! 🎉 
     
-Você identificou o erro de lógica no código. No dia a dia, saber ler código alheio e encontrar esses "pequenos vacilos" antes que cheguem em produção economiza horas de debug do time.`,
+Saber identificar esses detalhes rapidamente é uma habilidade essencial — evita bugs em produção e poupa tempo de todo o time.`,
   },
 
   // Spot The Bug - Falha (DICAS)
