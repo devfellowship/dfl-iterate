@@ -332,8 +332,28 @@ export default function LessonPage() {
           />
         );
       case ActivityType.PARSONS_PROBLEM:
-        return <ParsonsProblem activity={currentActivity} />;
-    }
+  return (
+    <ParsonsProblem 
+      activity={currentActivity} 
+      onSubmit={(orderedIds) => {
+        // 1. A ordem correta deve vir do seu objeto de atividade.
+        const correctOrder = currentActivity.correctOrder || [];
+        
+        // 2. Comparamos se a ordem que o usuário montou é igual à correta
+        const isCorrect = JSON.stringify(orderedIds) === JSON.stringify(correctOrder);
+
+        // 3. Definimos qual mensagem a IA vai dar baseado no sucesso
+        const responseKey = isCorrect ? 'act-parsons-success' : 'act-parsons-wrong';
+
+        // 4. Chamamos o manipulador global da página de lição
+        handleActivityComplete(
+          currentActivity.id,
+          responseKey,
+          isCorrect
+        );
+      }}
+    />
+  );
   };
 
   return (
