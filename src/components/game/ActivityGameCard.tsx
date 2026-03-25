@@ -12,6 +12,11 @@ interface ActivityGameCardProps {
 }
 
 const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; color: string }> = {
+  [ActivityType.FILL_THE_BLANKS]: {
+    icon: Search,
+    label: 'FILL THE BLANKS',
+    color: 'text-primary'
+  },
   [ActivityType.QUALITY_REVIEW]: {
     icon: Search,
     label: 'QUALITY REVIEW',
@@ -47,10 +52,6 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'FIX WITH CHOICES',
     color: 'text-red-400'
   },
-  [ActivityType.FIX_THE_CODE]: {
-    icon: undefined,
-    label: '',
-    color: ''
   [ActivityType.READ_AND_CHOOSE]: {
     icon: Search,
     label: 'READ AND CHOOSE',

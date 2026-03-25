@@ -1,30 +1,25 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Bot } from 'lucide-react';
-import { 
-  QualityReview,
-  ConstrainedEdit,
-  DecisionFork,
-  BreakAndFix,
-  VideoChallenge,
-  VisualImplementation
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {AnimatePresence, motion} from 'framer-motion';
+import {Bot, Terminal} from 'lucide-react';
+import {
+    FillTheBlanks,
+    BreakAndFix,
+    ConstrainedEdit,
+    DecisionFork,
+    QualityReview,
+    VideoChallenge,
+    VisualImplementation,
 } from '@/components/activity';
-import { DynamicPreview } from '@/components/preview';
-import { GitLog } from '@/components/project';
-import { 
-  GameHeader, 
-  ProgressPills, 
-  ResultModal,
-  AIHistoryDrawer,
-  LessonCompleteScreen,
-} from '@/components/game';
-import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
-import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
-import { lessonsData } from '@/test-utils/lessons.dummy';
-import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
-import { FixWithChoices } from '@/components/activity/FixWithChoices';
-import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
+import {DynamicPreview} from '@/components/preview';
+import {GitLog} from '@/components/project';
+import {AIHistoryDrawer, GameHeader, LessonCompleteScreen, ProgressPills, ResultModal,} from '@/components/game';
+import {useActivityPage, useAIHistory, usePreviewState, useSoundEffects} from '@/hooks';
+import {ActivityStatus, ActivityType, ProjectStatus} from '@/enums';
+import {lessonsData} from '@/test-utils/lessons.dummy';
+import {aiMessageTemplates} from '@/test-utils/ai-messages.dummy';
+import {FixWithChoices} from '@/components/activity/FixWithChoices';
+import {ReadAndChoose} from '@/components/molecules/ReadAndChoose/ReadAndChoose';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -214,6 +209,16 @@ export default function LessonPage() {
     if (!currentActivity) return null;
 
     switch (currentActivity.type) {
+      case ActivityType.FILL_THE_BLANKS:
+        return (
+          <FillTheBlanks
+            activity={currentActivity}
+            onSubmit={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-2-success', true);
+            }}
+          />
+        );
 
       case ActivityType.READ_AND_CHOOSE:
         return (
@@ -315,7 +320,7 @@ export default function LessonPage() {
           <FixWithChoices
             activity={currentActivity}
             onSubmit={(selectedId) => {
-              const selected = currentActivity.fixOptions?.find(
+              const selected = currentActivity.options?.find(
                 f => f.id === selectedId
               );
 

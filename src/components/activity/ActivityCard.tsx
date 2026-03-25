@@ -12,6 +12,7 @@ interface ActivityCardProps {
 }
 
 const typeIcons = {
+  [ActivityType.FILL_THE_BLANKS]: Search,
   [ActivityType.READ_AND_CHOOSE]: Search,
   [ActivityType.QUALITY_REVIEW]: Search,
   [ActivityType.CONSTRAINED_EDIT]: Scissors,
@@ -20,6 +21,7 @@ const typeIcons = {
 };
 
 const typeLabels = {
+  [ActivityType.FILL_THE_BLANKS]: 'Fill the Blanks',
   [ActivityType.READ_AND_CHOOSE]: 'Read And Choose',
   [ActivityType.QUALITY_REVIEW]: 'Quality Review',
   [ActivityType.CONSTRAINED_EDIT]: 'Constrained Edit',
