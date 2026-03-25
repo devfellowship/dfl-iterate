@@ -68,6 +68,7 @@ export interface Activity {
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
   codeBlocks?: CodeBlock[];
+  correctOrder?: string[];
 }
 
 export interface ProjectFile {

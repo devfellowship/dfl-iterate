@@ -274,7 +274,7 @@ export default function LessonPage() {
           <BreakAndFix
             activity={currentActivity}
             errorMessage="TypeError: Cannot read property 'map' of undefined
-    at CheckoutPage (CheckoutPage.tsx:7:18)"
+            at CheckoutPage (CheckoutPage.tsx:7:18)"
             onFix={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
               handleActivityComplete(currentActivity.id, 'act-4-success', true);
@@ -307,10 +307,6 @@ export default function LessonPage() {
             }}
           />
         );
-
-      default:
-        return null;
-
       case ActivityType.FIX_WITH_CHOICES:
         return (
           <FixWithChoices
@@ -332,28 +328,27 @@ export default function LessonPage() {
           />
         );
       case ActivityType.PARSONS_PROBLEM:
-  return (
-    <ParsonsProblem 
-      activity={currentActivity} 
-      onSubmit={(orderedIds) => {
-        // 1. A ordem correta deve vir do seu objeto de atividade.
-        const correctOrder = currentActivity.correctOrder || [];
-        
-        // 2. Comparamos se a ordem que o usuário montou é igual à correta
-        const isCorrect = JSON.stringify(orderedIds) === JSON.stringify(correctOrder);
+        return (
+          <ParsonsProblem 
+            activity={currentActivity} 
+            onSubmit={(orderedIds) => {
+              const correctOrder = currentActivity.correctOrder || [];
+              
+              const isCorrect = JSON.stringify(orderedIds) === JSON.stringify(correctOrder);
 
-        // 3. Definimos qual mensagem a IA vai dar baseado no sucesso
-        const responseKey = isCorrect ? 'act-parsons-success' : 'act-parsons-wrong';
+              const responseKey = isCorrect ? 'act-parsons-success' : 'act-parsons-wrong';
 
-        // 4. Chamamos o manipulador global da página de lição
-        handleActivityComplete(
-          currentActivity.id,
-          responseKey,
-          isCorrect
+              handleActivityComplete(
+                currentActivity.id,
+                responseKey,
+                isCorrect
+              );
+            }}
+          />
         );
-      }}
-    />
-  );
+      default:
+        return null;
+    }
   };
 
   return (

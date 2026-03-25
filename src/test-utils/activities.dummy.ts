@@ -11,7 +11,19 @@ export const activitiesData: Activity[] = [
     objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
     instructions: 'Os blocos de código estão embaralhados. Organize-os na ordem correta para criar um componente ProductCard funcional.',
     targetFiles: [],
-    status: ActivityStatus.LOCKED
+    status: ActivityStatus.CURRENT,
+    codeBlocks: [
+      { id: 'b1', code: "import { Product } from '@/types';" },
+      { id: 'b2', code: 'export function ProductCard({ product }: { product: Product }) {' },
+      { id: 'b3', code: '  return (' },
+      { id: 'b4', code: '    <article className="card">' },
+      { id: 'b5', code: '      <h2>{product.name}</h2>' },
+      { id: 'b6', code: '      <p>R$ {product.price.toFixed(2)}</p>' },
+      { id: 'b7', code: '    </article>' },
+      { id: 'b8', code: '  );' },
+      { id: 'b9', code: '}' },
+    ],
+    correctOrder: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9'],
   },
   {
     
@@ -269,17 +281,6 @@ export function PromoBadge() {
       caption: 'Badge de promoção - Design aprovado',
       expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
     },
-  },
-  {
-    id: 'act-8',
-    lessonId: 'lesson-1',
-    order: 1,
-    type: ActivityType.PARSONS_PROBLEM,
-    title: 'Organize o Código do ProductCard',
-    objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
-    instructions: 'Os blocos de código estão embaralhados. Organize-os na ordem correta para criar um componente ProductCard funcional.',
-    targetFiles: [],
-    status: ActivityStatus.LOCKED
   },
   {
       id: 'act-10',
