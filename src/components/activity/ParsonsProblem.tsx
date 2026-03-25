@@ -10,58 +10,46 @@ interface ParsonsProblemProps {
 
 export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [solutionOrder, setSolutionOrder] = React.useState<string[]>([]);
-  const [targetItems, setTargetItems] = React.useState<Activity['codeBlocks']>([]);
+  const solutionOrderRef = useRef<string[]>([]);
   const blocks = React.useMemo(() => activity.codeBlocks || [], [activity.codeBlocks]);
-
-  useEffect(() => {
-    if (blocks.length === 0) {
-      setTargetItems([]);
-      setSolutionOrder([]);
-      return;
-    }
-
-    const shuffled = [...blocks].sort(() => Math.random() - 0.5);
-    setTargetItems(shuffled);
-    setSolutionOrder(shuffled.map((block) => block.id));
-  }, [activity, blocks]);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const swapy = createSwapy(containerRef.current, { animation: 'spring' });
+
     const updateSolutionOrder = () => {
       if (!containerRef.current) return;
 
-      const slotElements = Array.from(
-        containerRef.current.querySelectorAll<HTMLDivElement>("[data-swapy-slot]")
+      const targetSlotElements = Array.from(
+        containerRef.current.querySelectorAll<HTMLDivElement>("[data-swapy-slot^='target-']")
       );
 
-      const order = slotElements
+      const order = targetSlotElements
         .map((slot) => {
           const item = slot.querySelector<HTMLDivElement>('[data-swapy-item]');
-          return item?.dataset.swapyItem || null;
+          return item?.dataset.swapyItem || '';
         })
-        .filter((id): id is string => Boolean(id));
+        .filter((id) => id && !id.startsWith('placeholder-'));
 
-      setSolutionOrder(order);
+      solutionOrderRef.current = order;
     };
 
     swapy.onSwap(() => {
       updateSolutionOrder();
     });
 
-    // initial order
+    // initial order at mount
     updateSolutionOrder();
 
     return () => swapy.destroy();
-  }, [targetItems]);
+  }, [blocks]);
 
   console.log('[ParsonsProblem] activity:', activity);
   console.log('[ParsonsProblem] blocks:', blocks);
 
   // Construir o código montado baseado na ordem atual
-  const assembledCode = solutionOrder
+  const assembledCode = solutionOrderRef.current
     .map(blockId => blocks.find(b => b.id === blockId)?.code)
     .filter(Boolean)
     .join('\n');
@@ -83,7 +71,7 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
       <hr className="border-border" />
 
       {/* 2. Área do Jogo (Swapy Container) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8" ref={containerRef}>
         {/* Coluna de Origem */}
         <div className="space-y-3">
           <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
@@ -92,25 +80,9 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
           </h3>
           <div className="space-y-2">
             {blocks.map((block) => (
-              <div key={`source-${block.id}`} className="p-3 bg-background border border-border rounded-lg">
-                <code className="font-mono text-sm text-foreground">{block.code}</code>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Coluna de Destino */}
-        <div className="space-y-3 p-4 bg-muted/20 rounded-xl border border-dashed border-border" ref={containerRef}>
-          <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-            <ListOrdered className="w-3 h-3" />
-            Sua Solução
-          </h3>
-
-          <div className="space-y-2">
-            {targetItems.map((block, index) => (
               <div
-                key={`target-${block.id}`}
-                data-swapy-slot={`target-${index}`}
+                key={`source-${block.id}`}
+                data-swapy-slot={`source-${block.id}`}
                 className="min-h-[56px] bg-background/50 border-2 border-dashed border-border rounded-lg"
               >
                 <div
@@ -119,6 +91,32 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
                 >
                   <GripVertical className="w-4 h-4 text-muted-foreground transition-colors" />
                   <code className="font-mono text-sm text-foreground">{block.code}</code>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Coluna de Destino */}
+        <div className="space-y-3 p-4 bg-muted/20 rounded-xl border border-dashed border-border">
+          <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
+            <ListOrdered className="w-3 h-3" />
+            Sua Solução
+          </h3>
+
+          <div className="space-y-2">
+            {blocks.map((_, index) => (
+              <div
+                key={`target-placeholder-${index}`}
+                data-swapy-slot={`target-${index}`}
+                className="min-h-[56px] bg-background/50 border-2 border-dashed border-border rounded-lg"
+              >
+                <div
+                  data-swapy-item={`placeholder-${index}`}
+                  className="flex items-center gap-3 p-3 bg-background border border-border rounded-lg shadow-sm cursor-grab active:cursor-grabbing hover:border-primary/50 transition-all"
+                >
+                  <GripVertical className="w-4 h-4 text-muted-foreground transition-colors" />
+                  <span className="text-xs text-muted-foreground">Solte aqui</span>
                 </div>
               </div>
             ))}
@@ -150,16 +148,16 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
 
         <button
           type="button"
-          onClick={() => onSubmit?.(solutionOrder)}
-          disabled={solutionOrder.length !== blocks.length}
+          onClick={() => onSubmit?.(solutionOrderRef.current)}
+          disabled={solutionOrderRef.current.length !== blocks.length}
           className="self-start rounded-lg px-4 py-2 bg-primary text-primary-foreground font-bold hover:bg-primary/90 disabled:bg-muted/50"
         >
           Enviar solução
         </button>
 
         <p className="text-xs text-muted-foreground">
-          {solutionOrder.length > 0
-            ? `Ordem atual: ${solutionOrder.join(' → ')}`
+          {solutionOrderRef.current.length > 0
+            ? `Ordem atual: ${solutionOrderRef.current.join(' → ')}`
             : 'Arraste todos os blocos para a área à direita e depois envie.'}
         </p>
 
