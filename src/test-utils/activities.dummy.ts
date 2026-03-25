@@ -5,7 +5,7 @@ export const activitiesData: Activity[] = [
   {
     id: 'act-8',
     lessonId: 'lesson-1',
-    order: 1,
+    order: 4,
     type: ActivityType.PARSONS_PROBLEM,
     title: 'Organize o Código do ProductCard',
     objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
@@ -29,7 +29,7 @@ export const activitiesData: Activity[] = [
     
     id: 'act-1',
     lessonId: 'lesson-1',
-    order: 8,
+    order: 1,
     type: ActivityType.READ_AND_CHOOSE,
     title: 'O que esse trecho de código faz?',
     objective: '',
@@ -128,7 +128,7 @@ Restrição: Você só pode editar as linhas 8-12 e 18-22.`,
   {
     id: 'act-4',
     lessonId: 'lesson-1',
-    order: 4,
+    order: 6,
     type: ActivityType.DECISION_FORK,
     title: 'Arquitetura de Estado',
     objective: 'O projeto vai crescer. Escolha como gerenciar o estado do carrinho.',
@@ -205,7 +205,7 @@ export function CheckoutPage() {
   {
     id: 'act-6',
     lessonId: 'lesson-1',
-    order: 6,
+    order: 7,
     type: ActivityType.VIDEO_CHALLENGE,
     title: 'Aprenda useMemo na Prática',
     objective: 'Assista como um dev sênior otimiza performance e aplique o mesmo pattern.',
@@ -254,7 +254,7 @@ export function ProductList({ products }: { products: Product[] }) {
   {
     id: 'act-7',
     lessonId: 'lesson-1',
-    order: 7,
+    order: 8,
     type: ActivityType.VISUAL_IMPLEMENTATION,
     title: 'Implemente o Badge de Promoção',
     objective: 'Veja o design do badge de "PROMOÇÃO" e implemente o CSS.',
@@ -285,7 +285,7 @@ export function PromoBadge() {
   {
       id: 'act-10',
       lessonId: 'lesson-1',
-      order: 10,
+      order: 9,
       type: ActivityType.FIX_WITH_CHOICES,
       title: 'Corrigir CheckoutPage',
       objective: 'Resolver erro de undefined',

@@ -228,9 +228,7 @@ export default function LessonPage() {
             }}
           />
         );
-
-
-
+        
       case ActivityType.QUALITY_REVIEW:
         return (
           <QualityReview
