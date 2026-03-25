@@ -2,7 +2,6 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
-
   {
     id: 'act-1',
     lessonId: 'lesson-1',
@@ -37,8 +36,17 @@ export const activitiesData: Activity[] = [
       },
     ],
   },
-
-
+  {
+    id: 'act-2',
+    lessonId: 'lesson-1',
+    order: 2,
+    type: ActivityType.TRUE_OR_FALSE,
+    title: 'O que esse trecho de código faz?',
+    objective: '',
+    instructions: `É um trecho.`,
+    targetFiles: ['src/context/', 'src/hooks/'],
+    status: ActivityStatus.LOCKED,
+  },
   {
     id: 'act-2',
     lessonId: 'lesson-1',

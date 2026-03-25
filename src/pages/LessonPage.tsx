@@ -26,6 +26,7 @@ import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
+import { TrueOrFalse } from '@/components/activity/TrueOrFalse';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -216,6 +217,11 @@ export default function LessonPage() {
 
     switch (currentActivity.type) {
 
+      case ActivityType.TRUE_OR_FALSE:
+        return (
+          <TrueOrFalse />
+        );
+
       case ActivityType.READ_AND_CHOOSE:
         return (
           <ReadAndChoose
@@ -327,7 +333,7 @@ export default function LessonPage() {
             }}
           />
         );
-      
+
       default:
         return null;
 
