@@ -12,8 +12,7 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [solutionOrder, setSolutionOrder] = React.useState<string[]>([]);
   const [targetItems, setTargetItems] = React.useState<Activity['codeBlocks']>([]);
-
-  const blocks = activity.codeBlocks || [];
+  const blocks = React.useMemo(() => activity.codeBlocks || [], [activity.codeBlocks]);
 
   useEffect(() => {
     if (blocks.length === 0) {
@@ -30,8 +29,7 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const swapy = createSwapy(containerRef.current);
-
+    const swapy = createSwapy(containerRef.current, { animation: 'spring' });
     const updateSolutionOrder = () => {
       if (!containerRef.current) return;
 
@@ -59,9 +57,6 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
     return () => swapy.destroy();
   }, [targetItems]);
 
-
-  // Pegamos os blocos da atividade (ou um array vazio se não houver)
-  const blocks = activity.codeBlocks || [];
   console.log('[ParsonsProblem] activity:', activity);
   console.log('[ParsonsProblem] blocks:', blocks);
 
@@ -122,7 +117,7 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
                   data-swapy-item={block.id}
                   className="flex items-center gap-3 p-3 bg-background border border-border rounded-lg shadow-sm cursor-grab active:cursor-grabbing hover:border-primary/50 transition-all"
                 >
-                  <GripVertical className="w-4 h-4 text-muted-foreground text-primary transition-colors" />
+                  <GripVertical className="w-4 h-4 text-muted-foreground transition-colors" />
                   <code className="font-mono text-sm text-foreground">{block.code}</code>
                 </div>
               </div>
