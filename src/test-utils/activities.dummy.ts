@@ -2,11 +2,48 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
-
   {
     id: 'act-1',
     lessonId: 'lesson-1',
     order: 1,
+    type: ActivityType.FILL_THE_BLANKS,
+    title: 'Preenchendo o código',
+    objective: 'O código tem espaços em branco, arrume ele.',
+    instructions: `Substitua pelo valor correto.
+
+Sua missão:
+1. Leia o código gerado
+2. Substitua os espaços em branco, arrume ele.`,
+    targetFiles: ['src/components/Header.tsx'],
+    status: ActivityStatus.LOCKED,
+    aiGeneratedCode: `import React from 'react';
+
+function Header() {
+  return (
+    <div style={{background: 'white', padding: '20px'}}>
+      <img src="/logo.png" />
+      <div>
+        <a href="/">Home</a>
+        <a href="/products">Produtos</a>
+        <a href="/cart">Carrinho (3)</a>
+      </div>
+    </div>
+  )
+}
+
+export default Header;`,
+    expectedIssues: [
+      'Sem atributo alt na imagem',
+      'Usando inline styles',
+      'Falta de semântica HTML (div ao invés de header/nav)',
+      'Número do carrinho hardcoded',
+      'Sem TypeScript types',
+    ],
+  },
+  {
+    id: 'act-9',
+    lessonId: 'lesson-1',
+    order: 9,
     type: ActivityType.READ_AND_CHOOSE,
     title: 'O que esse trecho de código faz?',
     objective: '',
