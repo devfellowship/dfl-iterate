@@ -13,7 +13,7 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
   const [solutionOrder, setSolutionOrder] = React.useState<string[]>([]);
   const solutionOrderRef = useRef<string[]>([]);
   const blocks = React.useMemo(() => activity.codeBlocks || [], [activity.codeBlocks]);
-
+//useParsonsProblem
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -47,17 +47,14 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
 
     return () => swapy.destroy();
   }, [blocks]);
-
-  console.log('[ParsonsProblem] activity:', activity);
-  console.log('[ParsonsProblem] blocks:', blocks);
-
   // Construir o código montado baseado na ordem atual
   const assembledCode = solutionOrder
     .map(blockId => blocks.find(b => b.id === blockId)?.code)
     .filter(Boolean)
     .join('\n');
-
+//useParsonsProblem
   return (
+    //gameCard
     <div className="flex flex-col gap-6 p-6 bg-card rounded-xl shadow-sm border border-border">
       
       {/* 1. Cabeçalho Centralizado: Título e Instruções */}

@@ -110,7 +110,7 @@ Restrição: Você só pode editar as linhas 8-12 e 18-22.`,
     objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
     instructions: 'Os blocos de código estão embaralhados. Organize-os na ordem correta para criar um componente ProductCard funcional.',
     targetFiles: [],
-    status: ActivityStatus.CURRENT,
+    status: ActivityStatus.LOCKED,
     codeBlocks: [
       { id: 'b1', code: "import { Product } from '@/types';" },
       { id: 'b2', code: 'export function ProductCard({ product }: { product: Product }) {' },
