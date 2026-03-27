@@ -10,6 +10,7 @@ import {
   VideoChallenge,
   VisualImplementation,
   FixTheCode,
+  StepThrough,
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
@@ -198,7 +199,7 @@ export default function LessonPage() {
     return (
       <div className="h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <h1 className="text-2xl font-display font-bold text-foreground mb-4">Lesson não encontrada</h1>
+          <h1 className="text-2xl font-display font-bold text-foreground mb-4">Lição não encontrada</h1>
           <button 
             onClick={() => navigate('/')} 
             className="px-6 py-3 bg-primary text-primary-foreground rounded-2xl font-bold"
@@ -214,7 +215,6 @@ export default function LessonPage() {
     if (!currentActivity) return null;
 
     switch (currentActivity.type) {
-
       case ActivityType.READ_AND_CHOOSE:
         return (
           <ReadAndChoose
@@ -227,8 +227,6 @@ export default function LessonPage() {
             }}
           />
         );
-
-
 
       case ActivityType.QUALITY_REVIEW:
         return (
@@ -273,7 +271,7 @@ export default function LessonPage() {
           <BreakAndFix
             activity={currentActivity}
             errorMessage="TypeError: Cannot read property 'map' of undefined
-    at CheckoutPage (CheckoutPage.tsx:7:18)"
+              at CheckoutPage (CheckoutPage.tsx:7:18)"
             onFix={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
               handleActivityComplete(currentActivity.id, 'act-4-success', true);
@@ -326,7 +324,18 @@ export default function LessonPage() {
             }}
           />
         );
-      
+
+      case ActivityType.STEP_THROUGH: // Novo caso adicionado
+        return (
+          <StepThrough
+            activity={currentActivity}
+            onComplete={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-step-through-success', true);
+            }}
+          />
+        );
+
       default:
         return null;
     }

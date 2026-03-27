@@ -38,7 +38,6 @@ export const activitiesData: Activity[] = [
     ],
   },
 
-
   {
     id: 'act-2',
     lessonId: 'lesson-1',
@@ -288,3 +287,37 @@ Corrija o algoritmo para que todos os testes passem.`,
     ],
   },
 ];
+
+export const activities = [
+  {
+    id: 'act-9',
+    lessonId: 'lesson-1',
+    order: 10,
+    type: ActivityType.STEP_THROUGH,
+    title: 'Simule a Execução (Step-Through)',
+    aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
+    objective: 'Componente interativo onde o usuário simula execução passo a passo do código.',
+    instructions: `Pergunta: "Qual o valor de X agora?" Input para resposta a cada step`,
+    steps: [
+      {
+        lineNumber: 1,
+        question: "Qual o valor de X agora?",
+        correctAnswer: "5",
+        variables: { x: 5, y: 0, z: 0 },
+      },
+      {
+        lineNumber: 2,
+        question: "Qual o valor de Y agora?",
+        correctAnswer: "10",
+        variables: { x: 5, y: 10, z: 0 },
+      },
+      {
+        lineNumber: 3,
+        question: "Qual o valor de Z agora?",
+        correctAnswer: "15",
+        variables: { x: 5, y: 10, z: 15 },
+      },
+    ],
+  },
+];
+

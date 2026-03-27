@@ -9,3 +9,4 @@ export { VisualImplementation } from './VisualImplementation';
 export { VideoModal } from './VideoModal';
 export { FixTheCode } from './FixTheCode';
 export { ImageZoomModal } from './ImageZoomModal';
+export { default as StepThrough } from './StepThrough'; 
