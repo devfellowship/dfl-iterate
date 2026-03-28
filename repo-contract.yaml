@@ -1,0 +1,29 @@
+# repo-contract.yaml — Machine-readable contract for dfl-iterate
+
+name: dfl-iterate
+description: {{One-line description}}
+
+type: {{infrastructure|platform|application|library|content}}
+
+provides:
+  # - type: api|package|webhook|ui
+  #   name: auth-endpoints
+  #   description: Authentication and session management
+  []
+
+consumes:
+  # - repo: dfl-schema
+  #   resource: supabase-tables
+  #   tables: [users, courses]
+  # - external: true
+  #   name: stripe
+  []
+
+environment:
+  required: []
+  optional: []
+
+health_check:
+  command: npm run build
+
+agent_entry_point: CLAUDE.md
