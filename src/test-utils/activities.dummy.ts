@@ -270,7 +270,7 @@ export function PromoBadge() {
   instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
   targetFiles: ['src/components/ReviewManager.tsx'],
   status: ActivityStatus.LOCKED,
-  BugChallenges: [
+  bugChallenges: [
     {
       code: `import { useState } from 'react';\nexport const FormatData = (): JSX.Element => {\nconst data: number[] = [1, 2, 3];\nif (data = null) return <span>Sem dados</span>;\nreturn <div>{data.join(', ')}</div>;\n};`,
       bugLine: 4,

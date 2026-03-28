@@ -15,7 +15,7 @@ export function useSpotTheBug({ activity, onSuccess, onError }: UseSpotTheBugPar
   const [challengeIndex, setChallengeIndex] = useState(0);
 
   useEffect(() => {
-    const total = activity.BugChallenges?.length || 0;
+    const total = activity.bugChallenges?.length || 0;
 
     if (total > 0) {
       setChallengeIndex(Math.floor(Math.random() * total));
@@ -25,7 +25,7 @@ export function useSpotTheBug({ activity, onSuccess, onError }: UseSpotTheBugPar
   }, [activity]);
 
   const challenge = useMemo(
-    () => activity.BugChallenges?.[challengeIndex], 
+    () => activity.bugChallenges?.[challengeIndex], 
     [challengeIndex, activity]
   );
 

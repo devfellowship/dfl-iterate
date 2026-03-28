@@ -44,7 +44,7 @@ export interface VisualConfig {
   expectedOutput?: string;
 }
 
-export type BugChallenges = {
+export type bugChallenges = {
   code: string;
   bugLine: number;
   explanation: string;
@@ -70,7 +70,7 @@ export interface Activity {
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
-  BugChallenges?: BugChallenges[];
+  bugChallenges?: bugChallenges[];
 }
 
 export interface ProjectFile {
