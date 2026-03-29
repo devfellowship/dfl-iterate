@@ -51,3 +51,32 @@ src/
 - New activity types need: component + hook + enum entry + dummy data
 - Tests required for activity logic (see test/components/)
 - Keep animations performant — Framer Motion for transitions only
+
+## Post-Sprint Updates
+
+> Added by dev-dfl agent — reflects post-sprint reality (CI, contracts, Infisical, agent context).
+
+### Testing
+- Test framework: **Vitest** is configured in this repo
+- Run tests with `npm test` or `npx vitest` (or `npx jest` for Jest repos)
+- Write tests alongside source files or in `__tests__/` directories
+
+### CI / Continuous Integration
+- CI runs **build + test + verify-docs** via the `dfl-ci` reusable workflow
+- Workflow file: `.github/workflows/ci.yml` — uses `devfellowship/dfl-ci/.github/workflows/ci.yml@main`
+- PRs must pass CI before merge
+
+### Contracts
+- `repo-contract.yaml` exists at repo root — defines the repo's role, ownership, and integration points
+- Keep this file in sync when changing the repo's scope or dependencies
+
+### Agent Context
+- `AGENTS.md` — instructions for AI agents working in this repo
+- `AGENT-PROGRESS.md` — tracks agent task progress and status
+- Update these files when making significant architectural changes
+
+### Secrets & Configuration (Infisical)
+- Secrets are managed via **Infisical** at `infisical.devfellowship.com`
+- Shared secrets path: `/shared/`
+- Do NOT commit secrets to the repo — use Infisical for environment variables
+- Check `repo-contract.yaml` for required environment variables
