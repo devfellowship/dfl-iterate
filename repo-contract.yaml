@@ -1,9 +1,14 @@
+# Managed merge scaffold for dfl-iterate/repo-contract.yaml
+# Human edits belong only inside MANUAL blocks.
+
+<!-- BEGIN GENERATED:repo-contract/base -->
+<!-- render-meta: repo=dfl-iterate; mode=merge; hash=7d0831aecb05e4516747f46a25eecdd908f1df81361a6fe91b9807ab459214b6 -->
 # repo-contract.yaml — Machine-readable contract for dfl-iterate
 
 name: dfl-iterate
-description: {{One-line description}}
+description: Generated contract scaffold for dfl-iterate
 
-type: {{infrastructure|platform|application|library|content}}
+type: platform
 
 provides:
   # - type: api|package|webhook|ui
@@ -27,3 +32,8 @@ health_check:
   command: npm run build
 
 agent_entry_point: CLAUDE.md
+<!-- END GENERATED:repo-contract/base -->
+
+<!-- BEGIN MANUAL:repo-contract/local -->
+<!-- repo-specific notes live here -->
+<!-- END MANUAL:repo-contract/local -->
