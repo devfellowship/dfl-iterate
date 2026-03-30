@@ -7,7 +7,61 @@ permissions:
   contents: read
   pull-requests: write
 
+concurrency:
+  group: ci-pr-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
-  review:
-    uses: devfellowship/dfl-ci/.github/workflows/ci.yml@main
-    secrets: inherit
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f package.json ]; then
+            npm install
+          else
+            echo "⚠️ No package.json found"
+          fi
+
+      - name: Build
+        id: build
+        run: |
+          if jq -e '.scripts.build' package.json &>/dev/null; then
+            npm run build
+          else
+            echo "⚠️ No build script, skipping"
+          fi
+        continue-on-error: true
+
+      - name: Tests
+        id: tests
+        run: |
+          if jq -e '.scripts.test' package.json &>/dev/null; then
+            npm test
+          else
+            echo "⚠️ No test script, skipping"
+          fi
+        continue-on-error: true
+
+      - name: Check CI status
+        if: always()
+        run: |
+          FAILED=0
+          if [ "${{ steps.build.outcome }}" == "failure" ]; then
+            echo "❌ Build failed"; FAILED=1
+          fi
+          if [ "${{ steps.tests.outcome }}" == "failure" ]; then
+            echo "❌ Tests failed"; FAILED=1
+          fi
+          if [ "$FAILED" -eq 1 ]; then exit 1; fi
+          echo "✅ CI passed"
