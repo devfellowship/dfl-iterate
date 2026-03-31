@@ -1,2 +1,54 @@
-# Placeholder for dfl-iterate/.claude/manifest.yaml
-# Assumption: canonical source is not available yet in dfl-hq.
+# .claude/manifest.yaml — AI-inferred repo metadata for dfl-iterate
+
+name: dfl-iterate
+description: >
+  Gamified coding exercise platform with Duolingo-style lessons,
+  Monaco code editor, AI feedback, and progress tracking.
+
+type: frontend-spa
+runtime: browser
+framework: react
+bundler: vite
+language: typescript
+
+domain: learning
+subdomain: gamified-exercises
+
+personas:
+  - learner: Completes coding activities in guided lesson sequences
+  - content-author: Creates activity definitions and lesson structures
+
+key_abstractions:
+  - Activity: Core unit of work — each type has component, hook, and enum entry
+  - Lesson: Ordered sequence of activities with progress tracking
+  - ProjectState: In-memory state of code files, decisions, and activity index
+  - AIStreaming: Real-time AI feedback for code review and hints
+
+entry_points:
+  app: src/main.tsx
+  pages:
+    - src/pages/HomePage.tsx
+    - src/pages/LessonPage.tsx
+    - src/pages/Index.tsx
+
+dependencies:
+  internal:
+    - dfl-learn: lesson data source (planned)
+    - dfl-tracks: learning path sequencing (planned)
+    - dfl-skill-evals: assessment integration (planned)
+  external:
+    - monaco-editor: code editing
+    - framer-motion: animations
+    - opentelemetry: observability
+
+schemas: []
+
+conventions:
+  new_activity_checklist:
+    - Add enum entry in src/enums/index.ts
+    - Create component in src/components/activity/
+    - Create hook in src/hooks/
+    - Add dummy data in src/test-utils/
+    - Write tests in src/test/
+  protected_dirs:
+    - src/components/ui/  # shadcn/ui managed
