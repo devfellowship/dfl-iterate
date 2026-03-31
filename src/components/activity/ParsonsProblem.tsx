@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { createSwapy } from 'swapy';
+import React, { useRef } from 'react';
 import { Activity } from '@/types';
-import { GripVertical, ListOrdered, Puzzle } from 'lucide-react';
+import { GripVertical, ListOrdered } from 'lucide-react';
+import { useParsonsProblem } from '@/hooks/useParsonsProblem';
+import { ActivityGameCard, GameButton } from '@/components/game';
 
 interface ParsonsProblemProps {
   activity: Activity;
@@ -10,43 +11,9 @@ interface ParsonsProblemProps {
 
 export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [solutionOrder, setSolutionOrder] = React.useState<string[]>([]);
-  const solutionOrderRef = useRef<string[]>([]);
   const blocks = React.useMemo(() => activity.codeBlocks || [], [activity.codeBlocks]);
+  const { solutionOrder, setSolutionOrder, submitted, isCorrect, handleSubmit } = useParsonsProblem((ordered) => onSubmit?.(ordered), activity.correctOrder || [], containerRef);
 //useParsonsProblem
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const swapy = createSwapy(containerRef.current, { animation: 'spring' });
-
-    const updateSolutionOrder = () => {
-      if (!containerRef.current) return;
-
-      const targetSlotElements = Array.from(
-        containerRef.current.querySelectorAll<HTMLDivElement>("[data-swapy-slot^='target-']")
-      );
-
-      const order = targetSlotElements
-        .map((slot) => {
-          const item = slot.querySelector<HTMLDivElement>('[data-swapy-item]');
-          return item?.dataset.swapyItem || '';
-        })
-        .filter((id) => id && !id.startsWith('placeholder-'));
-
-      solutionOrderRef.current = order;
-      setSolutionOrder(order);
-      setSolutionOrder(order);
-    };
-
-    swapy.onSwap(() => {
-      updateSolutionOrder();
-    });
-
-    // initial order at mount
-    updateSolutionOrder();
-
-    return () => swapy.destroy();
-  }, [blocks]);
   // Construir o código montado baseado na ordem atual
   const assembledCode = solutionOrder
     .map(blockId => blocks.find(b => b.id === blockId)?.code)
@@ -54,23 +21,24 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
     .join('\n');
 //useParsonsProblem
   return (
-    //gameCard
-    <div className="flex flex-col gap-6 p-6 bg-card rounded-xl shadow-sm border border-border">
-      
-      {/* 1. Cabeçalho Centralizado: Título e Instruções */}
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-          <Puzzle className="w-6 h-6 text-primary" />
-          {activity.title}
-        </h2>
-        <p className="text-muted-foreground leading-relaxed">
-          {activity.instructions}
-        </p>
-      </div>
-
-      <hr className="border-border" />
-
-      {/* 2. Área do Jogo (Swapy Container) */}
+    <ActivityGameCard
+      type={activity.type}
+      title={activity.title}
+      question={activity.instructions}
+      actions={
+        !submitted && (
+          <GameButton
+            onClick={handleSubmit}
+            disabled={solutionOrder.length !== blocks.length}
+            variant="primary"
+          >
+            Enviar solução
+          </GameButton>
+        )
+      }
+    >
+    <div className="flex flex-col gap-6">
+      {/* Área do Jogo (Swapy Container) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8" ref={containerRef}>
         {/* Coluna de Origem */}
         <div className="space-y-3">
@@ -138,51 +106,37 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
         </div>
       )}
 
-      {/* 4. Ações e Feedback */}
-      <div className="fixed bottom-4 left-1/2 z-40 w-[95%] max-w-4xl -translate-x-1/2 rounded-xl border border-border bg-card/95 p-4 shadow-lg backdrop-blur">
+      {/* Feedback */}
+      {submitted && isCorrect !== null && (
+        <div className={`p-4 rounded-lg border ${isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
+          <p className={`text-sm font-medium ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+            {isCorrect ? '✅ Correto! Parabéns.' : '❌ Incorreto. Tente novamente.'}
+          </p>
+        </div>
+      )}
+
+      {/* Informações */}
+      <div className="text-xs text-muted-foreground space-y-1">
         {activity.correctOrder && activity.correctOrder.length > 0 && (
-          <p className="text-xs text-muted-foreground">
+          <p>
             Ordem correta: <span className="font-mono text-foreground">{activity.correctOrder.join(' → ')}</span>
           </p>
         )}
-
-        <button
-          type="button"
-          onClick={() => {
-            const targetSlotElements = containerRef.current
-              ? Array.from(containerRef.current.querySelectorAll<HTMLDivElement>("[data-swapy-slot^='target-']"))
-              : [];
-            const currentOrder = targetSlotElements
-              .map((slot) => {
-                const item = slot.querySelector<HTMLDivElement>('[data-swapy-item]');
-                return item?.dataset.swapyItem || '';
-              })
-              .filter((id) => id && !id.startsWith('placeholder-'));
-
-            onSubmit?.(currentOrder);
-          }}
-          disabled={solutionOrder.length !== blocks.length}
-          className="w-full rounded-lg px-4 py-2 bg-primary text-primary-foreground font-bold hover:bg-primary/90 disabled:bg-muted/50"
-        >
-          Enviar solução
-        </button>
-
-        <p className="mt-2 text-xs text-muted-foreground">
+        <p>
           {solutionOrder.length > 0
             ? `Ordem atual: ${solutionOrder.join(' → ')}`
             : 'Arraste todos os blocos para a área à direita e depois envie.'}
         </p>
-
-        <p className="text-xs text-primary">
+        <p className="text-primary">
           Blocos carregados: {blocks.length}
         </p>
-
         {blocks.length === 0 && (
-          <p className="text-xs text-red-500">
+          <p className="text-red-500">
             Nenhum bloco encontrado. Verifique se a atividade possui `codeBlocks` no teste.
           </p>
         )}
       </div>
     </div>
+    </ActivityGameCard>
   );
 }
