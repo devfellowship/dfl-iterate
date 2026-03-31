@@ -1,3 +1,8 @@
+# Managed merge scaffold for dfl-iterate/AGENTS.md
+# Human edits belong only inside MANUAL blocks.
+
+<!-- BEGIN GENERATED:agents/base -->
+<!-- render-meta: repo=dfl-iterate; mode=merge; hash=34bd4d7d43063b351d47ddd253bf17243e28744a8dc15d00b1d9cecf6d3f4164 -->
 # AGENTS.md — Rules for AI Agents in dfl-iterate
 
 > Read this before touching anything. Non-negotiable.
@@ -34,3 +39,8 @@
 2. Check dfl-hq for ADRs
 3. Look at similar DFL repos
 4. If still stuck, say so clearly — don't guess and ship
+<!-- END GENERATED:agents/base -->
+
+<!-- BEGIN MANUAL:repo/agent-notes -->
+<!-- repo-specific notes live here -->
+<!-- END MANUAL:repo/agent-notes -->
