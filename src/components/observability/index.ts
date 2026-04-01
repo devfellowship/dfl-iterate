@@ -10,5 +10,7 @@ export { trackEvent } from "./lib/track-event";
 
 export { setUserId, setUserRole } from "./lib/resource-attributes";
 
+export { captureError, setSentryUser } from "./lib/sentry-init";
+
 export { useWebVitals } from "./hooks/useWebVitals";
 export { useQueryErrorReporter } from "./hooks/useQueryErrorReporter";

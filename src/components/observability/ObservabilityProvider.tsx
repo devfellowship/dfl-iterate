@@ -10,6 +10,7 @@ import {
   uninstrumentFetch,
 } from "./lib/fetch-instrumentation";
 import { getDynamicAttributes } from "./lib/resource-attributes";
+import { initSentry, captureError } from "./lib/sentry-init";
 import { useWebVitals } from "./hooks/useWebVitals";
 import { useQueryErrorReporter } from "./hooks/useQueryErrorReporter";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -23,6 +24,8 @@ export interface ObservabilityConfig {
   collectorUrl?: string;
   /** API key sent as x-api-key header. Default: VITE_OTEL_API_KEY */
   apiKey?: string;
+  /** Sentry DSN. Default: VITE_SENTRY_DSN */
+  sentryDsn?: string;
   /** Master kill-switch. Default: true in production (import.meta.env.PROD) */
   enabled?: boolean;
   /** Capture Core Web Vitals. Default: true */
@@ -68,6 +71,7 @@ export function ObservabilityProvider({
   serviceVersion,
   collectorUrl,
   apiKey,
+  sentryDsn,
   enabled,
   enableWebVitals = true,
   enableQueryTracking = true,
@@ -90,9 +94,21 @@ export function ObservabilityProvider({
   const resolvedCollectorUrl =
     collectorUrl ?? "https://otel.devfellowship.com";
   const resolvedApiKey = apiKey ?? (env?.VITE_OTEL_API_KEY as string);
+  const resolvedSentryDsn =
+    sentryDsn ?? (env?.VITE_SENTRY_DSN as string);
 
   useEffect(() => {
     if (!isEnabled) return;
+
+    // Initialize Sentry (if DSN provided)
+    if (resolvedSentryDsn) {
+      initSentry({
+        dsn: resolvedSentryDsn,
+        serviceName: resolvedServiceName,
+        serviceVersion: resolvedServiceVersion,
+        environment: env?.PROD ? "production" : "development",
+      });
+    }
 
     // Initialize OTel SDK
     const providers = initOtelBrowser({
@@ -131,6 +147,10 @@ export function ObservabilityProvider({
 
         if (event.error instanceof Error) {
           span.recordException(event.error);
+          captureError(event.error, {
+            source: event.filename ?? "",
+            lineno: String(event.lineno ?? 0),
+          });
         }
 
         span.end();
@@ -155,6 +175,7 @@ export function ObservabilityProvider({
 
         if (reason instanceof Error) {
           span.recordException(reason);
+          captureError(reason, { type: "unhandled_promise_rejection" });
         }
 
         span.end();
