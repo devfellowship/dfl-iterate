@@ -12,8 +12,6 @@ import { getDynamicAttributes } from "../lib/resource-attributes";
 export function useQueryErrorReporter(): void {
   let queryClient: QueryClient | null = null;
   try {
-    // useQueryClient internally calls useContext (preserving hook order)
-    // then throws if no provider — the try-catch is safe here.
     // eslint-disable-next-line react-hooks/rules-of-hooks
     queryClient = useQueryClient();
   } catch {
@@ -22,7 +20,6 @@ export function useQueryErrorReporter(): void {
 
   useEffect(() => {
     if (!queryClient) return;
-
     const tracer = trace.getTracer("@dfl/observability");
 
     const unsubscribe = queryClient.getQueryCache().subscribe((event) => {
