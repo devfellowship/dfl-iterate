@@ -1,5 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import { trace, SpanStatusCode } from "@opentelemetry/api";
+import { captureError } from "./lib/sentry-init";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -46,6 +47,10 @@ export class ErrorBoundary extends Component<
 
       span.recordException(error);
       span.end();
+    });
+
+    captureError(error, {
+      component_stack: errorInfo.componentStack ?? "",
     });
   }
 
