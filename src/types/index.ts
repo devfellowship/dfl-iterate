@@ -43,6 +43,13 @@ export interface VisualConfig {
   expectedOutput?: string;
 }
 
+export interface Step {
+  lineNumber: number;
+  question: string;
+  correctAnswer: string;
+  variables?: Record<string, unknown>;
+}
+
 export interface Activity {
   id: string;
   lessonId: string;
@@ -60,6 +67,7 @@ export interface Activity {
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
+  steps?: Step[];
   /** only applies when type === ActivityType.FIX_THE_CODE */
   testCases?: {
     input: string;

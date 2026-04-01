@@ -286,9 +286,6 @@ Corrija o algoritmo para que todos os testes passem.`,
       { description: 'n=15 retorna FizzBuzz', input: '15', expectedOutput: 'FizzBuzz' },
     ],
   },
-];
-
-export const activities = [
   {
     id: 'act-9',
     lessonId: 'lesson-1',
@@ -298,6 +295,8 @@ export const activities = [
     aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
     objective: 'Componente interativo onde o usuário simula execução passo a passo do código.',
     instructions: `Pergunta: "Qual o valor de X agora?" Input para resposta a cada step`,
+    targetFiles: [],
+    status: ActivityStatus.LOCKED,
     steps: [
       {
         lineNumber: 1,

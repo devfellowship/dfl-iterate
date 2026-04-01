@@ -4,7 +4,7 @@ export interface Step {
   lineNumber: number;
   question: string;
   correctAnswer: string;
-  variables?: Record<string, any>;
+  variables?: Record<string, unknown>;
 }
 
 export interface Activity {
