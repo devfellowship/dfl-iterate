@@ -6,7 +6,7 @@ interface CodeBlock {
   code: string;
 }
 
-export function useParsonsProblem(onSubmit: (orderedBlockIds: string[]) => void, correctOrder: string[], containerRef: React.RefObject<HTMLDivElement>) {
+export function useParsonsProblem(onSubmit: (orderedBlockIds: string[]) => void, correctOrder: string[], containerRef: React.RefObject<HTMLDivElement>, blocks: CodeBlock[]) {
   const [solutionOrder, setSolutionOrder] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -51,11 +51,17 @@ export function useParsonsProblem(onSubmit: (orderedBlockIds: string[]) => void,
     onSubmit(solutionOrder);
   };
 
+  const assembledCode = solutionOrder
+    .map(blockId => blocks.find(b => b.id === blockId)?.code)
+    .filter(Boolean)
+    .join('\n');
+
   return {
     solutionOrder,
     setSolutionOrder,
     submitted,
     isCorrect,
     handleSubmit,
+    assembledCode,
   };
 }

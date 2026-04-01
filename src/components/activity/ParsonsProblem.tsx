@@ -12,14 +12,7 @@ interface ParsonsProblemProps {
 export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const blocks = React.useMemo(() => activity.codeBlocks || [], [activity.codeBlocks]);
-  const { solutionOrder, setSolutionOrder, submitted, isCorrect, handleSubmit } = useParsonsProblem((ordered) => onSubmit?.(ordered), activity.correctOrder || [], containerRef);
-//useParsonsProblem
-  // Construir o código montado baseado na ordem atual
-  const assembledCode = solutionOrder
-    .map(blockId => blocks.find(b => b.id === blockId)?.code)
-    .filter(Boolean)
-    .join('\n');
-//useParsonsProblem
+  const { solutionOrder, setSolutionOrder, submitted, isCorrect, handleSubmit, assembledCode } = useParsonsProblem((ordered) => onSubmit?.(ordered), activity.correctOrder || [], containerRef, blocks);
   return (
     <ActivityGameCard
       type={activity.type}
