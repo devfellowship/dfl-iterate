@@ -49,7 +49,15 @@ export interface VisualConfig {
   expectedOutput?: string;
 }
 
+export interface Step {
+  lineNumber: number;
+  question: string;
+  correctAnswer: string;
+  variables?: Record<string, unknown>;
+}
+
 export interface Activity {
+  [x: string]: unknown;
   id: string;
   lessonId: string;
   order: number;
@@ -60,14 +68,15 @@ export interface Activity {
   targetFiles: string[];
   status: ActivityStatus;
   options?: DecisionOption[];
-  fixOptions?: FixOption[];
   choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
-  /** only applies when type === ActivityType.FIX_THE_CODE */
+
+ steps?: Step[];
+  
   testCases?: {
     input: string;
     expectedOutput: string;

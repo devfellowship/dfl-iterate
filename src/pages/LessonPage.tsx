@@ -10,6 +10,7 @@ import {
   VideoChallenge,
   VisualImplementation,
   FixTheCode,
+  StepThrough,
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
@@ -326,17 +327,15 @@ export default function LessonPage() {
               handleActivityComplete(currentActivity.id, 'act-7-fix-code-success', true);
             }}
           />
-        );
-      
-      default:
-        return null;
-
+        );     
+     
       case ActivityType.FIX_WITH_CHOICES:
         return (
           <FixWithChoices
             activity={currentActivity}
             onSubmit={(selectedId) => {
-              const selected = currentActivity.fixOptions?.find(
+              const fixOptions = (currentActivity.fixOptions || []) as Array<{ id: string; isCorrect?: boolean }>;
+              const selected = fixOptions.find(
                 f => f.id === selectedId
               );
 
@@ -351,6 +350,19 @@ export default function LessonPage() {
             }}
           />
         );
+
+        case ActivityType.STEP_THROUGH:
+        return (
+          <StepThrough
+            activity={currentActivity}
+            onSubmit={(answers) => {
+              handleActivityComplete(currentActivity.id, 'act-step-through-success', true);
+            }}
+          />
+        );
+
+      default:
+        return null;
     }
   };
 
