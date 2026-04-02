@@ -30,10 +30,7 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
         )
       }
     >
-    <div className="flex flex-col gap-6">
-      {/* Área do Jogo (Swapy Container) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8" ref={containerRef}>
-        {/* Coluna de Origem */}
         <div className="space-y-3">
           <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
             <GripVertical className="w-3 h-3" />
@@ -58,7 +55,6 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
           </div>
         </div>
 
-        {/* Coluna de Destino */}
         <div className="space-y-3 p-4 bg-muted/20 rounded-xl border border-dashed border-border">
           <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
             <ListOrdered className="w-3 h-3" />
@@ -85,7 +81,6 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
         </div>
       </div>
 
-      {/* 3. Código Montado */}
       {assembledCode && (
         <div className="space-y-3">
           <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest">
@@ -99,7 +94,6 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
         </div>
       )}
 
-      {/* Feedback */}
       {submitted && isCorrect !== null && (
         <div className={`p-4 rounded-lg border ${isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
           <p className={`text-sm font-medium ${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
@@ -108,7 +102,6 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
         </div>
       )}
 
-      {/* Informações */}
       <div className="text-xs text-muted-foreground space-y-1">
         {activity.correctOrder && activity.correctOrder.length > 0 && (
           <p>
@@ -129,7 +122,6 @@ export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
           </p>
         )}
       </div>
-    </div>
     </ActivityGameCard>
   );
 }

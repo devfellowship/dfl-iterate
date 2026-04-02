@@ -37,7 +37,6 @@ export function useParsonsProblem(onSubmit: (orderedBlockIds: string[]) => void,
       updateSolutionOrder();
     });
 
-    // initial order at mount
     updateSolutionOrder();
 
     return () => swapy.destroy();
