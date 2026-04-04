@@ -65,9 +65,9 @@ export function ActivityGameCard({ type, title, question, children, actions }: A
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Header with type and title */}
+      {/* Header */}
       <div className="text-center mb-4 shrink-0">
-        <motion.div 
+        <motion.div
           className={`inline-flex items-center gap-2 ${config.color} mb-2`}
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
@@ -77,15 +77,22 @@ export function ActivityGameCard({ type, title, question, children, actions }: A
             {config.label}
           </span>
         </motion.div>
+
         <h1 className="font-display text-2xl font-black text-foreground">
           {title}
         </h1>
-        <p className='text-sm text-zinc-400 font-normal mt-1 mb-4 text-center'>{question}</p>
       </div>
 
-      {/* Main content area - explicit flex-1 with overflow */}
+      {/* Content */}
       <div className="flex-1 overflow-hidden flex flex-col">
         {children}
+      </div>
+
+      {/* Question (igual à main) */}
+      <div className="text-center py-4 shrink-0">
+        <p className="text-lg text-muted-foreground font-medium">
+          {question}
+        </p>
       </div>
 
       {/* Actions */}
