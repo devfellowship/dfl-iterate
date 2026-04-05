@@ -50,6 +50,7 @@ export interface VisualConfig {
 }
 
 export interface Activity {
+  trueFalseConfig: any;
   id: string;
   lessonId: string;
   order: number;
