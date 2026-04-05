@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ActivityType } from '@/enums';
-import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug } from 'lucide-react';
+import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug, CheckCircle2 } from 'lucide-react';
 
 interface ActivityGameCardProps {
   type: ActivityType;
@@ -15,6 +15,11 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
   [ActivityType.QUALITY_REVIEW]: {
     icon: Search,
     label: 'QUALITY REVIEW',
+    color: 'text-primary'
+  },
+  [ActivityType.TRUE_OR_FALSE]: {
+    icon: CheckCircle2,
+    label: 'TRUE OR FALSE',
     color: 'text-primary'
   },
   [ActivityType.CONSTRAINED_EDIT]: {
