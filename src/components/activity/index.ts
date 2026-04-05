@@ -10,3 +10,4 @@ export { VideoModal } from './VideoModal';
 export { FixTheCode } from './FixTheCode';
 export { ImageZoomModal } from './ImageZoomModal';
 export { FixWithChoices } from './FixWithChoices';
+export { TrueOrFalse } from './TrueOrFalse';

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { TrueOrFalse } from '@/components/activity';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Bot } from 'lucide-react';
@@ -215,6 +216,21 @@ export default function LessonPage() {
     if (!currentActivity) return null;
 
     switch (currentActivity.type) {
+      case ActivityType.TRUE_OR_FALSE:
+        return (
+          <TrueOrFalse
+            key={`${currentActivity.id}-${Date.now()}`}
+            activity={currentActivity}
+            onSubmit={(answer) => {
+              const isCorrect = answer === currentActivity.trueFalseConfig?.correctAnswer;
+              handleActivityComplete(
+                currentActivity.id,
+                isCorrect ? 'default-success' : 'default-failure',
+                isCorrect
+              );
+            }}
+          />
+        );
 
       case ActivityType.READ_AND_CHOOSE:
         return (
@@ -327,7 +343,7 @@ export default function LessonPage() {
             }}
           />
         );
-      
+
       default:
         return null;
 
@@ -348,6 +364,7 @@ export default function LessonPage() {
                 selected?.isCorrect ? 'act-fix-success' : 'act-fix-wrong',
                 selected?.isCorrect
               );
+
             }}
           />
         );
