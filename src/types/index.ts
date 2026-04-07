@@ -18,6 +18,12 @@ export interface DecisionOption {
   impact: string;
 }
 
+export type FixOption = {
+  id: string;
+  code: string;
+  explanation: string;
+  isCorrect: boolean;
+};
 export interface ChooseOption {
   id: string;
   label: string;
@@ -62,6 +68,7 @@ export interface Activity {
   targetFiles: string[];
   status: ActivityStatus;
   options?: DecisionOption[];
+  fixOptions?: FixOption[];
   choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
@@ -71,6 +78,12 @@ export interface Activity {
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
   bugChallenges?: bugChallenges[];
+  /** only applies when type === ActivityType.FIX_THE_CODE */
+  testCases?: {
+    input: string;
+    expectedOutput: string;
+    description: string;
+  }[];
 }
 
 export interface ProjectFile {
@@ -104,4 +117,11 @@ export interface GitLogEntry {
   timestamp: Date;
   filesChanged: string[];
   type: 'activity_complete' | 'decision' | 'fix';
+}
+
+/** result from executing a test case */
+export interface TestResult {
+  description: string;
+  passed: boolean;
+  output?: string;
 }

@@ -310,3 +310,63 @@ export function PromoBadge() {
   ]
 }
 ];
+  {
+    id: 'act-9',
+    lessonId: 'lesson-1',
+    order: 9,
+    type: ActivityType.FIX_THE_CODE,
+    title: 'Corrigindo FizzBuzz',
+    objective: 'O código a seguir deveria retornar a string correta para FizzBuzz, mas está incompleto.',
+    instructions: `A função abaixo deveria:
+- retornar "Fizz" quando o número for múltiplo de 3
+- retornar "Buzz" quando múltiplo de 5
+- retornar "FizzBuzz" quando múltiplo de 15
+- retornar o próprio número como string nos demais casos
+
+Corrija o algoritmo para que todos os testes passem.`,
+    targetFiles: ['src/utils/fizzbuzz.ts'],
+    status: ActivityStatus.LOCKED,
+    aiGeneratedCode: `export function fizzbuzz(n: number): string {
+  let result = '';
+  if (n % 3 === 0) result += 'Fizz';
+  if (n % 5 === 0) result += 'Buzz';
+  return result;
+}`,
+    testCases: [
+      { description: 'n=3 retorna Fizz', input: '3', expectedOutput: 'Fizz' },
+      { description: 'n=5 retorna Buzz', input: '5', expectedOutput: 'Buzz' },
+      { description: 'n=15 retorna FizzBuzz', input: '15', expectedOutput: 'FizzBuzz' },
+    ],
+  },
+  {
+    id: 'act-10',
+    lessonId: 'lesson-1',
+    order: 10,
+    type: ActivityType.FIX_WITH_CHOICES,
+    title: 'Corrigir CheckoutPage',
+    objective: 'Resolver erro de undefined',
+    instructions: 'Escolha a melhor correção.',
+    targetFiles: ['src/pages/CheckoutPage.tsx'],
+    status: ActivityStatus.LOCKED,
+    fixOptions: [
+      {
+        id: 'fix-1',
+        code: 'const items = cart?.items;',
+        explanation: 'Evita crash mas não garante array.',
+        isCorrect: false,
+      },
+      {
+        id: 'fix-2',
+        code: 'const items = cart?.items ?? [];',
+        explanation: 'Garante array seguro mesmo se undefined.',
+        isCorrect: true,
+      },
+      {
+        id: 'fix-3',
+        code: 'try { ... } catch {}',
+        explanation: 'Esconde o erro.',
+        isCorrect: false,
+      }
+    ]
+  }
+];

@@ -41,6 +41,23 @@ Você aplicou corretamente:
 
 Performance é crucial em listas grandes. Esses patterns vão te salvar em produção.`,
   },
+
+  'act-fix-success': {
+    isSuccess: true,
+    message: `Excelente! 🎉
+  Você identificou corretamente o problema e aplicou a solução ideal.
+
+  Continue assim!`
+  },
+
+  'act-fix-wrong': {
+    isSuccess: false,
+    message: `Quase lá! 😅
+
+  A correção escolhida não resolve completamente o problema.
+
+  Revise a lógica e tente novamente.`
+  },
   
   // Decision Fork - Context
   'act-3-context': {
@@ -142,6 +159,13 @@ Você replicou o visual de referência:
 • Animações suaves
 
 Transformar design em código é uma habilidade essencial. Você está evoluindo!`,
+  },
+  // Fix the Code - Sucesso
+  'act-7-fix-code-success': {
+    isSuccess: true,
+    message: `Ótimo trabalho! Você corrigiu o algoritmo e os testes passaram.
+
+Sempre escreva casos de teste para código crítico – isso ajuda a encontrar bugs cedo!`,
   },
 
   // Spot The Bug - Sucesso

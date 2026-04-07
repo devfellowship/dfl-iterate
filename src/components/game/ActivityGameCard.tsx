@@ -32,6 +32,11 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'BREAK & FIX',
     color: 'text-destructive'
   },
+  [ActivityType.FIX_THE_CODE]: {
+    icon: Bug,
+    label: 'FIX THE CODE',
+    color: 'text-yellow-400'
+  },
   [ActivityType.VIDEO_CHALLENGE]: {
     icon: Video,
     label: 'VIDEO CHALLENGE',
@@ -41,6 +46,16 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     icon: Palette,
     label: 'VISUAL IMPLEMENTATION',
     color: 'text-cyan-400'
+  },
+  [ActivityType.FIX_WITH_CHOICES]: {
+    icon: Bug,
+    label: 'FIX WITH CHOICES',
+    color: 'text-red-400'
+  },
+  [ActivityType.FIX_THE_CODE]: {
+    icon: undefined,
+    label: '',
+    color: ''
   },
   [ActivityType.READ_AND_CHOOSE]: {
     icon: Search,
