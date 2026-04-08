@@ -75,6 +75,15 @@
     "web-vitals": "^5.1.0",
     "zod": "^3.25.76"
   },
+  "overrides": {
+    "@devfellowship/observability": {
+      "@opentelemetry/resources": "$@opentelemetry/resources",
+      "@opentelemetry/sdk-trace-web": "$@opentelemetry/sdk-trace-web",
+      "@opentelemetry/sdk-metrics": "$@opentelemetry/sdk-metrics",
+      "@opentelemetry/exporter-trace-otlp-http": "$@opentelemetry/exporter-trace-otlp-http",
+      "@opentelemetry/exporter-metrics-otlp-http": "$@opentelemetry/exporter-metrics-otlp-http"
+    }
+  },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.16",
