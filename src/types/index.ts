@@ -68,6 +68,7 @@ export interface Activity {
   placeholder?: PlaceHolder[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
+  expectedOutput?: string;
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;

@@ -6,16 +6,19 @@ import { Textarea } from '@/components/ui/textarea';
 
 export interface PredictOutputProps {
   activity: Activity;
+  onSubmit: (output: string) => void;
+  onError?: () => void;
 }
 
-export function PredictOutput({ activity }: PredictOutputProps) {
+export function PredictOutput({ activity, onSubmit, onError}: PredictOutputProps) {
   const code = activity.aiGeneratedCode || '';
   const placeholder = useMemo(
     () => activity.placeholder?.[0]?.placeholder ?? 'Digite o que vai aparecer no console...',
     [activity.placeholder]
   );
-
   const [prediction, setPrediction] = useState('');
+  const isCorrect = activity.expectedOutput?.trim() === prediction.trim();
+
 
   return (
     <ActivityGameCard
@@ -24,13 +27,16 @@ export function PredictOutput({ activity }: PredictOutputProps) {
       question={activity.objective || activity.instructions || ''}
       actions={
         <GameButton
-          variant="primary"
-          disabled={!prediction.trim()}
           onClick={() => {
-            // Por enquanto, esta activity é só UI (o placeholder funciona por aqui).
-            // A lógica de validação/completion pode ser adicionada depois.
-            console.log('PredictOutput prediction:', prediction);
+            if (isCorrect) {
+              onSubmit(prediction);
+              return;
+            }
+
+            onError?.();
           }}
+          disabled={!prediction}
+          variant="primary"
         >
           Confirmar
         </GameButton>
@@ -49,16 +55,13 @@ export function PredictOutput({ activity }: PredictOutputProps) {
 
         {/* Previsão do aluno */}
         <div className="flex flex-col gap-2 flex-1 overflow-hidden">
-          <p className="text-sm font-bold text-foreground">Sua previsão</p>
+          <p className="text-sm font-bold text-foreground">Qual será o output?</p>
           <Textarea
             value={prediction}
             onChange={(e) => setPrediction(e.target.value)}
             placeholder={placeholder}
             className="flex-1 min-h-[140px] resize-none"
           />
-          <p className="text-xs text-muted-foreground">
-            Digite exatamente como você espera que a saída apareça.
-          </p>
         </div>
       </div>
     </ActivityGameCard>

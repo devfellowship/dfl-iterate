@@ -27,7 +27,7 @@ import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
 
-export default function LessonPage() {
+export default function LessonPage() {        
   const { lessonId } = useParams<{ lessonId: string }>();
   const navigate = useNavigate();
 
@@ -333,11 +333,21 @@ export default function LessonPage() {
         );
       case ActivityType.PREDICT_OUTPUT:
         return (
-          <PredictOutput />
+          <PredictOutput 
+            activity={currentActivity} 
+            onSubmit={(output) => {
+              handleActivityComplete(currentActivity.id);
+            }}
+            onError={() => {
+              handleActivityComplete(currentActivity.id, 'default-failure', false);
+            }}
+            
+          />
         );
-    }
+      }
+
   };
-  
+
 
   return (
     <div className="h-screen bg-background flex flex-col overflow-hidden">

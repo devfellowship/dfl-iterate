@@ -1,6 +1,7 @@
 import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
+
 export const activitiesData: Activity[] = [
   {
     id: 'act-11',
@@ -8,11 +9,17 @@ export const activitiesData: Activity[] = [
     order: 11,
     type: ActivityType.PREDICT_OUTPUT,
     title: 'Predict Output',
-    objective: 'Predict the output of the code',
-    instructions: 'Predict the output of the code',
+    objective: '',
+    instructions: '',
     targetFiles: ['src/pages/CheckoutPage.tsx'],
     status: ActivityStatus.CURRENT,
+    aiGeneratedCode:`let total = 0;
+    for (let i = 1; i <= 3; i++) {total += i;}
+    console.log(total);`,
+    placeholder: [{ placeholder: 'O que vai aparecer no console? (EX: 3)' }],
+    expectedOutput: '6'
   },
+
   {
     id: 'act-1',
     lessonId: 'lesson-1',
@@ -22,7 +29,7 @@ export const activitiesData: Activity[] = [
     objective: '',
     instructions: `É um trecho.`,
     targetFiles: ['src/context/', 'src/hooks/'],
-    status: ActivityStatus.LOCKED,
+    status: ActivityStatus.CURRENT,
     aiGeneratedCode: `const products = [
     { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
     { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
