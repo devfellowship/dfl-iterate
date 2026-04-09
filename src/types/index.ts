@@ -1,4 +1,5 @@
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
+import { StepVariableValue } from './StepVariableValue';
 
 export interface Lesson {
   id: string;
@@ -27,7 +28,9 @@ export interface ChooseOption {
   id: string;
   label: string;
   description: string;
-
+  code?: string;
+  explanation?: string;
+  isCorrect?: boolean;
 }
 
 export interface EditableRegion {
@@ -53,11 +56,10 @@ export interface Step {
   lineNumber: number;
   question: string;
   correctAnswer: string;
-  variables?: Record<string, unknown>;
+  variables?: Record<string, StepVariableValue>;
 }
 
 export interface Activity {
-  [x: string]: unknown;
   id: string;
   lessonId: string;
   order: number;
@@ -67,16 +69,15 @@ export interface Activity {
   instructions: string;
   targetFiles: string[];
   status: ActivityStatus;
-  options?: DecisionOption[];
+  options?: DecisionOption[]; 
+  fixOptions?: FixOption[];
   choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
-
- steps?: Step[];
-  
+ steps?: Step[];  
   testCases?: {
     input: string;
     expectedOutput: string;

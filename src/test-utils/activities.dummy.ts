@@ -316,18 +316,15 @@ Corrija o algoritmo para que todos os testes passem.`,
         code: 'try { ... } catch {}',
         explanation: 'Esconde o erro.',
         isCorrect: false,
-      }
-    ]
-  }
-];
-
-export const activities = [
+  },
+    ], 
+  },
   {
-      id: 'act-11',
+    id: 'act-11',
     lessonId: 'lesson-1',
     order: 11,
     type: ActivityType.STEP_THROUGH,
-    title: 'Simule a Execução (Step-Through)',
+    title: 'Simulação de Execução de Código',
     aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
     objective: 'Componente interativo onde o usuário simula execução passo a passo do código.',
     instructions: `Pergunta: "Qual o valor de X agora?" Input para resposta a cada step`,
@@ -351,7 +348,6 @@ export const activities = [
         question: "Qual o valor de Z agora?",
         correctAnswer: "15",
         variables: { x: 5, y: 10, z: 15 },
- 
       },
     ],
   },

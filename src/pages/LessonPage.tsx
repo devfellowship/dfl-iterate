@@ -334,9 +334,8 @@ export default function LessonPage() {
           <FixWithChoices
             activity={currentActivity}
             onSubmit={(selectedId) => {
-              const fixOptions = (currentActivity.fixOptions || []) as Array<{ id: string; isCorrect?: boolean }>;
-              const selected = fixOptions.find(
-                f => f.id === selectedId
+              const selected = currentActivity.fixOptions?.find(
+              f => f.id === selectedId
               );
 
               console.log('Current Activity:', currentActivity);

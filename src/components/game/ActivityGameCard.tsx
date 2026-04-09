@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ActivityType } from '@/enums';
-import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug } from 'lucide-react';
+import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug, ChevronRight } from 'lucide-react';
 
 interface ActivityGameCardProps {
   type: ActivityType;
@@ -52,15 +52,15 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'FIX WITH CHOICES',
     color: 'text-red-400'
   },
-  [ActivityType.FIX_THE_CODE]: {
-    icon: undefined,
-    label: '',
-    color: ''
-  },
   [ActivityType.READ_AND_CHOOSE]: {
     icon: Search,
     label: 'READ AND CHOOSE',
     color: 'text-primary'
+  },
+  [ActivityType.STEP_THROUGH]: {
+    icon: ChevronRight,
+    label: 'STEP THROUGH',
+    color: 'text-blue-400'
   }
 };
 

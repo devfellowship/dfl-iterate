@@ -1,2 +1,2 @@
-export { default as CodeDisplay } from './CodeDisplay';
+export { default as CodeDisplay } from './CodeDisplay/CodeDisplay';
 
