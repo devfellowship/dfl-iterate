@@ -1,0 +1,1 @@
+{"$schema":"https://docs.renovatebot.com/renovate-schema.json","extends":["github>devfellowship/dfl-hq:renovate-config"]}
