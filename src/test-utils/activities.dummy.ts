@@ -3,53 +3,75 @@ import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
   {
-    id: 'act-1',
+    id: 'act-fill-1',
     lessonId: 'lesson-1',
     order: 1,
     type: ActivityType.FILL_THE_BLANKS,
     title: 'Preenchendo o código',
-    objective: 'O código tem espaços em branco, arrume ele.',
-    instructions: `Substitua pelo valor correto.
+    objective: 'O código tem lacunas e precisa ser completado corretamente.',
+    instructions: `Substitua cada lacuna pelo valor correto.
 
 Sua missão:
 1. Leia o código gerado
-2. Substitua os espaços em branco, arrume ele.`,
+2. Preencha cada espaço marcado
+3. Valide até todas as lacunas ficarem corretas.`,
     targetFiles: ['src/components/Header.tsx'],
-    status: ActivityStatus.LOCKED,
+    status: ActivityStatus.CURRENT,
     aiGeneratedCode: `import React from 'react';
 
 function Header() {
   return (
-    <div style={{background: 'white', padding: '20px'}}>
-      <img src="/logo.png" />
-      <div>
+    <header className="___">
+      <img src="/logo.png" alt="___" />
+      <nav>
         <a href="/">Home</a>
         <a href="/products">Produtos</a>
-        <a href="/cart">Carrinho (3)</a>
-      </div>
-    </div>
-  )
+        <a href="/cart">Carrinho (___)</a>
+      </nav>
+    </header>
+  );
 }
 
 export default Header;`,
-    expectedIssues: [
-      'Sem atributo alt na imagem',
-      'Usando inline styles',
-      'Falta de semântica HTML (div ao invés de header/nav)',
-      'Número do carrinho hardcoded',
-      'Sem TypeScript types',
+    blanks: [
+      {
+        id: 'header-class',
+        line: 5,
+        startColumn: 24,
+        endColumn: 26,
+        correctAnswer: 'site-header',
+        hint: 'Use uma classe semântica para o header.',
+      },
+      {
+        id: 'header-alt',
+        line: 6,
+        startColumn: 33,
+        endColumn: 35,
+        correctAnswer: 'BoxShop',
+        hint: 'A imagem precisa de texto alternativo.',
+      },
+      {
+        id: 'header-cart-count',
+        line: 10,
+        startColumn: 35,
+        endColumn: 37,
+        correctAnswer: '3',
+        options: ['0', '1', '3', '5'],
+        hint: 'Use o valor exibido no layout atual.',
+      },
     ],
   },
+
   {
-    id: 'act-9',
+    id: 'act-1',
     lessonId: 'lesson-1',
-    order: 9,
+    order: 1,
     type: ActivityType.READ_AND_CHOOSE,
     title: 'O que esse trecho de código faz?',
     objective: '',
     instructions: `É um trecho.`,
     targetFiles: ['src/context/', 'src/hooks/'],
-    status: ActivityStatus.CURRENT,
+    status: ActivityStatus.LOCKED,
     aiGeneratedCode: `const products = [
     { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
     { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
@@ -297,38 +319,38 @@ export function PromoBadge() {
     },
   },
   {
-      id: 'act-10',
-      lessonId: 'lesson-1',
-      order: 1,
-      type: ActivityType.FIX_WITH_CHOICES,
-      title: 'Corrigir CheckoutPage',
-      objective: 'Resolver erro de undefined',
-      instructions: 'Escolha a melhor correção.',
-      status: ActivityStatus.LOCKED,
-      targetFiles: ['CheckoutPage.tsx'],
-      aiGeneratedCode: `
+    id: 'act-10',
+    lessonId: 'lesson-1',
+    order: 1,
+    type: ActivityType.FIX_WITH_CHOICES,
+    title: 'Corrigir CheckoutPage',
+    objective: 'Resolver erro de undefined',
+    instructions: 'Escolha a melhor correção.',
+    status: ActivityStatus.LOCKED,
+    targetFiles: ['CheckoutPage.tsx'],
+    aiGeneratedCode: `
     const items = cart.items;
     return items.map(item => <Item key={item.id} />);
       `,
-      options: [
-        {
-          id: 'fix-1',
-          code: 'const items = cart?.items;',
-          explanation: 'Evita crash mas não garante array.',
-          isCorrect: false,
-        },
-        {
-          id: 'fix-2',
-          code: 'const items = cart?.items ?? [];',
-          explanation: 'Garante array seguro mesmo se undefined.',
-          isCorrect: true,
-        },
-        {
-          id: 'fix-3',
-          code: 'try { ... } catch {}',
-          explanation: 'Esconde o erro.',
-          isCorrect: false,
-        }
-      ]
-    }
+    options: [
+      {
+        id: 'fix-1',
+        code: 'const items = cart?.items;',
+        explanation: 'Evita crash mas não garante array.',
+        isCorrect: false,
+      },
+      {
+        id: 'fix-2',
+        code: 'const items = cart?.items ?? [];',
+        explanation: 'Garante array seguro mesmo se undefined.',
+        isCorrect: true,
+      },
+      {
+        id: 'fix-3',
+        code: 'try { ... } catch {}',
+        explanation: 'Esconde o erro.',
+        isCorrect: false,
+      }
+    ]
+  }
 ];
