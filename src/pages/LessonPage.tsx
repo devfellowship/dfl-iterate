@@ -19,6 +19,7 @@ import {
   ResultModal,
   AIHistoryDrawer,
   LessonCompleteScreen,
+  ActivityGameCard,
 } from '@/components/game';
 import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
@@ -26,6 +27,7 @@ import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
+import { SpotTheBug } from '@/components/activity/SpotTheBug';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -229,7 +231,18 @@ export default function LessonPage() {
           />
         );
 
-
+     case ActivityType.SPOT_THE_BUG:
+  return (
+    <SpotTheBug
+      activity={currentActivity}
+      onSuccess={() => 
+        handleActivityComplete(currentActivity.id, 'spot-the-bug-success', true)
+      }
+      onError={() => 
+        handleActivityComplete(currentActivity.id, 'spot-the-bug-fail', false)
+      }
+    />
+  );
 
       case ActivityType.QUALITY_REVIEW:
         return (

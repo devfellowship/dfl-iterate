@@ -8,5 +8,15 @@ export const lessonsData: Lesson[] = [
     projectName: 'BoxShop',
     totalActivities: 8,
     estimatedMinutes: 50,
+    activities: [
+      'act-1',
+      'act-2',
+      'act-3',
+      'act-4',
+      'act-5',
+      'act-6',
+      'act-7',
+      'act-8',
+    ],
   },
 ];
