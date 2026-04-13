@@ -1,25 +1,31 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
-import {AnimatePresence, motion} from 'framer-motion';
-import {Bot, Terminal} from 'lucide-react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Terminal, Bot } from 'lucide-react';
 import {
-    FillTheBlanks,
-    BreakAndFix,
+    QualityReview,
     ConstrainedEdit,
     DecisionFork,
-    QualityReview,
+    BreakAndFix,
     VideoChallenge,
     VisualImplementation,
+    FillTheBlanks,
 } from '@/components/activity';
-import {DynamicPreview} from '@/components/preview';
-import {GitLog} from '@/components/project';
-import {AIHistoryDrawer, GameHeader, LessonCompleteScreen, ProgressPills, ResultModal,} from '@/components/game';
-import {useActivityPage, useAIHistory, usePreviewState, useSoundEffects} from '@/hooks';
-import {ActivityStatus, ActivityType, ProjectStatus} from '@/enums';
-import {lessonsData} from '@/test-utils/lessons.dummy';
-import {aiMessageTemplates} from '@/test-utils/ai-messages.dummy';
-import {FixWithChoices} from '@/components/activity/FixWithChoices';
-import {ReadAndChoose} from '@/components/molecules/ReadAndChoose/ReadAndChoose';
+import { DynamicPreview } from '@/components/preview';
+import { GitLog } from '@/components/project';
+import {
+    GameHeader,
+    ProgressPills,
+    ResultModal,
+    AIHistoryDrawer,
+    LessonCompleteScreen,
+} from '@/components/game';
+import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
+import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
+import { lessonsData } from '@/test-utils/lessons.dummy';
+import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
+import { FixWithChoices } from '@/components/activity/FixWithChoices';
+import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
