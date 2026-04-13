@@ -1,6 +1,6 @@
 import { ReactNode, ButtonHTMLAttributes } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '@devfellowship/components';
 
 interface GameButtonProps {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'danger';

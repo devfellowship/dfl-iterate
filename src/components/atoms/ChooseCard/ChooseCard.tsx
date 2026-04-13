@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@devfellowship/components";
 import { ChooseOption } from "@/types";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
