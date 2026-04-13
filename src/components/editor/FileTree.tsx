@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronRight, ChevronDown, FileCode, Folder, FolderOpen } from 'lucide-react';
 import { ProjectFile } from '@/types';
-import { cn } from '@/lib/utils';
+import { cn } from '@devfellowship/components';
 
 interface FileTreeProps {
   files: ProjectFile[];
