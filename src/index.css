@@ -1,75 +1,107 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* DFL Design System — synced from dfl-components-cli/src/index.css */
+
 @layer base {
   :root {
-    /* Gamified Dark Theme */
-    --background: 0 0% 6%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    /* Primary - DFL Orange */
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 216 27.8% 7.1%;
+    --foreground: 207.7 35.1% 92.7%;
+
+    --card: 215 21.4% 11%;
+    --card-foreground: 207.7 35.1% 92.7%;
+
+    --popover: 215 21.4% 11%;
+    --popover-foreground: 207.7 35.1% 92.7%;
+
     --primary: 33 90% 55%;
-    --primary-foreground: 0 0% 4%;
-    --primary-dark: 25 85% 40%;
+    --primary-foreground: 0 0% 0%;
 
-    /* Secondary */
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 215 15.4% 15.3%;
+    --secondary-foreground: 207.7 35.1% 92.7%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 212.3 11.9% 21.4%;
+    --muted-foreground: 211.6 8.9% 58.2%;
 
     --accent: 33 90% 55%;
-    --accent-foreground: 0 0% 4%;
+    --accent-foreground: 0 0% 0%;
 
-    /* Danger - DFL Red */
-    --destructive: 6 76% 50%;
-    --destructive-foreground: 0 0% 98%;
-    --destructive-dark: 6 76% 35%;
+    --destructive: 0 86% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    /* Success */
+    --border: 215 15.4% 15.3%;
+    --input: 215 15.4% 15.3%;
+    --ring: 270 90% 71%;
+
+    --sidebar-background: 216 27.8% 7.1%;
+    --sidebar-foreground: 207.7 35.1% 92.7%;
+    --sidebar-primary: 33 90% 55%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 215 15.4% 15.3%;
+    --sidebar-accent-foreground: 207.7 35.1% 92.7%;
+    --sidebar-border: 215 15.4% 15.3%;
+    --sidebar-ring: 270 90% 71%;
+
     --success: 142 71% 45%;
     --success-foreground: 0 0% 4%;
     --success-dark: 142 71% 30%;
-
-    /* Warning */
     --warning: 48 96% 53%;
     --warning-foreground: 0 0% 4%;
-
-    /* Gamification Colors */
-    --life: 0 84% 60%;
-    --streak: 24 95% 53%;
-    --xp: 45 93% 47%;
-
-    --border: 0 0% 18%;
-    --input: 0 0% 15%;
-    --ring: 33 90% 55%;
-
-    --radius: 0.75rem;
-
-    /* Shadows */
     --shadow-glow: 0 0 30px -5px hsl(33 90% 55% / 0.3);
     --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.5);
-
-    /* Sidebar */
-    --sidebar-background: 0 0% 8%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 33 90% 55%;
-    --sidebar-primary-foreground: 0 0% 4%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 33 90% 55%;
   }
+}
+
+@keyframes ds-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+.ds-shimmer {
+  background: linear-gradient(90deg, #21262D 25%, #2D333B 50%, #21262D 75%);
+  background-size: 1200px 100%;
+  animation: ds-shimmer 1.6s infinite linear;
 }
 
 @layer base {
@@ -79,74 +111,31 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
-  code, pre, .font-mono {
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .font-display {
-    font-family: 'Nunito', sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Barlow Condensed', sans-serif;
   }
 }
 
-@layer components {
-  /* Preview - Clean style */
-  .preview-container {
-    @apply rounded-2xl overflow-hidden bg-white border border-border;
-  }
-
-  .preview-header {
-    @apply flex items-center justify-between px-3 py-2 bg-card border-b border-border;
-  }
-
-  /* Terminal style */
-  .terminal {
-    @apply font-mono text-sm bg-black/80 rounded-xl p-4 border border-border;
-  }
-
-  /* Scrollbar styling */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-transparent;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-muted rounded-full;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/50;
-  }
-
-  /* Streaming text animation */
-  .streaming-cursor::after {
-    content: '▋';
-    @apply animate-pulse text-primary ml-0.5;
-  }
-
-  /* Loading skeleton shimmer */
-  .loading-skeleton {
-    @apply bg-muted rounded-lg;
-    background: linear-gradient(
-      90deg,
-      hsl(var(--muted)) 25%,
-      hsl(var(--card)) 50%,
-      hsl(var(--muted)) 75%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-  }
-
-  /* Editor container */
-  .editor-container {
-    @apply rounded-xl overflow-hidden border border-border bg-[#0d0d0d];
-  }
+/* Dark scrollbars */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #0D1117;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #30363D;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #484F58;
+}
+.dark {
+  scrollbar-color: #30363D #0D1117;
 }
 
 @layer utilities {
@@ -156,7 +145,6 @@
   }
 }
 
-/* Keyframes */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -199,8 +187,4 @@
   100% {
     box-shadow: 0 0 0 0 hsl(33 90% 55% / 0);
   }
-}
-
-.animate-update-glow {
-  animation: update-glow 3s ease-out;
 }
