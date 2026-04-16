@@ -36,19 +36,14 @@ export function TrueOrFalse({ activity, onSubmit }: TrueOrFalseProps) {
     return (
         <ActivityGameCard
             type={ActivityType.TRUE_OR_FALSE}
-            title="Verdadeiro ou Falso"
-            question=""
+            title={activity.title}
+            question={activity.instructions}
             actions={actions}
         >
-            {/* Afirmação */}
-            <div className="rounded-2xl border border-border bg-card p-6 mb-4">
-                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3">
-                    Verdadeiro ou Falso?
-                </p>
-                <p className="text-xl font-semibold text-foreground leading-snug">
-                    {activity.instructions}
-                </p>
-            </div>
+            <p className="text-lg text-foreground font-semibold mb-4">
+                {activity.instructions}
+            </p>
+            <div className="grid grid-cols-2 gap-4"></div>
 
             {/* Botões de resposta */}
             <div className="grid grid-cols-2 gap-4">
