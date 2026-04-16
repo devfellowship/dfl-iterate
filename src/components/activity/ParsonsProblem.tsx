@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import { Activity } from '@/types';
 import { useParsonsProblem } from '@/hooks/useParsonsProblem';
 import { ActivityGameCard, GameButton } from '@/components/game';
@@ -16,9 +15,7 @@ interface ParsonsProblemProps {
 }
 
 export function ParsonsProblem({ activity, onSubmit }: ParsonsProblemProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const blocks = React.useMemo(() => activity.codeBlocks || [], [activity.codeBlocks]);
-  const { solutionOrder, setSolutionOrder, submitted, isCorrect, handleSubmit, assembledCode } = useParsonsProblem((ordered) => onSubmit?.(ordered), activity.correctOrder || [], containerRef, blocks);
+  const { solutionOrder, submitted, isCorrect, handleSubmit, assembledCode, blocks, containerRef } = useParsonsProblem(activity, onSubmit);
   return (
     <ActivityGameCard
       type={activity.type}

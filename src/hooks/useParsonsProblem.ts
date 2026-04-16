@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { createSwapy } from 'swapy';
+import { Activity } from '@/types';
 
-interface CodeBlock {
-  id: string;
-  code: string;
-}
-
-export function useParsonsProblem(onSubmit: (orderedBlockIds: string[]) => void, correctOrder: string[], containerRef: React.RefObject<HTMLDivElement>, blocks: CodeBlock[]) {
+export function useParsonsProblem(activity: Activity, onSubmit?: (orderedBlockIds: string[]) => void) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const blocks = useMemo(() => activity.codeBlocks || [], [activity.codeBlocks]);
+  const correctOrder = activity.correctOrder || [];
   const [solutionOrder, setSolutionOrder] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -47,7 +46,7 @@ export function useParsonsProblem(onSubmit: (orderedBlockIds: string[]) => void,
     const correct = solutionOrder.join(',') === correctOrder.join(',');
     setIsCorrect(correct);
     setSubmitted(true);
-    onSubmit(solutionOrder);
+    onSubmit?.(solutionOrder);
   };
 
   const assembledCode = solutionOrder
@@ -62,5 +61,7 @@ export function useParsonsProblem(onSubmit: (orderedBlockIds: string[]) => void,
     isCorrect,
     handleSubmit,
     assembledCode,
+    blocks,
+    containerRef,
   };
 }
