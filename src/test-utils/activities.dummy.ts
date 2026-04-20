@@ -2,17 +2,16 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
-
   {
     id: 'act-1',
     lessonId: 'lesson-1',
-    order: 1,
+    order: 2,
     type: ActivityType.READ_AND_CHOOSE,
     title: 'O que esse trecho de código faz?',
     objective: '',
     instructions: `É um trecho.`,
     targetFiles: ['src/context/', 'src/hooks/'],
-    status: ActivityStatus.CURRENT,
+    status: ActivityStatus.LOCKED,
     aiGeneratedCode: `const products = [
     { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
     { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
@@ -38,11 +37,10 @@ export const activitiesData: Activity[] = [
     ],
   },
 
-
   {
     id: 'act-2',
     lessonId: 'lesson-1',
-    order: 2,
+    order: 3,
     type: ActivityType.QUALITY_REVIEW,
     title: 'Revisão do Header Gerado',
     objective: 'A IA gerou um componente Header para o BoxShop. Avalie se está pronto para produção.',
@@ -79,11 +77,13 @@ export default Header;`,
       'Número do carrinho hardcoded',
       'Sem TypeScript types',
     ],
+    bugLine: 14,
+    xpReward: 25,
   },
   {
     id: 'act-3',
     lessonId: 'lesson-1',
-    order: 3,
+    order: 4,
     type: ActivityType.CONSTRAINED_EDIT,
     title: 'Refatorando o ProductCard',
     objective: 'O ProductCard funciona, mas tem problemas de performance. Melhore sem alterar a estrutura.',
@@ -105,7 +105,7 @@ Restrição: Você só pode editar as linhas 8-12 e 18-22.`,
   {
     id: 'act-4',
     lessonId: 'lesson-1',
-    order: 4,
+    order: 5,
     type: ActivityType.DECISION_FORK,
     title: 'Arquitetura de Estado',
     objective: 'O projeto vai crescer. Escolha como gerenciar o estado do carrinho.',
@@ -140,7 +140,7 @@ Não existe resposta "errada" - cada opção tem trade-offs.`,
   {
     id: 'act-5',
     lessonId: 'lesson-1',
-    order: 5,
+    order: 6,
     type: ActivityType.BREAK_AND_FIX,
     title: 'Debug: Checkout Quebrado',
     objective: 'Uma mudança automática quebrou o checkout. Encontre e corrija o problema.',
@@ -182,7 +182,7 @@ export function CheckoutPage() {
   {
     id: 'act-6',
     lessonId: 'lesson-1',
-    order: 6,
+    order: 7,
     type: ActivityType.VIDEO_CHALLENGE,
     title: 'Aprenda useMemo na Prática',
     objective: 'Assista como um dev sênior otimiza performance e aplique o mesmo pattern.',
@@ -231,7 +231,7 @@ export function ProductList({ products }: { products: Product[] }) {
   {
     id: 'act-7',
     lessonId: 'lesson-1',
-    order: 7,
+    order: 8,
     type: ActivityType.VISUAL_IMPLEMENTATION,
     title: 'Implemente o Badge de Promoção',
     objective: 'Veja o design do badge de "PROMOÇÃO" e implemente o CSS.',
@@ -259,9 +259,58 @@ export function PromoBadge() {
       expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',      
     },
   },
+  
   {
-   
-    id: 'act-8',
+  id: 'act-8',
+  lessonId: 'lesson-1',
+  order: 7,
+  type: ActivityType.SPOT_THE_BUG,
+  title: 'Spot the Bug',
+  objective: 'Identify the line that contains a bug in the code.',
+  instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
+  targetFiles: ['src/components/ReviewManager.tsx'],
+  status: ActivityStatus.LOCKED,
+  bugChallenges: [
+    {
+      code: `import { useState } from 'react';\nexport const FormatData = (): JSX.Element => {\nconst data: number[] = [1, 2, 3];\nif (data = null) return <span>Sem dados</span>;\nreturn <div>{data.join(', ')}</div>;\n};`,
+      bugLine: 4,
+      explanation: 'Atribuição (=) em vez de comparação.',
+      tip: 'Use === para comparar valores em condições.'
+    },
+    {
+      code: `interface User {\nname: string;\nage: number;\n}\nexport const UserCard = (props: { user?: User }): JSX.Element => {\nreturn (\n<div>\n<h2>{props.user.name}</h2>\n<p>{props.user?.age}</p>\n</div>\n);\n};`,
+      bugLine: 8,
+      explanation: 'Acesso a propriedade de objeto possivelmente undefined.',
+      tip: 'Use optional chaining (props.user?.name).'
+    },
+    {
+      code: `export const Sum = (): number => {\nconst a = 5;\nconst b = 3;\nreturn\na + b;\n};`,
+      bugLine: 4,
+      explanation: 'Quebra de linha após o return.',
+      tip: 'O JavaScript encerra o return se houver quebra de linha.'
+    },
+    {
+      code: `export const DoubledList = (): number[] => {\nconst numbers: number[] = [1, 2, 3];\nconst result = numbers.map((n: number): number => {\nn * 2;\n});\nreturn result;\n};`,
+      bugLine: 4,
+      explanation: 'Falta do return dentro do map.',
+      tip: 'Funções com {} precisam de return explícito.'
+    },
+    {
+      code: `import { useState } from 'react';\nexport const Counter = (): JSX.Element => {\nconst [value, setValue] = useState<number>(0);\nconst handleClick = (): void => {\nvalue++;\n};\nreturn <button onClick={handleClick}>{value}</button>;\n};`,
+      bugLine: 5,
+      explanation: 'Mutação direta de estado.',
+      tip: 'Use o setter: setValue(value + 1).'
+    },
+    {
+      code: `interface Props {\nonClick: () => void;\n}\nexport const Button = (props: Props): JSX.Element => {\nreturn (\n<button onClick={props.onClick()}>\nClick\n</button>\n);\n};`,
+      bugLine: 6,
+      explanation: 'Função executada durante a renderização.',
+      tip: 'Passe apenas a referência: onClick={props.onClick}.'
+    }
+  ]
+},
+  {
+    id: 'act-9',
     lessonId: 'lesson-1',
     order: 9,
     type: ActivityType.FIX_THE_CODE,

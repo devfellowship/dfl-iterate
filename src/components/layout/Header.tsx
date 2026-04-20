@@ -1,6 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { ProjectStatus } from '@/enums';
-import { Button } from '@/components/ui/button';
+import { Button } from '@devfellowship/components';
 
 interface HeaderProps {
   projectName: string;

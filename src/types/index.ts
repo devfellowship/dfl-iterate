@@ -9,6 +9,7 @@ export interface Lesson {
   totalActivities: number;
   estimatedMinutes: number;
   thumbnail?: string;
+  activities?: string[];
 }
 
 export interface DecisionOption {
@@ -58,6 +59,13 @@ export interface Step {
   correctAnswer: string;
   variables?: Record<string, StepVariableValue>;
 }
+  
+export type bugChallenges = {
+  code: string;
+  bugLine: number;
+  explanation: string;
+  tip: string;
+}
 
 export interface Activity {
   id: string;
@@ -74,10 +82,14 @@ export interface Activity {
   choices?: ChooseOption[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
+  bugLine?: number;
+  xpReward?: number;
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
- steps?: Step[];  
+  steps?: Step[];  
+  bugChallenges?: bugChallenges[];
+  /** only applies when type === ActivityType.FIX_THE_CODE */
   testCases?: {
     input: string;
     expectedOutput: string;

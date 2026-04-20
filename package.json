@@ -13,6 +13,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@devfellowship/components": "^0.2.0",
+    "@devfellowship/observability": "^2.0.1",
     "@hookform/resolvers": "^3.10.0",
     "@monaco-editor/react": "^4.7.0",
     "@opentelemetry/api": "^1.9.0",
@@ -22,7 +24,6 @@
     "@opentelemetry/sdk-metrics": "^2.5.1",
     "@opentelemetry/sdk-trace-web": "^2.5.1",
     "@opentelemetry/semantic-conventions": "^1.40.0",
-    "@sentry/react": "^10.47.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
@@ -50,7 +51,9 @@
     "@radix-ui/react-toggle": "^1.1.9",
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@sentry/react": "^10.47.0",
     "@tanstack/react-query": "^5.83.0",
+    "@types/prismjs": "^1.26.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -60,6 +63,7 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.3.0",
+    "prismjs": "^1.30.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
@@ -73,6 +77,15 @@
     "vaul": "^0.9.9",
     "web-vitals": "^5.1.0",
     "zod": "^3.25.76"
+  },
+  "overrides": {
+    "@devfellowship/observability": {
+      "@opentelemetry/resources": "$@opentelemetry/resources",
+      "@opentelemetry/sdk-trace-web": "$@opentelemetry/sdk-trace-web",
+      "@opentelemetry/sdk-metrics": "$@opentelemetry/sdk-metrics",
+      "@opentelemetry/exporter-trace-otlp-http": "$@opentelemetry/exporter-trace-otlp-http",
+      "@opentelemetry/exporter-metrics-otlp-http": "$@opentelemetry/exporter-metrics-otlp-http"
+    }
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
@@ -92,9 +105,9 @@
     "lovable-tagger": "^1.1.13",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.38.0",
-    "vite": "^5.4.19",
+    "vite": "^5.4.21",
     "vitest": "^3.2.4"
   }
 }
