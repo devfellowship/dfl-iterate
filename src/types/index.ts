@@ -24,6 +24,18 @@ export type FixOption = {
   explanation: string;
   isCorrect: boolean;
 };
+
+export type BestOption = {
+  id: string;
+  code: string;
+  metrics?: {
+    timeComplexity: string;
+    spaceComplexity: string;
+    linesOfCode: number;
+    readability: number;
+  }
+  explanation?: string;
+}
 export interface ChooseOption {
   id: string;
   label: string;
@@ -84,6 +96,8 @@ export interface Activity {
     expectedOutput: string;
     description: string;
   }[];
+  bestOption?: BestOption[];
+  correctImplementationId?: string;
 }
 
 export interface ProjectFile {
