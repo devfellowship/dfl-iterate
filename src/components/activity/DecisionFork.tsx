@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, DecisionOption } from '@/types';
 import { Check, Sparkles } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@devfellowship/components';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game';
 
