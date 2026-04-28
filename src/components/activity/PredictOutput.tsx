@@ -3,24 +3,21 @@ import { Activity } from '@/types';
 import { ActivityGameCard, GameButton } from '@/components/game';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { Textarea } from '@/components/ui/textarea';
+import {PredictOutputProps, usePredictOutput } from '@/hooks/usePredictOutput';
 
-export interface PredictOutputProps {
-  activity: Activity;
-  onSubmit: (output: string) => void;
-  onError?: () => void;
-}
+export function PredictOutput(props: PredictOutputProps) {
+  const {
+    activity,
+    onSubmit,
+    onError,
+    code,
+    placeholder,
+    prediction,
+    setPrediction,
+    isCorrect,
+  } = usePredictOutput(props);
 
-export function PredictOutput({ activity, onSubmit, onError}: PredictOutputProps) {
-  const code = activity.aiGeneratedCode || '';
-  const placeholder = useMemo(
-    () => activity.placeholder?.[0]?.placeholder ?? 'Digite o que vai aparecer no console...',
-    [activity.placeholder]
-  );
-  const [prediction, setPrediction] = useState('');
-  const isCorrect = activity.expectedOutput?.trim() === prediction.trim();
-
-
-  return (
+return(
     <ActivityGameCard
       type={activity.type}
       title={activity.title}
@@ -65,5 +62,5 @@ export function PredictOutput({ activity, onSubmit, onError}: PredictOutputProps
         </div>
       </div>
     </ActivityGameCard>
-  );
+);
 }
