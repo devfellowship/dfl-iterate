@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Activity } from '@/types';
+// import { useState } from 'react';
+// import { Activity } from '@/types';
 import { ActivityGameCard, GameButton } from '@/components/game';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,7 +11,7 @@ export function PredictOutput(props: PredictOutputProps) {
     onSubmit,
     onError,
     code,
-    placeholder,
+    // placeholder,
     prediction,
     setPrediction,
     isCorrect,
@@ -56,7 +56,6 @@ return(
           <Textarea
             value={prediction}
             onChange={(e) => setPrediction(e.target.value)}
-            placeholder={placeholder}
             className="flex-1 min-h-[140px] resize-none"
           />
         </div>

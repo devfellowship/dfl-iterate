@@ -29,9 +29,6 @@ export interface ChooseOption {
   description: string;
 
 }
-export interface PlaceHolder {
-  placeholder: string;
-}
 
 export interface EditableRegion {
   startLine: number;
@@ -65,7 +62,7 @@ export interface Activity {
   options?: DecisionOption[];
   fixOptions?: FixOption[];
   choices?: ChooseOption[];
-  placeholder?: PlaceHolder[];
+  placeholder?: string[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
   expectedOutput?: string;

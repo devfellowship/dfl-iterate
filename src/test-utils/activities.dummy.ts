@@ -10,13 +10,12 @@ export const activitiesData: Activity[] = [
     type: ActivityType.PREDICT_OUTPUT,
     title: 'Predict Output',
     objective: '',
-    instructions: '',
+    instructions: 'Digite o que vai aparecer no console...',
     targetFiles: ['src/pages/CheckoutPage.tsx'],
     status: ActivityStatus.CURRENT,
     aiGeneratedCode:`let total = 0;
     for (let i = 1; i <= 3; i++) {total += i;}
     console.log(total);`,
-    placeholder: [{ placeholder: 'O que vai aparecer no console? (EX: 3)' }],
     expectedOutput: '6'
   },
 
