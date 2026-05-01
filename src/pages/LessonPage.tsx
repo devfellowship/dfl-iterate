@@ -341,7 +341,6 @@ export default function LessonPage() {
             onError={() => {
               handleActivityComplete(currentActivity.id, 'default-failure', false);
             }}
-            
           />
         );
       }

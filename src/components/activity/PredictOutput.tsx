@@ -1,21 +1,17 @@
-// import { useState } from 'react';
-// import { Activity } from '@/types';
 import { ActivityGameCard, GameButton } from '@/components/game';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { Textarea } from '@/components/ui/textarea';
-import {PredictOutputProps, usePredictOutput } from '@/hooks/usePredictOutput';
+import {usePredictOutput } from '@/hooks/usePredictOutput';
+import { Activity } from '@/types';
 
-export function PredictOutput(props: PredictOutputProps) {
-  const {
-    activity,
-    onSubmit,
-    onError,
-    code,
-    // placeholder,
-    prediction,
-    setPrediction,
-    isCorrect,
-  } = usePredictOutput(props);
+interface PredictOutputProps {
+  activity: Activity;
+  onSubmit: (output: string) => void;
+  onError?: () => void;
+}
+
+export function PredictOutput({ activity, onSubmit, onError }: PredictOutputProps) {
+  const { code, prediction, setPrediction, isCorrect } = usePredictOutput(activity);
 
 return(
     <ActivityGameCard
