@@ -367,5 +367,75 @@ Corrija o algoritmo para que todos os testes passem.`,
         isCorrect: false,
       }
     ]
+  },
+  {
+    id: 'act-11',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.BEST_IMPLEMENTATION,
+    title: 'Escolha a Melhor Implementação',
+    objective: 'Analise as implementações da função de filtro e escolha a mais eficiente.',
+    instructions: `Três devs implementaram a mesma função de filtro de produtos.
+
+Analise cada versão considerando:
+- Complexidade de tempo e espaço
+- Legibilidade
+- Linhas de código
+
+Escolha a implementação que você levaria para produção.`,
+    targetFiles: ['src/utils/filterProducts.ts'],
+    status: ActivityStatus.LOCKED,
+    bestOption: [
+      {
+        id: 'impl-1',
+        code: `function filterProducts(products: Product[], query: string): Product[] {
+  const result: Product[] = [];
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+      result.push(products[i]);
+    }
   }
+  return result;
+}`,
+        metrics: {
+          timeComplexity: 'O(n)',
+          spaceComplexity: 'O(k)',
+          linesOfCode: 8,
+          readability: 2,
+        },
+        explanation: 'Loop imperativo com indexOf. Funciona, mas verboso e recalcula toLowerCase a cada iteração.',
+      },
+      {
+        id: 'impl-2',
+        code: `function filterProducts(products: Product[], query: string): Product[] {
+  const lowerQuery = query.toLowerCase();
+  return products.filter(p => p.name.toLowerCase().includes(lowerQuery));
+}`,
+        metrics: {
+          timeComplexity: 'O(n)',
+          spaceComplexity: 'O(k)',
+          linesOfCode: 3,
+          readability: 5,
+        },
+        explanation: 'Usa filter + includes de forma declarativa. Otimiza o toLowerCase do query fora do loop.',
+      },
+      {
+        id: 'impl-3',
+        code: `function filterProducts(products: Product[], query: string): Product[] {
+  const lowerQuery = query.toLowerCase();
+  return products.reduce((acc: Product[], p) => {
+    if (p.name.toLowerCase().includes(lowerQuery)) acc.push(p);
+    return acc;
+  }, []);
+}`,
+        metrics: {
+          timeComplexity: 'O(n)',
+          spaceComplexity: 'O(k)',
+          linesOfCode: 6,
+          readability: 3,
+        },
+        explanation: 'Usa reduce desnecessariamente para o que é essencialmente um filter — mais complexo sem ganho.',
+      },
+    ],
+  },
 ];

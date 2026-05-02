@@ -25,15 +25,17 @@ export type FixOption = {
   isCorrect: boolean;
 };
 
+export type BestOptionMetrics = {
+  timeComplexity: string;
+  spaceComplexity: string;
+  linesOfCode: number;
+  readability: number;
+}
+
 export type BestOption = {
   id: string;
   code: string;
-  metrics?: {
-    timeComplexity: string;
-    spaceComplexity: string;
-    linesOfCode: number;
-    readability: number;
-  }
+  metrics?: BestOptionMetrics;
   explanation?: string;
 }
 export interface ChooseOption {

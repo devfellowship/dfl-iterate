@@ -1,8 +1,6 @@
-import { Activity } from "@/types";
 import { useState } from "react";
 
-export function useBestImplementation( 
-    activity: Activity, 
+export function useBestImplementation(
     onSubmit: (selectedId: string, justification: string) => void
 ) {
     const [selectedId, setSelectedId] = useState('');
