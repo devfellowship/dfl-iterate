@@ -2,17 +2,16 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
-
   {
     id: 'act-1',
     lessonId: 'lesson-1',
-    order: 1,
+    order: 2,
     type: ActivityType.READ_AND_CHOOSE,
     title: 'O que esse trecho de código faz?',
     objective: '',
     instructions: `É um trecho.`,
     targetFiles: ['src/context/', 'src/hooks/'],
-    status: ActivityStatus.CURRENT,
+    status: ActivityStatus.LOCKED,
     aiGeneratedCode: `const products = [
     { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
     { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
@@ -94,6 +93,8 @@ export default Header;`,
       'Número do carrinho hardcoded',
       'Sem TypeScript types',
     ],
+    bugLine: 14,
+    xpReward: 25,
   },
   {
     id: 'act-4',
@@ -271,9 +272,59 @@ export function PromoBadge() {
     visualConfig: {
       imageUrl: 'https://placehold.co/400x120/dc2626/ffffff?text=🔥+PROMOÇÃO+-50%25&font=montserrat',
       caption: 'Badge de promoção - Design aprovado',
-      expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
+      expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',      
     },
   },
+  
+  {
+  id: 'act-8',
+  lessonId: 'lesson-1',
+  order: 7,
+  type: ActivityType.SPOT_THE_BUG,
+  title: 'Spot the Bug',
+  objective: 'Identify the line that contains a bug in the code.',
+  instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
+  targetFiles: ['src/components/ReviewManager.tsx'],
+  status: ActivityStatus.LOCKED,
+  bugChallenges: [
+    {
+      code: `import { useState } from 'react';\nexport const FormatData = (): JSX.Element => {\nconst data: number[] = [1, 2, 3];\nif (data = null) return <span>Sem dados</span>;\nreturn <div>{data.join(', ')}</div>;\n};`,
+      bugLine: 4,
+      explanation: 'Atribuição (=) em vez de comparação.',
+      tip: 'Use === para comparar valores em condições.'
+    },
+    {
+      code: `interface User {\nname: string;\nage: number;\n}\nexport const UserCard = (props: { user?: User }): JSX.Element => {\nreturn (\n<div>\n<h2>{props.user.name}</h2>\n<p>{props.user?.age}</p>\n</div>\n);\n};`,
+      bugLine: 8,
+      explanation: 'Acesso a propriedade de objeto possivelmente undefined.',
+      tip: 'Use optional chaining (props.user?.name).'
+    },
+    {
+      code: `export const Sum = (): number => {\nconst a = 5;\nconst b = 3;\nreturn\na + b;\n};`,
+      bugLine: 4,
+      explanation: 'Quebra de linha após o return.',
+      tip: 'O JavaScript encerra o return se houver quebra de linha.'
+    },
+    {
+      code: `export const DoubledList = (): number[] => {\nconst numbers: number[] = [1, 2, 3];\nconst result = numbers.map((n: number): number => {\nn * 2;\n});\nreturn result;\n};`,
+      bugLine: 4,
+      explanation: 'Falta do return dentro do map.',
+      tip: 'Funções com {} precisam de return explícito.'
+    },
+    {
+      code: `import { useState } from 'react';\nexport const Counter = (): JSX.Element => {\nconst [value, setValue] = useState<number>(0);\nconst handleClick = (): void => {\nvalue++;\n};\nreturn <button onClick={handleClick}>{value}</button>;\n};`,
+      bugLine: 5,
+      explanation: 'Mutação direta de estado.',
+      tip: 'Use o setter: setValue(value + 1).'
+    },
+    {
+      code: `interface Props {\nonClick: () => void;\n}\nexport const Button = (props: Props): JSX.Element => {\nreturn (\n<button onClick={props.onClick()}>\nClick\n</button>\n);\n};`,
+      bugLine: 6,
+      explanation: 'Função executada durante a renderização.',
+      tip: 'Passe apenas a referência: onClick={props.onClick}.'
+    }
+  ]
+},
   {
     id: 'act-9',
     lessonId: 'lesson-1',
@@ -332,5 +383,69 @@ Corrija o algoritmo para que todos os testes passem.`,
         isCorrect: false,
       }
     ]
-  }
+  },
+  {
+    id: 'act-20',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.REPL_CHALLENGE,
+    title: 'Primeiros Passos com Git',
+    objective: 'Inicialize um repositório e faça seu primeiro commit.',
+    instructions: `Você acabou de criar o projeto BoxShop localmente.\n\nAgora precisa versionar o código usando Git.\n\nExecute os comandos na ordem correta para inicializar o repositório e registrar o primeiro commit.`,
+    targetFiles: ['.git/'],
+    status: ActivityStatus.LOCKED,
+    initialPrompt: '$ ',
+    commands: [
+      {
+        command: 'git init',
+        description: 'Inicializa o repositório Git local',
+        output: 'Initialized empty Git repository in /boxshop/.git/',
+        validation: 'exact',
+      },
+      {
+        command: 'git add .',
+        description: 'Adiciona todos os arquivos ao stage',
+        output: '',
+        validation: 'exact',
+      },
+      {
+        command: 'git commit -m "feat: initial commit"',
+        description: 'Cria o primeiro commit do projeto',
+        output: '[main (root-commit) a1b2c3d] feat: initial commit\n 12 files changed, 248 insertions(+)',
+        validation: 'exact',
+      },
+    ],
+  },
+  {
+    id: 'act-11',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.STEP_THROUGH,
+    title: 'Simulação de Execução de Código',
+    aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
+    objective: 'Componente interativo onde o usuário simula execução passo a passo do código.',
+    instructions: `Pergunta: "Qual o valor de X agora?" Input para resposta a cada step`,
+    targetFiles: [],
+    status: ActivityStatus.LOCKED,
+    steps: [
+      {
+        lineNumber: 1,
+        question: "Qual o valor de X agora?",
+        correctAnswer: "5",
+        variables: { x: 5, y: 0, z: 0 },
+      },
+      {
+        lineNumber: 2,
+        question: "Qual o valor de Y agora?",
+        correctAnswer: "10",
+        variables: { x: 5, y: 10, z: 0 },
+      },
+      {
+        lineNumber: 3,
+        question: "Qual o valor de Z agora?",
+        correctAnswer: "15",
+        variables: { x: 5, y: 10, z: 15 },
+      },
+    ],
+  },
 ];

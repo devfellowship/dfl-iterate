@@ -25,7 +25,7 @@ export function usePreviewState(
   decisions: Decision[]
 ): PreviewState {
   return useMemo(() => {
-    let state = { ...initialState };
+    const state = { ...initialState };
     
     // Show state UP TO the current activity
     // If viewing activity 0, show initial state

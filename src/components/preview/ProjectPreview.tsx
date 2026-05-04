@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ProjectStatus } from '@/enums';
 import { RefreshCw, ExternalLink, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@devfellowship/components';
 
 interface ProjectPreviewProps {
   status: ProjectStatus;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Lesson } from '@/types';
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { Clock, Layers, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@devfellowship/components';
 
 export default function HomePage() {
   const navigate = useNavigate();

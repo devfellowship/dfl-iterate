@@ -11,6 +11,7 @@ import {
   VideoChallenge,
   VisualImplementation,
   FixTheCode,
+  StepThrough,
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
@@ -20,6 +21,7 @@ import {
   ResultModal,
   AIHistoryDrawer,
   LessonCompleteScreen,
+  ActivityGameCard,
 } from '@/components/game';
 import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
@@ -27,6 +29,8 @@ import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
+import { REPLChallenge } from '@/components/activity/REPLChallenge';
+import { SpotTheBug } from '@/components/activity/SpotTheBug';
 
 export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -245,7 +249,18 @@ export default function LessonPage() {
           />
         );
 
-
+     case ActivityType.SPOT_THE_BUG:
+  return (
+    <SpotTheBug
+      activity={currentActivity}
+      onSuccess={() => 
+        handleActivityComplete(currentActivity.id, 'spot-the-bug-success', true)
+      }
+      onError={() => 
+        handleActivityComplete(currentActivity.id, 'spot-the-bug-fail', false)
+      }
+    />
+  );
 
       case ActivityType.QUALITY_REVIEW:
         return (
@@ -342,18 +357,15 @@ export default function LessonPage() {
               handleActivityComplete(currentActivity.id, 'act-7-fix-code-success', true);
             }}
           />
-        );
-
-      default:
-        return null;
-
+        );  
+     
       case ActivityType.FIX_WITH_CHOICES:
         return (
           <FixWithChoices
             activity={currentActivity}
             onSubmit={(selectedId) => {
               const selected = currentActivity.fixOptions?.find(
-                f => f.id === selectedId
+              f => f.id === selectedId
               );
 
               console.log('Current Activity:', currentActivity);
@@ -368,6 +380,33 @@ export default function LessonPage() {
             }}
           />
         );
+        
+      case ActivityType.REPL_CHALLENGE:
+        return (
+          <REPLChallenge
+            activity={currentActivity}
+            onSubmit={(executedCommands) => {
+              handleActivityComplete(
+                currentActivity.id,
+                'act-terminal-success',
+                true
+              );
+            }}
+          />
+        );
+
+        case ActivityType.STEP_THROUGH:
+          return (
+            <StepThrough
+              activity={currentActivity}
+              onSubmit={(answers) => {
+                handleActivityComplete(currentActivity.id, 'act-step-through-success', true);
+              }}
+            />
+          );
+
+      default:
+        return null;
     }
   };
 

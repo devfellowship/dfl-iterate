@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 import { Check, Lock, Search, Scissors, GitFork, Bug } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@devfellowship/components';
 
 interface ActivityCardProps {
   activity: Activity;
