@@ -1,7 +1,23 @@
 import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
+
 export const activitiesData: Activity[] = [
+  {
+    id: 'act-11',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.PREDICT_OUTPUT,
+    title: 'Predict Output',
+    objective: '',
+    instructions: 'Digite o que vai aparecer no console...',
+    targetFiles: ['src/pages/CheckoutPage.tsx'],
+    status: ActivityStatus.CURRENT,
+    aiGeneratedCode:`let total = 0;
+    for (let i = 1; i <= 3; i++) {total += i;}
+    console.log(total);`,
+    expectedOutput: '6'
+  },
   {
     id: 'act-1',
     lessonId: 'lesson-1',
@@ -36,9 +52,25 @@ export const activitiesData: Activity[] = [
       },
     ],
   },
-
   {
     id: 'act-2',
+    lessonId: 'lesson-1',
+    order: 2,
+    type: ActivityType.TRUE_OR_FALSE,
+    title: 'Verdadeiro ou Falso: Funções Puras',
+    objective: 'Teste seu conhecimento sobre funções puras em JavaScript.',
+    instructions: `Uma função pura sempre retorna o mesmo resultado para os mesmos argumentos e não produz efeitos colaterais.`,
+    targetFiles: [],
+    status: ActivityStatus.LOCKED,
+    trueFalseConfig: {
+      correctAnswer: true,
+      explanation: 'Funções puras são previsíveis e testáveis, pois não dependem de estado externo ou variáveis mutáveis.',
+    },
+
+
+  },
+  {
+    id: 'act-3',
     lessonId: 'lesson-1',
     order: 3,
     type: ActivityType.QUALITY_REVIEW,
@@ -81,7 +113,7 @@ export default Header;`,
     xpReward: 25,
   },
   {
-    id: 'act-3',
+    id: 'act-4',
     lessonId: 'lesson-1',
     order: 4,
     type: ActivityType.CONSTRAINED_EDIT,
@@ -103,7 +135,7 @@ Restrição: Você só pode editar as linhas 8-12 e 18-22.`,
     ],
   },
   {
-    id: 'act-4',
+    id: 'act-5',
     lessonId: 'lesson-1',
     order: 5,
     type: ActivityType.DECISION_FORK,
@@ -138,7 +170,7 @@ Não existe resposta "errada" - cada opção tem trade-offs.`,
     ],
   },
   {
-    id: 'act-5',
+    id: 'act-6',
     lessonId: 'lesson-1',
     order: 6,
     type: ActivityType.BREAK_AND_FIX,
@@ -180,7 +212,7 @@ export function CheckoutPage() {
 }`,
   },
   {
-    id: 'act-6',
+    id: 'act-7',
     lessonId: 'lesson-1',
     order: 7,
     type: ActivityType.VIDEO_CHALLENGE,
@@ -229,7 +261,7 @@ export function ProductList({ products }: { products: Product[] }) {
     },
   },
   {
-    id: 'act-7',
+    id: 'act-8',
     lessonId: 'lesson-1',
     order: 8,
     type: ActivityType.VISUAL_IMPLEMENTATION,
@@ -256,7 +288,7 @@ export function PromoBadge() {
     visualConfig: {
       imageUrl: 'https://placehold.co/400x120/dc2626/ffffff?text=🔥+PROMOÇÃO+-50%25&font=montserrat',
       caption: 'Badge de promoção - Design aprovado',
-      expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
+      expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',      
     },
   },
   
@@ -435,6 +467,66 @@ Escolha a implementação que você levaria para produção.`,
           readability: 3,
         },
         explanation: 'Usa reduce desnecessariamente para o que é essencialmente um filter — mais complexo sem ganho.',
+    id: 'act-20',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.REPL_CHALLENGE,
+    title: 'Primeiros Passos com Git',
+    objective: 'Inicialize um repositório e faça seu primeiro commit.',
+    instructions: `Você acabou de criar o projeto BoxShop localmente.\n\nAgora precisa versionar o código usando Git.\n\nExecute os comandos na ordem correta para inicializar o repositório e registrar o primeiro commit.`,
+    targetFiles: ['.git/'],
+    status: ActivityStatus.LOCKED,
+    initialPrompt: '$ ',
+    commands: [
+      {
+        command: 'git init',
+        description: 'Inicializa o repositório Git local',
+        output: 'Initialized empty Git repository in /boxshop/.git/',
+        validation: 'exact',
+      },
+      {
+        command: 'git add .',
+        description: 'Adiciona todos os arquivos ao stage',
+        output: '',
+        validation: 'exact',
+      },
+      {
+        command: 'git commit -m "feat: initial commit"',
+        description: 'Cria o primeiro commit do projeto',
+        output: '[main (root-commit) a1b2c3d] feat: initial commit\n 12 files changed, 248 insertions(+)',
+        validation: 'exact',
+      },
+    ],
+  },
+  {
+    id: 'act-11',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.STEP_THROUGH,
+    title: 'Simulação de Execução de Código',
+    aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
+    objective: 'Componente interativo onde o usuário simula execução passo a passo do código.',
+    instructions: `Pergunta: "Qual o valor de X agora?" Input para resposta a cada step`,
+    targetFiles: [],
+    status: ActivityStatus.LOCKED,
+    steps: [
+      {
+        lineNumber: 1,
+        question: "Qual o valor de X agora?",
+        correctAnswer: "5",
+        variables: { x: 5, y: 0, z: 0 },
+      },
+      {
+        lineNumber: 2,
+        question: "Qual o valor de Y agora?",
+        correctAnswer: "10",
+        variables: { x: 5, y: 10, z: 0 },
+      },
+      {
+        lineNumber: 3,
+        question: "Qual o valor de Z agora?",
+        correctAnswer: "15",
+        variables: { x: 5, y: 10, z: 15 },
       },
     ],
   },

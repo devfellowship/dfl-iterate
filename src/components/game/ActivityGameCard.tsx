@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ActivityType } from '@/enums';
-import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug } from 'lucide-react';
+import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug, ChevronRight, Terminal } from 'lucide-react';
 
 interface ActivityGameCardProps {
   type: ActivityType;
@@ -15,6 +15,11 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
   [ActivityType.QUALITY_REVIEW]: {
     icon: Search,
     label: 'QUALITY REVIEW',
+    color: 'text-primary'
+  },
+  [ActivityType.TRUE_OR_FALSE]: {
+    icon: CheckCircle2,
+    label: 'TRUE OR FALSE',
     color: 'text-primary'
   },
   [ActivityType.CONSTRAINED_EDIT]: {
@@ -32,11 +37,13 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'BREAK & FIX',
     color: 'text-destructive'
   },
+
   [ActivityType.FIX_THE_CODE]: {
     icon: Bug,
     label: 'FIX THE CODE',
     color: 'text-yellow-400'
   },
+
   [ActivityType.VIDEO_CHALLENGE]: {
     icon: Video,
     label: 'VIDEO CHALLENGE',
@@ -47,20 +54,31 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'VISUAL IMPLEMENTATION',
     color: 'text-cyan-400'
   },
+
   [ActivityType.FIX_WITH_CHOICES]: {
     icon: Bug,
     label: 'FIX WITH CHOICES',
     color: 'text-red-400'
   },
-  [ActivityType.FIX_THE_CODE]: {
-    icon: undefined,
-    label: '',
-    color: ''
-  },
   [ActivityType.READ_AND_CHOOSE]: {
     icon: Search,
     label: 'READ AND CHOOSE',
     color: 'text-primary'
+  },
+  [ActivityType.PREDICT_OUTPUT]: {
+    icon: Wrench,
+    label: 'PREDICT OUTPUT',
+    color: 'text-primary'
+  },
+    [ActivityType.REPL_CHALLENGE]: {
+    icon: Terminal,
+    label: 'TERMINAL CHALLENGE',
+    color: 'text-green-400',
+  },
+  [ActivityType.STEP_THROUGH]: {
+    icon: ChevronRight,
+    label: 'STEP THROUGH',
+    color: 'text-blue-400',
   },
   [ActivityType.SPOT_THE_BUG]: {
     icon: Bug,

@@ -1,4 +1,5 @@
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
+import { StepVariableValue } from './StepVariableValue';
 
 export interface Lesson {
   id: string;
@@ -38,11 +39,14 @@ export type BestOption = {
   metrics?: BestOptionMetrics;
   explanation?: string;
 }
+
 export interface ChooseOption {
   id: string;
   label: string;
   description: string;
-
+  code?: string;
+  explanation?: string;
+  isCorrect?: boolean;
 }
 
 export interface EditableRegion {
@@ -64,6 +68,20 @@ export interface VisualConfig {
   expectedOutput?: string;
 }
 
+export interface TerminalCommandStep {
+  command: string;
+  description: string;
+  output?: string;
+  validation?: 'exact' | 'contains' | 'regex';
+}
+
+export interface Step {
+  lineNumber: number;
+  question: string;
+  correctAnswer: string;
+  variables?: Record<string, StepVariableValue>;
+}
+  
 export type bugChallenges = {
   code: string;
   bugLine: number;
@@ -72,6 +90,7 @@ export type bugChallenges = {
 }
 
 export interface Activity {
+  trueFalseConfig: any;
   id: string;
   lessonId: string;
   order: number;
@@ -81,16 +100,19 @@ export interface Activity {
   instructions: string;
   targetFiles: string[];
   status: ActivityStatus;
-  options?: DecisionOption[];
+  options?: DecisionOption[]; 
   fixOptions?: FixOption[];
   choices?: ChooseOption[];
+  placeholder?: string[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
+  expectedOutput?: string;
   bugLine?: number;
   xpReward?: number;
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
+  steps?: Step[];  
   bugChallenges?: bugChallenges[];
   /** only applies when type === ActivityType.FIX_THE_CODE */
   testCases?: {
@@ -100,6 +122,8 @@ export interface Activity {
   }[];
   bestOption?: BestOption[];
   correctImplementationId?: string;
+  commands?: TerminalCommandStep[];
+  initialPrompt?: string;
 }
 
 export interface ProjectFile {
