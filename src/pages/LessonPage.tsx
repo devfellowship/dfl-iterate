@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { TrueOrFalse } from '@/components/activity';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Bot } from 'lucide-react';
@@ -10,6 +11,8 @@ import {
   VideoChallenge,
   VisualImplementation,
   PredictOutput,
+  FixTheCode,
+  StepThrough,
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
@@ -19,6 +22,7 @@ import {
   ResultModal,
   AIHistoryDrawer,
   LessonCompleteScreen,
+  ActivityGameCard,
 } from '@/components/game';
 import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
@@ -26,6 +30,8 @@ import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
+import { REPLChallenge } from '@/components/activity/REPLChallenge';
+import { SpotTheBug } from '@/components/activity/SpotTheBug';
 
 export default function LessonPage() {        
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -215,6 +221,21 @@ export default function LessonPage() {
     if (!currentActivity) return null;
 
     switch (currentActivity.type) {
+      case ActivityType.TRUE_OR_FALSE:
+        return (
+          <TrueOrFalse
+            key={`${currentActivity.id}-${Date.now()}`}
+            activity={currentActivity}
+            onSubmit={(answer) => {
+              const isCorrect = answer === currentActivity.trueFalseConfig?.correctAnswer;
+              handleActivityComplete(
+                currentActivity.id,
+                isCorrect ? 'default-success' : 'default-failure',
+                isCorrect
+              );
+            }}
+          />
+        );
 
       case ActivityType.READ_AND_CHOOSE:
         return (
@@ -229,7 +250,18 @@ export default function LessonPage() {
           />
         );
 
-
+     case ActivityType.SPOT_THE_BUG:
+  return (
+    <SpotTheBug
+      activity={currentActivity}
+      onSuccess={() => 
+        handleActivityComplete(currentActivity.id, 'spot-the-bug-success', true)
+      }
+      onError={() => 
+        handleActivityComplete(currentActivity.id, 'spot-the-bug-fail', false)
+      }
+    />
+  );
 
       case ActivityType.QUALITY_REVIEW:
         return (
@@ -308,16 +340,33 @@ export default function LessonPage() {
           />
         );
 
-      default:
-        return null;
-
+      case ActivityType.FIX_THE_CODE:
+        return (
+          <FixTheCode
+            activity={currentActivity}
+            onRunTests={async (code) => {
+              // naive local runner based on testCases
+              return (
+                currentActivity.testCases || []
+              ).map(tc => ({
+                description: tc.description,
+                passed: code.includes(tc.expectedOutput),
+              }));
+            }}
+            onSubmit={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-7-fix-code-success', true);
+            }}
+          />
+        );  
+     
       case ActivityType.FIX_WITH_CHOICES:
         return (
           <FixWithChoices
             activity={currentActivity}
             onSubmit={(selectedId) => {
               const selected = currentActivity.fixOptions?.find(
-                f => f.id === selectedId
+              f => f.id === selectedId
               );
 
               console.log('Current Activity:', currentActivity);
@@ -327,6 +376,21 @@ export default function LessonPage() {
                 currentActivity.id,
                 selected?.isCorrect ? 'act-fix-success' : 'act-fix-wrong',
                 selected?.isCorrect
+              );
+
+            }}
+          />
+        );
+        
+      case ActivityType.REPL_CHALLENGE:
+        return (
+          <REPLChallenge
+            activity={currentActivity}
+            onSubmit={(executedCommands) => {
+              handleActivityComplete(
+                currentActivity.id,
+                'act-terminal-success',
+                true
               );
             }}
           />
@@ -345,6 +409,20 @@ export default function LessonPage() {
         );
       }
 
+
+        case ActivityType.STEP_THROUGH:
+          return (
+            <StepThrough
+              activity={currentActivity}
+              onSubmit={(answers) => {
+                handleActivityComplete(currentActivity.id, 'act-step-through-success', true);
+              }}
+            />
+          );
+
+      default:
+        return null;
+    }
   };
 
 

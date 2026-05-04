@@ -1,0 +1,128 @@
+# repo-contract.yaml — Machine-readable contract for dfl-iterate
+# Defines provided interfaces, consumed dependencies, environment,
+# health checks, and agent integration metadata.
+
+name: dfl-iterate
+description: >
+  Gamified coding exercise platform — Duolingo-style lessons with code editing,
+  AI-powered feedback, and progress tracking pills. Part of the DFL Learn ecosystem.
+
+type: platform
+version: 1.0.0
+
+owner:
+  team: dfl-core
+  slack: "#dfl-iterate"
+
+stack:
+  runtime: browser
+  framework: react-18
+  bundler: vite-5
+  language: typescript-5
+  styling: tailwind-css
+  ui_library: shadcn-ui
+  editor: monaco-editor
+  animations: framer-motion
+  state: tanstack-react-query
+  testing: vitest
+  observability: opentelemetry
+
+provides:
+  - type: ui
+    name: lesson-player
+    description: >
+      Interactive lesson player rendering activity sequences with
+      code editing, AI feedback, and gamified progress indicators.
+    entry: src/pages/LessonPage.tsx
+
+  - type: ui
+    name: activity-engine
+    description: >
+      Pluggable activity component system supporting multiple activity types:
+      FixTheCode, BreakAndFix, ConstrainedEdit, DecisionFork, FixWithChoices,
+      QualityReview, VideoChallenge, VisualImplementation, ReadAndChoose.
+    entry: src/components/activity/
+
+  - type: ui
+    name: code-editor
+    description: >
+      Monaco-based code editor with file tree, editable regions,
+      syntax highlighting, and sandboxed live preview.
+    entry: src/components/editor/
+
+  - type: ui
+    name: ai-feedback
+    description: >
+      Streaming AI feedback panel for code review hints and explanations.
+    entry: src/components/ai/
+
+  - type: ui
+    name: gamification-layer
+    description: >
+      Progress pills, celebration overlays, result modals, and sound effects
+      for gamified lesson flow.
+    entry: src/components/game/
+
+consumes:
+  - repo: dfl-learn
+    resource: lesson-data
+    description: Lesson and activity definitions from the LMS ecosystem
+    integration: planned
+
+  - repo: dfl-tracks
+    resource: learning-paths
+    description: Track sequencing for lesson ordering
+    integration: planned
+
+  - external: true
+    name: opentelemetry-collector
+    description: OTel traces and metrics export endpoint
+    env_var: VITE_OTEL_API_KEY
+
+environment:
+  required:
+    - name: VITE_SUPABASE_URL
+      description: Supabase project URL for future backend integration
+    - name: VITE_SUPABASE_ANON_KEY
+      description: Supabase anonymous key for client-side access
+  optional:
+    - name: VITE_OTEL_API_KEY
+      description: API key for OpenTelemetry trace/metrics export
+    - name: VITE_OTEL_ENABLED
+      description: Toggle observability instrumentation (true/false)
+      default: "true"
+
+health_check:
+  command: npm run build
+  test_command: npm run test
+
+scripts:
+  dev: npm run dev
+  build: npm run build
+  test: npm run test
+  lint: npm run lint
+
+agent_entry_point: CLAUDE.md
+
+activity_types:
+  - fix_the_code
+  - break_and_fix
+  - constrained_edit
+  - decision_fork
+  - fix_with_choices
+  - quality_review
+  - video_challenge
+  - visual_implementation
+  - read_and_choose
+
+testing:
+  framework: vitest
+  config: vitest.config.ts
+  pattern: "src/**/*.test.{ts,tsx}"
+  coverage: false
+
+observability:
+  provider: opentelemetry
+  traces: true
+  metrics: true
+  config: src/components/observability/

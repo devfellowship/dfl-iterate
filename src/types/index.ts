@@ -1,4 +1,5 @@
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
+import { StepVariableValue } from './StepVariableValue';
 
 export interface Lesson {
   id: string;
@@ -8,6 +9,7 @@ export interface Lesson {
   totalActivities: number;
   estimatedMinutes: number;
   thumbnail?: string;
+  activities?: string[];
 }
 
 export interface DecisionOption {
@@ -23,11 +25,14 @@ export type FixOption = {
   explanation: string;
   isCorrect: boolean;
 };
+
 export interface ChooseOption {
   id: string;
   label: string;
   description: string;
-
+  code?: string;
+  explanation?: string;
+  isCorrect?: boolean;
 }
 
 export interface EditableRegion {
@@ -49,7 +54,29 @@ export interface VisualConfig {
   expectedOutput?: string;
 }
 
+export interface TerminalCommandStep {
+  command: string;
+  description: string;
+  output?: string;
+  validation?: 'exact' | 'contains' | 'regex';
+}
+
+export interface Step {
+  lineNumber: number;
+  question: string;
+  correctAnswer: string;
+  variables?: Record<string, StepVariableValue>;
+}
+  
+export type bugChallenges = {
+  code: string;
+  bugLine: number;
+  explanation: string;
+  tip: string;
+}
+
 export interface Activity {
+  trueFalseConfig: any;
   id: string;
   lessonId: string;
   order: number;
@@ -59,16 +86,28 @@ export interface Activity {
   instructions: string;
   targetFiles: string[];
   status: ActivityStatus;
-  options?: DecisionOption[];
+  options?: DecisionOption[]; 
   fixOptions?: FixOption[];
   choices?: ChooseOption[];
   placeholder?: string[];
   aiGeneratedCode?: string;
   expectedIssues?: string[];
   expectedOutput?: string;
+  bugLine?: number;
+  xpReward?: number;
   editableRegions?: EditableRegion[];
   videoConfig?: VideoConfig;
   visualConfig?: VisualConfig;
+  steps?: Step[];  
+  bugChallenges?: bugChallenges[];
+  /** only applies when type === ActivityType.FIX_THE_CODE */
+  testCases?: {
+    input: string;
+    expectedOutput: string;
+    description: string;
+  }[];
+  commands?: TerminalCommandStep[];
+  initialPrompt?: string;
 }
 
 export interface ProjectFile {
@@ -102,4 +141,11 @@ export interface GitLogEntry {
   timestamp: Date;
   filesChanged: string[];
   type: 'activity_complete' | 'decision' | 'fix';
+}
+
+/** result from executing a test case */
+export interface TestResult {
+  description: string;
+  passed: boolean;
+  output?: string;
 }
