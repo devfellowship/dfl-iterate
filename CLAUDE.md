@@ -60,4 +60,8 @@ src/
 
 <!-- BEGIN MANUAL:repo/local-notes -->
 <!-- repo-specific notes live here -->
-<!-- END MANUAL:repo/local-notes -->
+<!-- END MANUAL:repo/local-notes -->## Edge Functions
+
+Edge functions are owned by `dfl-schema`. Do NOT add or modify files under `supabase/functions/` in this repo.
+Open your PR in [dfl-schema](https://github.com/devfellowship/dfl-schema) instead.
+The `push-functions.yml` workflow auto-deploys on merge to main.
