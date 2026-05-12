@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
-import { Check, Lock, Search, Scissors, GitFork, Bug } from 'lucide-react';
+import { Check, Lock, Search, Scissors, GitFork, Bug, Wrench } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ActivityCardProps {
@@ -18,6 +18,7 @@ const typeIcons = {
   [ActivityType.CONSTRAINED_EDIT]: Scissors,
   [ActivityType.DECISION_FORK]: GitFork,
   [ActivityType.BREAK_AND_FIX]: Bug,
+  [ActivityType.PREDICT_OUTPUT]: Wrench,
 };
 
 const typeLabels = {
@@ -27,6 +28,7 @@ const typeLabels = {
   [ActivityType.CONSTRAINED_EDIT]: 'Constrained Edit',
   [ActivityType.DECISION_FORK]: 'Decision Fork',
   [ActivityType.BREAK_AND_FIX]: 'Break & Fix',
+  [ActivityType.PREDICT_OUTPUT]: 'Predict Output',
 };
 
 export function ActivityCard({ activity, index, onClick, isActive }: ActivityCardProps) {

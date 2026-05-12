@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, ExternalLink, AlertTriangle, ShoppingCart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@devfellowship/components';
 import { PreviewState } from '@/hooks/usePreviewState';
 import { ProjectStatus } from '@/enums';
 

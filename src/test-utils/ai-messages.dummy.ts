@@ -160,6 +160,32 @@ Você replicou o visual de referência:
 
 Transformar design em código é uma habilidade essencial. Você está evoluindo!`,
   },
+  // Fix the Code - Sucesso
+  'act-7-fix-code-success': {
+    isSuccess: true,
+    message: `Ótimo trabalho! Você corrigiu o algoritmo e os testes passaram.
+
+Sempre escreva casos de teste para código crítico – isso ajuda a encontrar bugs cedo!`,
+  },
+
+  // Spot The Bug - Sucesso
+  'spot-the-bug-success': {
+    isSuccess: true,
+    message: `Excelente olho clínico! 🎉 
+    
+Saber identificar esses detalhes rapidamente é uma habilidade essencial — evita bugs em produção e poupa tempo de todo o time.`,
+  },
+
+  // Spot The Bug - Falha (DICAS)
+  'spot-the-bug-fail': {
+    isSuccess: false,
+    message: `Ops, essa linha parece estar correta. 
+    
+**Dicas para encontrar o bug:**
+• Verifique se as variáveis usadas foram realmente declaradas.
+• Olhe atentamente para os nomes das propriedades (TYPOS são comuns!).
+• Erros de sintaxe ou referências nulas costumam se esconder em operações de Array.`,
+  },
 
   // Default success
   'default-success': {

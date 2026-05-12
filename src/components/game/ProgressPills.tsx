@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Check, Lock } from 'lucide-react';
 import { Activity } from '@/types';
 import { ActivityStatus } from '@/enums';
-import { cn } from '@/lib/utils';
+import { cn } from '@devfellowship/components';
 
 interface ProgressPillsProps {
   activities: Activity[];

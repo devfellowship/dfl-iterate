@@ -2,7 +2,7 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
-  {
+    {
     id: 'act-fill-1',
     lessonId: 'lesson-1',
     order: 1,
@@ -61,11 +61,25 @@ export default Header;`,
       },
     ],
   },
-
+  {
+    id: 'act-11',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.PREDICT_OUTPUT,
+    title: 'Predict Output',
+    objective: '',
+    instructions: 'Digite o que vai aparecer no console...',
+    targetFiles: ['src/pages/CheckoutPage.tsx'],
+    status: ActivityStatus.CURRENT,
+    aiGeneratedCode:`let total = 0;
+    for (let i = 1; i <= 3; i++) {total += i;}
+    console.log(total);`,
+    expectedOutput: '6'
+  },
   {
     id: 'act-1',
     lessonId: 'lesson-1',
-    order: 1,
+    order: 2,
     type: ActivityType.READ_AND_CHOOSE,
     title: 'O que esse trecho de código faz?',
     objective: '',
@@ -96,12 +110,27 @@ export default Header;`,
       },
     ],
   },
-
-
   {
     id: 'act-2',
     lessonId: 'lesson-1',
     order: 2,
+    type: ActivityType.TRUE_OR_FALSE,
+    title: 'Verdadeiro ou Falso: Funções Puras',
+    objective: 'Teste seu conhecimento sobre funções puras em JavaScript.',
+    instructions: `Uma função pura sempre retorna o mesmo resultado para os mesmos argumentos e não produz efeitos colaterais.`,
+    targetFiles: [],
+    status: ActivityStatus.LOCKED,
+    trueFalseConfig: {
+      correctAnswer: true,
+      explanation: 'Funções puras são previsíveis e testáveis, pois não dependem de estado externo ou variáveis mutáveis.',
+    },
+
+
+  },
+  {
+    id: 'act-3',
+    lessonId: 'lesson-1',
+    order: 3,
     type: ActivityType.QUALITY_REVIEW,
     title: 'Revisão do Header Gerado',
     objective: 'A IA gerou um componente Header para o BoxShop. Avalie se está pronto para produção.',
@@ -138,11 +167,13 @@ export default Header;`,
       'Número do carrinho hardcoded',
       'Sem TypeScript types',
     ],
+    bugLine: 14,
+    xpReward: 25,
   },
   {
-    id: 'act-3',
+    id: 'act-4',
     lessonId: 'lesson-1',
-    order: 3,
+    order: 4,
     type: ActivityType.CONSTRAINED_EDIT,
     title: 'Refatorando o ProductCard',
     objective: 'O ProductCard funciona, mas tem problemas de performance. Melhore sem alterar a estrutura.',
@@ -162,9 +193,32 @@ Restrição: Você só pode editar as linhas 8-12 e 18-22.`,
     ],
   },
   {
-    id: 'act-4',
+    id: 'act-5',
     lessonId: 'lesson-1',
     order: 4,
+    type: ActivityType.PARSONS_PROBLEM,
+    title: 'Organize o Código do ProductCard',
+    objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
+    instructions: 'Os blocos de código estão embaralhados. Organize-os na ordem correta para criar um componente ProductCard funcional.',
+    targetFiles: [],
+    status: ActivityStatus.LOCKED,
+    codeBlocks: [
+      { id: 'b1', code: "import { Product } from '@/types';" },
+      { id: 'b2', code: 'export function ProductCard({ product }: { product: Product }) {' },
+      { id: 'b3', code: '  return (' },
+      { id: 'b4', code: '    <article className="card">' },
+      { id: 'b5', code: '      <h2>{product.name}</h2>' },
+      { id: 'b6', code: '      <p>R$ {product.price.toFixed(2)}</p>' },
+      { id: 'b7', code: '    </article>' },
+      { id: 'b8', code: '  );' },
+      { id: 'b9', code: '}' },
+    ],
+    correctOrder: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9'],
+  },
+  {
+    id: 'act-4',
+    lessonId: 'lesson-1',
+    order: 5,
     type: ActivityType.DECISION_FORK,
     title: 'Arquitetura de Estado',
     objective: 'O projeto vai crescer. Escolha como gerenciar o estado do carrinho.',
@@ -197,9 +251,9 @@ Não existe resposta "errada" - cada opção tem trade-offs.`,
     ],
   },
   {
-    id: 'act-5',
+    id: 'act-6',
     lessonId: 'lesson-1',
-    order: 5,
+    order: 6,
     type: ActivityType.BREAK_AND_FIX,
     title: 'Debug: Checkout Quebrado',
     objective: 'Uma mudança automática quebrou o checkout. Encontre e corrija o problema.',
@@ -239,9 +293,9 @@ export function CheckoutPage() {
 }`,
   },
   {
-    id: 'act-6',
+    id: 'act-7',
     lessonId: 'lesson-1',
-    order: 6,
+    order: 7,
     type: ActivityType.VIDEO_CHALLENGE,
     title: 'Aprenda useMemo na Prática',
     objective: 'Assista como um dev sênior otimiza performance e aplique o mesmo pattern.',
@@ -288,9 +342,9 @@ export function ProductList({ products }: { products: Product[] }) {
     },
   },
   {
-    id: 'act-7',
+    id: 'act-8',
     lessonId: 'lesson-1',
-    order: 7,
+    order: 8,
     type: ActivityType.VISUAL_IMPLEMENTATION,
     title: 'Implemente o Badge de Promoção',
     objective: 'Veja o design do badge de "PROMOÇÃO" e implemente o CSS.',
@@ -315,24 +369,113 @@ export function PromoBadge() {
     visualConfig: {
       imageUrl: 'https://placehold.co/400x120/dc2626/ffffff?text=🔥+PROMOÇÃO+-50%25&font=montserrat',
       caption: 'Badge de promoção - Design aprovado',
-      expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
+      expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',      
     },
+  },
+  
+  {
+  id: 'act-8',
+  lessonId: 'lesson-1',
+  order: 7,
+  type: ActivityType.SPOT_THE_BUG,
+  title: 'Spot the Bug',
+  objective: 'Identify the line that contains a bug in the code.',
+  instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
+  targetFiles: ['src/components/ReviewManager.tsx'],
+  status: ActivityStatus.LOCKED,
+  bugChallenges: [
+    {
+      code: `import { useState } from 'react';\nexport const FormatData = (): JSX.Element => {\nconst data: number[] = [1, 2, 3];\nif (data = null) return <span>Sem dados</span>;\nreturn <div>{data.join(', ')}</div>;\n};`,
+      bugLine: 4,
+      explanation: 'Atribuição (=) em vez de comparação.',
+      tip: 'Use === para comparar valores em condições.'
+    },
+    {
+      code: `interface User {\nname: string;\nage: number;\n}\nexport const UserCard = (props: { user?: User }): JSX.Element => {\nreturn (\n<div>\n<h2>{props.user.name}</h2>\n<p>{props.user?.age}</p>\n</div>\n);\n};`,
+      bugLine: 8,
+      explanation: 'Acesso a propriedade de objeto possivelmente undefined.',
+      tip: 'Use optional chaining (props.user?.name).'
+    },
+    {
+      code: `export const Sum = (): number => {\nconst a = 5;\nconst b = 3;\nreturn\na + b;\n};`,
+      bugLine: 4,
+      explanation: 'Quebra de linha após o return.',
+      tip: 'O JavaScript encerra o return se houver quebra de linha.'
+    },
+    {
+      code: `export const DoubledList = (): number[] => {\nconst numbers: number[] = [1, 2, 3];\nconst result = numbers.map((n: number): number => {\nn * 2;\n});\nreturn result;\n};`,
+      bugLine: 4,
+      explanation: 'Falta do return dentro do map.',
+      tip: 'Funções com {} precisam de return explícito.'
+    },
+    {
+      code: `import { useState } from 'react';\nexport const Counter = (): JSX.Element => {\nconst [value, setValue] = useState<number>(0);\nconst handleClick = (): void => {\nvalue++;\n};\nreturn <button onClick={handleClick}>{value}</button>;\n};`,
+      bugLine: 5,
+      explanation: 'Mutação direta de estado.',
+      tip: 'Use o setter: setValue(value + 1).'
+    },
+    {
+      code: `interface Props {\nonClick: () => void;\n}\nexport const Button = (props: Props): JSX.Element => {\nreturn (\n<button onClick={props.onClick()}>\nClick\n</button>\n);\n};`,
+      bugLine: 6,
+      explanation: 'Função executada durante a renderização.',
+      tip: 'Passe apenas a referência: onClick={props.onClick}.'
+    }
+  ]
+},
+  {
+      id: 'act-10',
+      lessonId: 'lesson-1',
+      order: 9,
+      type: ActivityType.FIX_WITH_CHOICES,
+      title: 'Corrigir CheckoutPage',
+      objective: 'Resolver erro de undefined',
+      instructions: 'Escolha a melhor correção.',
+      targetFiles: ['src/pages/CheckoutPage.tsx'],
+      status: ActivityStatus.LOCKED,
+      fixOptions: [
+        {
+          id: 'fix-1',
+          code: 'const items = cart?.items;',
+          explanation: 'Evita crash mas não garante array.',
+          isCorrect: false,
+    id: 'act-9',
+    lessonId: 'lesson-1',
+    order: 9,
+    type: ActivityType.FIX_THE_CODE,
+    title: 'Corrigindo FizzBuzz',
+    objective: 'O código a seguir deveria retornar a string correta para FizzBuzz, mas está incompleto.',
+    instructions: `A função abaixo deveria:
+- retornar "Fizz" quando o número for múltiplo de 3
+- retornar "Buzz" quando múltiplo de 5
+- retornar "FizzBuzz" quando múltiplo de 15
+- retornar o próprio número como string nos demais casos
+
+Corrija o algoritmo para que todos os testes passem.`,
+    targetFiles: ['src/utils/fizzbuzz.ts'],
+    status: ActivityStatus.LOCKED,
+    aiGeneratedCode: `export function fizzbuzz(n: number): string {
+  let result = '';
+  if (n % 3 === 0) result += 'Fizz';
+  if (n % 5 === 0) result += 'Buzz';
+  return result;
+}`,
+    testCases: [
+      { description: 'n=3 retorna Fizz', input: '3', expectedOutput: 'Fizz' },
+      { description: 'n=5 retorna Buzz', input: '5', expectedOutput: 'Buzz' },
+      { description: 'n=15 retorna FizzBuzz', input: '15', expectedOutput: 'FizzBuzz' },
+    ],
   },
   {
     id: 'act-10',
     lessonId: 'lesson-1',
-    order: 1,
+    order: 10,
     type: ActivityType.FIX_WITH_CHOICES,
     title: 'Corrigir CheckoutPage',
     objective: 'Resolver erro de undefined',
     instructions: 'Escolha a melhor correção.',
+    targetFiles: ['src/pages/CheckoutPage.tsx'],
     status: ActivityStatus.LOCKED,
-    targetFiles: ['CheckoutPage.tsx'],
-    aiGeneratedCode: `
-    const items = cart.items;
-    return items.map(item => <Item key={item.id} />);
-      `,
-    options: [
+    fixOptions: [
       {
         id: 'fix-1',
         code: 'const items = cart?.items;',
@@ -352,5 +495,135 @@ export function PromoBadge() {
         isCorrect: false,
       }
     ]
+  },
+  {
+    id: 'act-11',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.BEST_IMPLEMENTATION,
+    title: 'Escolha a Melhor Implementação',
+    objective: 'Analise as implementações da função de filtro e escolha a mais eficiente.',
+    instructions: `Três devs implementaram a mesma função de filtro de produtos.
+
+Analise cada versão considerando:
+- Complexidade de tempo e espaço
+- Legibilidade
+- Linhas de código
+
+Escolha a implementação que você levaria para produção.`,
+    targetFiles: ['src/utils/filterProducts.ts'],
+    status: ActivityStatus.LOCKED,
+    bestOption: [
+      {
+        id: 'impl-1',
+        code: `function filterProducts(products: Product[], query: string): Product[] {
+  const result: Product[] = [];
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+      result.push(products[i]);
+    }
   }
+  return result;
+}`,
+        metrics: {
+          timeComplexity: 'O(n)',
+          spaceComplexity: 'O(k)',
+          linesOfCode: 8,
+          readability: 2,
+        },
+        explanation: 'Loop imperativo com indexOf. Funciona, mas verboso e recalcula toLowerCase a cada iteração.',
+      },
+      {
+        id: 'impl-2',
+        code: `function filterProducts(products: Product[], query: string): Product[] {
+  const lowerQuery = query.toLowerCase();
+  return products.filter(p => p.name.toLowerCase().includes(lowerQuery));
+}`,
+        metrics: {
+          timeComplexity: 'O(n)',
+          spaceComplexity: 'O(k)',
+          linesOfCode: 3,
+          readability: 5,
+        },
+        explanation: 'Usa filter + includes de forma declarativa. Otimiza o toLowerCase do query fora do loop.',
+      },
+      {
+        id: 'impl-3',
+        code: `function filterProducts(products: Product[], query: string): Product[] {
+  const lowerQuery = query.toLowerCase();
+  return products.reduce((acc: Product[], p) => {
+    if (p.name.toLowerCase().includes(lowerQuery)) acc.push(p);
+    return acc;
+  }, []);
+}`,
+        metrics: {
+          timeComplexity: 'O(n)',
+          spaceComplexity: 'O(k)',
+          linesOfCode: 6,
+          readability: 3,
+        },
+        explanation: 'Usa reduce desnecessariamente para o que é essencialmente um filter — mais complexo sem ganho.',
+    id: 'act-20',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.REPL_CHALLENGE,
+    title: 'Primeiros Passos com Git',
+    objective: 'Inicialize um repositório e faça seu primeiro commit.',
+    instructions: `Você acabou de criar o projeto BoxShop localmente.\n\nAgora precisa versionar o código usando Git.\n\nExecute os comandos na ordem correta para inicializar o repositório e registrar o primeiro commit.`,
+    targetFiles: ['.git/'],
+    status: ActivityStatus.LOCKED,
+    initialPrompt: '$ ',
+    commands: [
+      {
+        command: 'git init',
+        description: 'Inicializa o repositório Git local',
+        output: 'Initialized empty Git repository in /boxshop/.git/',
+        validation: 'exact',
+      },
+      {
+        command: 'git add .',
+        description: 'Adiciona todos os arquivos ao stage',
+        output: '',
+        validation: 'exact',
+      },
+      {
+        command: 'git commit -m "feat: initial commit"',
+        description: 'Cria o primeiro commit do projeto',
+        output: '[main (root-commit) a1b2c3d] feat: initial commit\n 12 files changed, 248 insertions(+)',
+        validation: 'exact',
+      },
+    ],
+  },
+  {
+    id: 'act-11',
+    lessonId: 'lesson-1',
+    order: 11,
+    type: ActivityType.STEP_THROUGH,
+    title: 'Simulação de Execução de Código',
+    aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
+    objective: 'Componente interativo onde o usuário simula execução passo a passo do código.',
+    instructions: `Pergunta: "Qual o valor de X agora?" Input para resposta a cada step`,
+    targetFiles: [],
+    status: ActivityStatus.LOCKED,
+    steps: [
+      {
+        lineNumber: 1,
+        question: "Qual o valor de X agora?",
+        correctAnswer: "5",
+        variables: { x: 5, y: 0, z: 0 },
+      },
+      {
+        lineNumber: 2,
+        question: "Qual o valor de Y agora?",
+        correctAnswer: "10",
+        variables: { x: 5, y: 10, z: 0 },
+      },
+      {
+        lineNumber: 3,
+        question: "Qual o valor de Z agora?",
+        correctAnswer: "15",
+        variables: { x: 5, y: 10, z: 15 },
+      },
+    ],
+  },
 ];

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ActivityType } from '@/enums';
-import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug } from 'lucide-react';
+import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug, ChevronRight, Puzzle, Terminal } from 'lucide-react';
 
 interface ActivityGameCardProps {
   type: ActivityType;
@@ -22,6 +22,11 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'QUALITY REVIEW',
     color: 'text-primary'
   },
+  [ActivityType.TRUE_OR_FALSE]: {
+    icon: CheckCircle2,
+    label: 'TRUE OR FALSE',
+    color: 'text-primary'
+  },
   [ActivityType.CONSTRAINED_EDIT]: {
     icon: Scissors,
     label: 'CONSTRAINED EDIT',
@@ -37,6 +42,13 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'BREAK & FIX',
     color: 'text-destructive'
   },
+
+  [ActivityType.FIX_THE_CODE]: {
+    icon: Bug,
+    label: 'FIX THE CODE',
+    color: 'text-yellow-400'
+  },
+
   [ActivityType.VIDEO_CHALLENGE]: {
     icon: Video,
     label: 'VIDEO CHALLENGE',
@@ -47,6 +59,7 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     label: 'VISUAL IMPLEMENTATION',
     color: 'text-cyan-400'
   },
+
   [ActivityType.FIX_WITH_CHOICES]: {
     icon: Bug,
     label: 'FIX WITH CHOICES',
@@ -56,6 +69,30 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     icon: Search,
     label: 'READ AND CHOOSE',
     color: 'text-primary'
+  },
+  [ActivityType.PARSONS_PROBLEM]: {
+    icon: Puzzle,
+    label: 'PARSONS PROBLEM',
+    color: 'text-yellow-400'
+  [ActivityType.PREDICT_OUTPUT]: {
+    icon: Wrench,
+    label: 'PREDICT OUTPUT',
+    color: 'text-primary'
+  },
+    [ActivityType.REPL_CHALLENGE]: {
+    icon: Terminal,
+    label: 'TERMINAL CHALLENGE',
+    color: 'text-green-400',
+  },
+  [ActivityType.STEP_THROUGH]: {
+    icon: ChevronRight,
+    label: 'STEP THROUGH',
+    color: 'text-blue-400',
+  },
+  [ActivityType.SPOT_THE_BUG]: {
+    icon: Bug,
+    label: 'SPOT THE BUG',
+    color: 'text-orange-400'
   }
 };
 
@@ -70,9 +107,9 @@ export function ActivityGameCard({ type, title, question, children, actions }: A
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Header with type and title */}
+      {/* Header */}
       <div className="text-center mb-4 shrink-0">
-        <motion.div 
+        <motion.div
           className={`inline-flex items-center gap-2 ${config.color} mb-2`}
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
@@ -82,17 +119,18 @@ export function ActivityGameCard({ type, title, question, children, actions }: A
             {config.label}
           </span>
         </motion.div>
+
         <h1 className="font-display text-2xl font-black text-foreground">
           {title}
         </h1>
       </div>
 
-      {/* Main content area - explicit flex-1 with overflow */}
+      {/* Content */}
       <div className="flex-1 overflow-hidden flex flex-col">
         {children}
       </div>
 
-      {/* Question */}
+      {/* Question (igual à main) */}
       <div className="text-center py-4 shrink-0">
         <p className="text-lg text-muted-foreground font-medium">
           {question}
