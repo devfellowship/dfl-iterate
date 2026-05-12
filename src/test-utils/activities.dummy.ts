@@ -1,8 +1,66 @@
 import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
-
 export const activitiesData: Activity[] = [
+    {
+    id: 'act-fill-1',
+    lessonId: 'lesson-1',
+    order: 1,
+    type: ActivityType.FILL_THE_BLANKS,
+    title: 'Preenchendo o código',
+    objective: 'O código tem lacunas e precisa ser completado corretamente.',
+    instructions: `Substitua cada lacuna pelo valor correto.
+
+Sua missão:
+1. Leia o código gerado
+2. Preencha cada espaço marcado
+3. Valide até todas as lacunas ficarem corretas.`,
+    targetFiles: ['src/components/Header.tsx'],
+    status: ActivityStatus.CURRENT,
+    aiGeneratedCode: `import React from 'react';
+
+function Header() {
+  return (
+    <header className="___">
+      <img src="/logo.png" alt="___" />
+      <nav>
+        <a href="/">Home</a>
+        <a href="/products">Produtos</a>
+        <a href="/cart">Carrinho (___)</a>
+      </nav>
+    </header>
+  );
+}
+
+export default Header;`,
+    blanks: [
+      {
+        id: 'header-class',
+        line: 5,
+        startColumn: 24,
+        endColumn: 26,
+        correctAnswer: 'site-header',
+        hint: 'Use uma classe semântica para o header.',
+      },
+      {
+        id: 'header-alt',
+        line: 6,
+        startColumn: 33,
+        endColumn: 35,
+        correctAnswer: 'BoxShop',
+        hint: 'A imagem precisa de texto alternativo.',
+      },
+      {
+        id: 'header-cart-count',
+        line: 10,
+        startColumn: 35,
+        endColumn: 37,
+        correctAnswer: '3',
+        options: ['0', '1', '3', '5'],
+        hint: 'Use o valor exibido no layout atual.',
+      },
+    ],
+  },
   {
     id: 'act-11',
     lessonId: 'lesson-1',

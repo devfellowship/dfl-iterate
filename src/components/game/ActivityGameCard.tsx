@@ -12,6 +12,11 @@ interface ActivityGameCardProps {
 }
 
 const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; color: string }> = {
+  [ActivityType.FILL_THE_BLANKS]: {
+    icon: Search,
+    label: 'FILL THE BLANKS',
+    color: 'text-primary'
+  },
   [ActivityType.QUALITY_REVIEW]: {
     icon: Search,
     label: 'QUALITY REVIEW',

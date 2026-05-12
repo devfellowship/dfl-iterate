@@ -13,16 +13,16 @@ import {
   PredictOutput,
   FixTheCode,
   StepThrough,
+  FillTheBlanks,
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
 import {
-  GameHeader,
-  ProgressPills,
-  ResultModal,
-  AIHistoryDrawer,
-  LessonCompleteScreen,
-  ActivityGameCard,
+    GameHeader,
+    ProgressPills,
+    ResultModal,
+    AIHistoryDrawer,
+    LessonCompleteScreen,
 } from '@/components/game';
 import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
@@ -223,6 +223,17 @@ export default function LessonPage() {
     if (!currentActivity) return null;
 
     switch (currentActivity.type) {
+      case ActivityType.FILL_THE_BLANKS:
+        return (
+          <FillTheBlanks
+            activity={currentActivity}
+            onSubmit={(code) => {
+              handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              handleActivityComplete(currentActivity.id, 'act-2-success', true);
+            }
+          />
+        );
+              
       case ActivityType.TRUE_OR_FALSE:
         return (
           <TrueOrFalse

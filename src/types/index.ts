@@ -55,6 +55,16 @@ export interface EditableRegion {
   hint?: string;
 }
 
+export interface CodeBlank {
+  id: string;
+  line: number;
+  startColumn: number;
+  endColumn: number;
+  correctAnswer: string;
+  options?: string[];
+  hint?: string;
+}
+
 export interface VideoConfig {
   youtubeId: string;
   title: string;
@@ -105,7 +115,8 @@ export interface Activity {
   choices?: ChooseOption[];
   placeholder?: string[];
   aiGeneratedCode?: string;
-  expectedIssues?: string[];
+  blanks?: CodeBlank[];
+  expectedIsssue?: string[];
   expectedOutput?: string;
   bugLine?: number;
   xpReward?: number;

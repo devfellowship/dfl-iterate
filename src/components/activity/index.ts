@@ -11,6 +11,7 @@ export { FixTheCode } from './FixTheCode';
 export { ImageZoomModal } from './ImageZoomModal';
 export { SpotTheBug } from './SpotTheBug';
 export { FixWithChoices } from './FixWithChoices';
+export { FillTheBlanks } from './FillTheBlanks';
 export { BestImplementation } from './BestImplementation';
 export { PredictOutput } from './PredictOutput';
 export { TrueOrFalse } from './TrueOrFalse';
