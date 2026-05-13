@@ -2,7 +2,7 @@
 /// <reference types="react" />
 import { render, screen, fireEvent } from '@testing-library/react';
 import { FixTheCode } from '@/components/activity';
-import { Activity, TestResult } from '@/types';
+import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 
 const dummyActivity: Activity = {
@@ -10,19 +10,16 @@ const dummyActivity: Activity = {
   lessonId: 'test',
   order: 1,
   type: ActivityType.FIX_THE_CODE,
-  title: 'Dummy fix 01', 
+  title: 'Dummy fix 01',
   objective: '',
   instructions: 'Fix the problem',
   targetFiles: ['file.ts'],
   status: ActivityStatus.CURRENT,
   aiGeneratedCode: `const a = 1;`,
-  testCases: [
-    { description: 'always pass', input: '', expectedOutput: 'a' },
-  ],
 };
 
 describe('FixTheCode component', () => {
-  it.skip('renders editor and buttons', () => {
+  it.skip('renders editor and submit', () => {
     render(
       <FixTheCode
         activity={dummyActivity}
@@ -31,23 +28,19 @@ describe('FixTheCode component', () => {
     );
 
     expect(screen.getByText(/Dummy fix/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Run Tests/i })).toBeEnabled();
-    expect(screen.getByRole('button', { name: /Submit/i })).toBeEnabled();
+    expect(screen.getByRole('button', { name: /Enviar/i })).toBeEnabled();
   });
 
-  it.skip('runs default tests and shows results', async () => {
+  it.skip('calls onSubmit with editor contents', () => {
+    const onSubmit = vi.fn();
     render(
       <FixTheCode
         activity={dummyActivity}
-        onSubmit={() => {}}
+        onSubmit={onSubmit}
       />
     );
 
-    const runButton = screen.getByRole('button', { name: /Run Tests/i });
-    fireEvent.click(runButton);
-
-    
-    const passed = await screen.findByText('always pass');
-    expect(passed).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /Enviar/i }));
+    expect(onSubmit).toHaveBeenCalledWith(expect.stringContaining('const a = 1'));
   });
 });

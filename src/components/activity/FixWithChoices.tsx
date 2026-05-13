@@ -43,7 +43,7 @@ export function FixWithChoices({ activity, onSubmit }: FixWithChoicesProps) {
       </div>
       {/* Opções */}
       <div className="space-y-4">
-        {activity.options.map(option => (
+        {(activity.fixOptions ?? []).map(option => (
           <label
             key={option.id}
             className={`block border rounded-xl p-4 cursor-pointer transition ${

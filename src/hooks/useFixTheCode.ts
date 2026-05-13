@@ -1,39 +1,23 @@
-import { useCallback, useState } from 'react';
-import { Activity, TestResult } from '@/types';
+// Origin: agent
+import { useCallback, useEffect, useState } from 'react';
+import { Activity } from '@/types';
 
-export function useFixTheCode(
-  activity: Activity,
-  onSubmit: (fixedCode: string) => void,
-  onRunTests?: (code: string) => Promise<TestResult[]>
-) {
-  const [code, setCode] = useState(activity.aiGeneratedCode || '');
-  const [results, setResults] = useState<TestResult[]>([]);
-  const [isRunning, setIsRunning] = useState(false);
+export interface UseFixTheCodeCallbacks {
+  onSubmit: (fixedCode: string) => void;
+}
 
-  const runTests = useCallback(async () => {
-    setIsRunning(true);
-    let res: TestResult[] = [];
+/**
+ * Padrão ouro (alinhado ao `useQualityReview`): `activity` + objeto `callbacks`.
+ * Mantém só o estado do código no editor e o envio final.
+ */
+export function useFixTheCode(activity: Activity, callbacks: UseFixTheCodeCallbacks) {
+  const { onSubmit } = callbacks;
 
-    if (onRunTests) {
-      try {
-        res = await onRunTests(code);
-      } catch {
-        res = [];
-      }
-    } else {
-      res =
-        activity.testCases?.map(tc => ({
-          description: tc.description,
-          passed: code.includes(tc.expectedOutput),
-        })) || [];
+  const [code, setCode] = useState(() => activity.aiGeneratedCode ?? '');
 
-      // Simulate delay to give feedback when running tests
-      await new Promise(r => setTimeout(r, 500));
-    }
-
-    setResults(res);
-    setIsRunning(false);
-  }, [activity.testCases, code, onRunTests]);
+  useEffect(() => {
+    setCode(activity.aiGeneratedCode ?? '');
+  }, [activity.id, activity.aiGeneratedCode]);
 
   const handleSubmit = useCallback(() => {
     onSubmit(code);
@@ -42,9 +26,6 @@ export function useFixTheCode(
   return {
     code,
     setCode,
-    results,
-    isRunning,
-    runTests,
     handleSubmit,
   };
 }

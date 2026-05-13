@@ -99,8 +99,13 @@ export type bugChallenges = {
   tip: string;
 }
 
+export interface TrueFalseConfig {
+  correctAnswer: boolean;
+  explanation?: string;
+}
+
 export interface Activity {
-  trueFalseConfig: any;
+  trueFalseConfig?: TrueFalseConfig;
   id: string;
   lessonId: string;
   order: number;
@@ -116,7 +121,8 @@ export interface Activity {
   placeholder?: string[];
   aiGeneratedCode?: string;
   blanks?: CodeBlank[];
-  expectedIsssue?: string[];
+  /** Shown after "approve" in quality review when the sample has known issues */
+  expectedIssues?: string[];
   expectedOutput?: string;
   bugLine?: number;
   xpReward?: number;

@@ -230,14 +230,14 @@ export default function LessonPage() {
             onSubmit={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
               handleActivityComplete(currentActivity.id, 'act-2-success', true);
-            }
+            }}
           />
         );
               
       case ActivityType.TRUE_OR_FALSE:
         return (
           <TrueOrFalse
-            key={`${currentActivity.id}-${Date.now()}`}
+            key={currentActivity.id}
             activity={currentActivity}
             onSubmit={(answer) => {
               const isCorrect = answer === currentActivity.trueFalseConfig?.correctAnswer;
@@ -357,15 +357,6 @@ export default function LessonPage() {
         return (
           <FixTheCode
             activity={currentActivity}
-            onRunTests={async (code) => {
-              // naive local runner based on testCases
-              return (
-                currentActivity.testCases || []
-              ).map(tc => ({
-                description: tc.description,
-                passed: code.includes(tc.expectedOutput),
-              }));
-            }}
             onSubmit={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
               handleActivityComplete(currentActivity.id, 'act-7-fix-code-success', true);
@@ -394,19 +385,13 @@ export default function LessonPage() {
           <FixWithChoices
             activity={currentActivity}
             onSubmit={(selectedId) => {
-              const selected = currentActivity.fixOptions?.find(
-              f => f.id === selectedId
-              );
-
-              console.log('Current Activity:', currentActivity);
-              console.log('Activity Type:', currentActivity?.type);
+              const selected = currentActivity.fixOptions?.find(f => f.id === selectedId);
 
               handleActivityComplete(
                 currentActivity.id,
                 selected?.isCorrect ? 'act-fix-success' : 'act-fix-wrong',
                 selected?.isCorrect
               );
-
             }}
           />
         );
@@ -449,25 +434,24 @@ export default function LessonPage() {
         return (
           <PredictOutput 
             activity={currentActivity} 
-            onSubmit={(output) => {
-              handleActivityComplete(currentActivity.id);
+            onSubmit={() => {
+              handleActivityComplete(currentActivity.id, 'default-success', true);
             }}
             onError={() => {
               handleActivityComplete(currentActivity.id, 'default-failure', false);
             }}
           />
         );
-      }
 
-        case ActivityType.STEP_THROUGH:
-          return (
-            <StepThrough
-              activity={currentActivity}
-              onSubmit={(answers) => {
-                handleActivityComplete(currentActivity.id, 'act-step-through-success', true);
-              }}
-            />
-          );
+      case ActivityType.STEP_THROUGH:
+        return (
+          <StepThrough
+            activity={currentActivity}
+            onSubmit={() => {
+              handleActivityComplete(currentActivity.id, 'act-step-through-success', true);
+            }}
+          />
+        );
 
       default:
         return null;

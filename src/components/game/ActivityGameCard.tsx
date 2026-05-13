@@ -1,7 +1,20 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ActivityType } from '@/enums';
-import { Search, Scissors, GitBranch, Wrench, Video, Palette, Bug, ChevronRight, Puzzle, Terminal } from 'lucide-react';
+import {
+  Search,
+  Scissors,
+  GitBranch,
+  Wrench,
+  Video,
+  Palette,
+  Bug,
+  ChevronRight,
+  Puzzle,
+  Terminal,
+  CheckCircle2,
+  Award,
+} from 'lucide-react';
 
 interface ActivityGameCardProps {
   type: ActivityType;
@@ -73,13 +86,14 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
   [ActivityType.PARSONS_PROBLEM]: {
     icon: Puzzle,
     label: 'PARSONS PROBLEM',
-    color: 'text-yellow-400'
+    color: 'text-yellow-400',
+  },
   [ActivityType.PREDICT_OUTPUT]: {
     icon: Wrench,
     label: 'PREDICT OUTPUT',
-    color: 'text-primary'
+    color: 'text-primary',
   },
-    [ActivityType.REPL_CHALLENGE]: {
+  [ActivityType.REPL_CHALLENGE]: {
     icon: Terminal,
     label: 'TERMINAL CHALLENGE',
     color: 'text-green-400',
@@ -92,8 +106,13 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
   [ActivityType.SPOT_THE_BUG]: {
     icon: Bug,
     label: 'SPOT THE BUG',
-    color: 'text-orange-400'
-  }
+    color: 'text-orange-400',
+  },
+  [ActivityType.BEST_IMPLEMENTATION]: {
+    icon: Award,
+    label: 'BEST IMPLEMENTATION',
+    color: 'text-amber-400',
+  },
 };
 
 export function ActivityGameCard({ type, title, question, children, actions }: ActivityGameCardProps) {

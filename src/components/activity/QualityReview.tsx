@@ -1,12 +1,13 @@
-import { useState } from 'react';
+// Origin: agent
 import { Activity } from '@/types';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game';
+import { useQualityReview } from '@/hooks/useQualityReview';
 import { Check, Edit3, RefreshCw, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-interface QualityReviewProps {
+export interface QualityReviewProps {
   activity: Activity;
   onApprove: () => void;
   onRegenerate: () => void;
@@ -14,50 +15,44 @@ interface QualityReviewProps {
 }
 
 export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: QualityReviewProps) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [code, setCode] = useState(activity.aiGeneratedCode || '');
-  const [showWarning, setShowWarning] = useState(false);
-
-  const handleApprove = () => {
-    if (activity.expectedIssues && activity.expectedIssues.length > 0) {
-      setShowWarning(true);
-    }
-    onApprove();
-  };
-
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveEdit = () => {
-    onEdit(code);
-    setIsEditing(false);
-  };
+  const {
+    code,
+    setCode,
+    isEditing,
+    showWarning,
+    question,
+    enterEditMode,
+    cancelEdit,
+    saveEdit,
+    approve,
+    onRegenerate: handleRegenerate,
+    activateEditFromPreview,
+  } = useQualityReview(activity, { onApprove, onRegenerate, onEdit });
 
   return (
     <ActivityGameCard
       type={activity.type}
       title={activity.title}
-      question={isEditing ? "Salve suas edições quando terminar" : "O código está pronto para produção?"}
+      question={question}
       actions={
         isEditing ? (
           <>
-            <GameButton onClick={handleSaveEdit} variant="primary" icon={<Check className="w-5 h-5" />}>
+            <GameButton onClick={saveEdit} variant="primary" icon={<Check className="w-5 h-5" />}>
               Salvar
             </GameButton>
-            <GameButton onClick={() => setIsEditing(false)} variant="tertiary">
+            <GameButton onClick={cancelEdit} variant="tertiary">
               Cancelar
             </GameButton>
           </>
         ) : (
           <>
-            <GameButton onClick={handleApprove} variant="primary" icon={<Check className="w-5 h-5" />}>
+            <GameButton onClick={approve} variant="primary" icon={<Check className="w-5 h-5" />}>
               Aprovar
             </GameButton>
-            <GameButton onClick={handleEdit} variant="secondary" icon={<Edit3 className="w-5 h-5" />}>
+            <GameButton onClick={enterEditMode} variant="secondary" icon={<Edit3 className="w-5 h-5" />}>
               Editar
             </GameButton>
-            <GameButton onClick={onRegenerate} variant="tertiary" icon={<RefreshCw className="w-5 h-5" />}>
+            <GameButton onClick={handleRegenerate} variant="tertiary" icon={<RefreshCw className="w-5 h-5" />}>
               Regen
             </GameButton>
           </>
@@ -65,12 +60,7 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
       }
     >
       <div className="flex-1 flex flex-col gap-4 overflow-hidden">
-        {/* Code Editor - Main focus */}
-        {/* Click on editor activates edit mode for better UX */}
-        <div 
-          className="flex-1 overflow-hidden"
-          onClick={() => !isEditing && setIsEditing(true)}
-        >
+        <div className="flex-1 overflow-hidden" onClick={activateEditFromPreview}>
           <CodeEditor
             value={code}
             onChange={setCode}
@@ -80,9 +70,8 @@ export function QualityReview({ activity, onApprove, onRegenerate, onEdit }: Qua
           />
         </div>
 
-        {/* Warning - Only if shown */}
-        {showWarning && activity.expectedIssues && (
-          <motion.div 
+        {showWarning && activity.expectedIssues && activity.expectedIssues.length > 0 && (
+          <motion.div
             className="p-4 rounded-xl bg-warning/10 border-2 border-warning/30"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}

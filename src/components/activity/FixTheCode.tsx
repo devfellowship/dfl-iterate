@@ -1,6 +1,4 @@
-import React from 'react';
-import { Play, Check, X, Bug } from 'lucide-react';
-import { Activity, TestResult } from '@/types';
+import { Activity } from '@/types';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game';
@@ -9,38 +7,23 @@ import { useFixTheCode } from '@/hooks/useFixTheCode';
 export interface FixTheCodeProps {
   activity: Activity;
   onSubmit: (fixedCode: string) => void;
-  onRunTests?: (code: string) => Promise<TestResult[]>;
 }
 
-export function FixTheCode({ activity, onSubmit, onRunTests }: FixTheCodeProps) {
-  const { code, setCode, results, isRunning, runTests, handleSubmit } = useFixTheCode(
-    activity,
-    onSubmit,
-    onRunTests
-  );
+export function FixTheCode({ activity, onSubmit }: FixTheCodeProps) {
+  const { code, setCode, handleSubmit } = useFixTheCode(activity, { onSubmit });
 
   return (
     <ActivityGameCard
       type={activity.type}
       title={activity.title}
-      question="Corrija o código e valide com os testes"
+      question="Corrija o código e envie quando estiver pronto"
       actions={
-        <>
-          <GameButton
-            onClick={runTests}
-            disabled={isRunning}
-            icon={<Play className="w-5 h-5" />}
-          >
-            {isRunning ? 'Executando...' : 'Run Tests'}
-          </GameButton>
-          <GameButton onClick={handleSubmit} variant="primary">
-            Submit
-          </GameButton>
-        </>
+        <GameButton onClick={handleSubmit} variant="primary">
+          Enviar
+        </GameButton>
       }
     >
       <div className="flex-1 flex overflow-hidden">
-
         <div className="w-[70%] flex flex-col overflow-hidden">
           <div className="flex-1 overflow-hidden">
             <CodeEditor
@@ -49,23 +32,6 @@ export function FixTheCode({ activity, onSubmit, onRunTests }: FixTheCodeProps) 
               language="typescript"
               fontSize={14}
             />
-          </div>
-
-          <div className="mt-2 overflow-auto max-h-40 bg-card/30 p-2 rounded">
-            {results.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Nenhum teste executado</p>
-            ) : (
-              results.map((r, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-sm">
-                  {r.passed ? (
-                    <Check className="w-4 h-4 text-green-500" />
-                  ) : (
-                    <X className="w-4 h-4 text-red-500" />
-                  )}
-                  <span>{r.description}</span>
-                </div>
-              ))
-            )}
           </div>
         </div>
 
