@@ -626,4 +626,24 @@ Escolha a implementação que você levaria para produção.`,
       },
     ],
   },
+  {
+    id: 'act-12',
+    lessonId: 'lesson-1',
+    order: 13,
+    type: ActivityType.MATCH_PAIRS,
+    title: 'Match Pairs',
+    objective: 'Conecte cada conceito ao resultado correto.',
+    instructions: `Associe os itens da coluna da esquerda com seus pares corretos na coluna da direita.
+Você recebe feedback visual imediato:
+- Verde: par correto
+- Vermelho: par incorreto`,
+    targetFiles: ['src/context/', 'src/hooks/'],
+    status: ActivityStatus.CURRENT,
+    matchPairs: [
+      { id: 'pair-context', left: 'React Context', right: 'Compartilhar estado global' },
+      { id: 'pair-reducer', left: 'useReducer', right: 'Gerenciar transições de estado' },
+      { id: 'pair-hook', left: 'Custom Hook', right: 'Reutilizar regra de negócio' },
+      { id: 'pair-localstorage', left: 'LocalStorage', right: 'Persistir dados entre sessões' },
+    ],
+  },
 ];

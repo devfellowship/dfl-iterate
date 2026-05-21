@@ -93,6 +93,11 @@ const typeConfig: Record<ActivityType, { icon: typeof Search; label: string; col
     icon: Bug,
     label: 'SPOT THE BUG',
     color: 'text-orange-400'
+  },
+  [ActivityType.MATCH_PAIRS]: {
+    icon: Search,
+    label: 'MATCH PAIRS',
+    color: 'text-primary'
   }
 };
 

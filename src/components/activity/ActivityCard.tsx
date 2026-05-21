@@ -19,6 +19,7 @@ const typeIcons = {
   [ActivityType.DECISION_FORK]: GitFork,
   [ActivityType.BREAK_AND_FIX]: Bug,
   [ActivityType.PREDICT_OUTPUT]: Wrench,
+  [ActivityType.MATCH_PAIRS]: Search,
 };
 
 const typeLabels = {
@@ -29,6 +30,7 @@ const typeLabels = {
   [ActivityType.DECISION_FORK]: 'Decision Fork',
   [ActivityType.BREAK_AND_FIX]: 'Break & Fix',
   [ActivityType.PREDICT_OUTPUT]: 'Predict Output',
+  [ActivityType.MATCH_PAIRS]: 'Match Pairs',
 };
 
 export function ActivityCard({ activity, index, onClick, isActive }: ActivityCardProps) {

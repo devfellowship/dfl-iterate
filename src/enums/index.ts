@@ -18,6 +18,7 @@ export enum ActivityType {
   TRUE_OR_FALSE = 'true_or_false',
   REPL_CHALLENGE = 'repl_challenge',
   STEP_THROUGH = 'step_through', 
+  MATCH_PAIRS = 'match_pairs',
 }
 
 export enum ProjectStatus {
