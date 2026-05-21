@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.ORG_ADMIN_PAT }}
           script: |
             await github.rest.issues.addAssignees({
               owner: context.repo.owner,
