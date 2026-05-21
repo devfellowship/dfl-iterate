@@ -113,6 +113,7 @@ export interface Activity {
   options?: DecisionOption[]; 
   fixOptions?: FixOption[];
   choices?: ChooseOption[];
+  matchPairs?: MatchPairItem[];
   placeholder?: string[];
   aiGeneratedCode?: string;
   blanks?: CodeBlank[];
@@ -183,4 +184,11 @@ export interface TestResult {
   description: string;
   passed: boolean;
   output?: string;
+}
+
+
+export interface MatchPairItem {
+  id: string;
+  left: string;
+  right: string;
 }

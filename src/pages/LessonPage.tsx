@@ -34,6 +34,7 @@ import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoos
 import { ParsonsProblem } from '@/components/activity/ParsonsProblem';
 import { REPLChallenge } from '@/components/activity/REPLChallenge';
 import { SpotTheBug } from '@/components/activity/SpotTheBug';
+import { MatchPairs } from '@/components/organisms/MatchPairs/MatchPairs';
 
 export default function LessonPage() {        
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -457,7 +458,6 @@ export default function LessonPage() {
             }}
           />
         );
-      }
 
         case ActivityType.STEP_THROUGH:
           return (
@@ -468,6 +468,22 @@ export default function LessonPage() {
               }}
             />
           );
+          
+          case ActivityType.MATCH_PAIRS:
+            return (
+              <MatchPairs
+                activity={currentActivity}
+                onMatch={(pairId) => {
+                  handleDecision(pairId);
+                }}
+                onUnmatch={(pairId) => {
+                  handleDecision(pairId);
+                }}
+                onComplete={() => {
+                  handleActivityComplete(currentActivity.id, 'default-success', true);
+                }}
+              />
+            );
 
       default:
         return null;
