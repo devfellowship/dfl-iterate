@@ -1,3 +1,4 @@
+// Origin: agent
 import { useEffect, useMemo, useState } from 'react';
 import { Activity, CodeBlank } from '@/types';
 
@@ -6,6 +7,15 @@ export type BlankStatus = 'idle' | 'correct' | 'incorrect';
 export type CodeSegment =
     | { type: 'text'; value: string }
     | { type: 'blank'; blank: CodeBlank };
+
+export interface UseFillTheBlanksCallbacks {
+    /**
+     * Disparado em **toda** validação (sucesso e erro).
+     * Permite que a página mostre modal de certo/errado consistentemente.
+     * O aluno pode revalidar quantas vezes quiser (padrão do projeto).
+     */
+    onSubmit: (filledCode: string, isCorrect: boolean) => void;
+}
 
 const KEYWORDS = new Set([
     'const',
@@ -169,12 +179,16 @@ function replaceBlankValues(code: string, blanks: CodeBlank[], values: Record<st
     return lines.join('\n');
 }
 
-interface UseFillTheBlanksProps {
-    activity: Activity;
-    onSubmit: (filledCode: string) => void;
-}
-
-export function useFillTheBlanks({ activity, onSubmit }: UseFillTheBlanksProps) {
+/**
+ * Padrão ouro (alinhado a `useFixTheCode` / `useQualityReview`):
+ * `activity` + objeto `callbacks`.
+ *
+ * Diferença em relação aos outros tipos: `onSubmit` dispara em sucesso E em erro,
+ * porque o aluno pode revalidar quantas vezes quiser. A página decide o que
+ * persistir/avançar com base em `isCorrect`.
+ */
+export function useFillTheBlanks(activity: Activity, callbacks: UseFillTheBlanksCallbacks) {
+    const { onSubmit } = callbacks;
     const code = activity.aiGeneratedCode ?? '';
     const blanks = useMemo(() => inferBlanks(code, activity.blanks), [code, activity.blanks]);
     const codeLines = useMemo(() => buildCodeSegments(code, blanks), [code, blanks]);
@@ -230,9 +244,8 @@ export function useFillTheBlanks({ activity, onSubmit }: UseFillTheBlanksProps) 
 
         setStatuses(nextStatuses);
 
-        if (Object.values(nextStatuses).every((status) => status === 'correct')) {
-            onSubmit(filledCode);
-        }
+        const isAllCorrect = Object.values(nextStatuses).every((status) => status === 'correct');
+        onSubmit(filledCode, isAllCorrect);
     };
 
     return {

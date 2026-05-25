@@ -30,6 +30,7 @@ export function useQualityReview(activity: Activity, callbacks: UseQualityReview
     setIsEditing(true);
   }, []);
 
+  /** Atividade = fonte da verdade: descartar rascunho ao sair sem salvar (fluxo curto / bate-pronto). */
   const cancelEdit = useCallback(() => {
     setCode(activity.aiGeneratedCode ?? '');
     setIsEditing(false);

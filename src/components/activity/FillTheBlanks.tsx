@@ -8,7 +8,7 @@ export { useFillTheBlanks };
 
 interface FillTheBlanksProps {
     activity: Activity;
-    onSubmit: (filledCode: string) => void;
+    onSubmit: (filledCode: string, isCorrect: boolean) => void;
 }
 
 export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
@@ -25,7 +25,7 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
         allCorrect,
         handleChange,
         handleSubmit,
-    } = useFillTheBlanks({ activity, onSubmit });
+    } = useFillTheBlanks(activity, { onSubmit });
 
     return (
         <ActivityGameCard

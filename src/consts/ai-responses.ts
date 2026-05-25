@@ -152,4 +152,46 @@ Esta é uma lição importante: **nunca confie que dados externos existem**. Sem
 🎉 Parabéns! Você completou todas as activities desta lesson!`,
     delay: 1600,
   },
+
+  'act-fill-success': {
+    text: `✅ Todas as lacunas preenchidas corretamente.
+
+Você não só completou o código — você entendeu **por que** cada peça vai onde vai. Esse exercício treina o que mais aparece no dia a dia: ler um snippet existente e completar com o valor/símbolo certo.
+
+Próxima atividade desbloqueada.`,
+    delay: 1500,
+  },
+
+  'act-fill-failure': {
+    text: `❌ Algumas lacunas ainda não estão certas.
+
+Como revisar sem chutar:
+- Olhe o **contexto** ao redor da lacuna (o que está antes e depois?).
+- Pergunte: *"qual valor ou símbolo faz esta linha compilar e funcionar?"*
+- As lacunas em vermelho mostram exatamente quais corrigir.
+
+Ajuste e clique em **Validar código** de novo. Você pode tentar quantas vezes precisar.`,
+    delay: 1500,
+  },
+
+  'act-step-through-success': {
+    text: `✅ Você simulou a execução do código corretamente, linha por linha.
+
+Esse exercício treina o que mais diferencia um dev iniciante de um dev sênior: **rodar o código mentalmente** antes de pedir pro computador rodar.
+
+Toda vez que você revisar um PR, leia assim — passo a passo — em vez de só olhar o diff geral.`,
+    delay: 1500,
+  },
+
+  'act-step-through-failure': {
+    text: `❌ Algum dos valores não bateu com a execução real.
+
+Dica para revisar:
+- Volte ao primeiro step e confira o estado inicial das variáveis.
+- Em cada linha, pergunte: *"qual variável muda aqui e para qual valor?"*
+- Atribuição (\`=\`) acontece **depois** que o lado direito é calculado.
+
+Tente de novo — você consegue rastrear linha por linha.`,
+    delay: 1500,
+  },
 };

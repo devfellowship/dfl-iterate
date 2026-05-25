@@ -70,30 +70,51 @@ export function useActivityPage() {
     }
   }, [completeActivity, addGitLogEntry, currentActivity, triggerAIResponse]);
 
-  const handleDecision = useCallback(async (optionId: string) => {
-    const option = currentActivity?.options?.find(o => o.id === optionId);
-    if (!option || !currentActivity) return;
+  /**
+   * Grava escolha no projeto/git log apenas. Conclusão da atividade e stream de AI
+   * ficam com `handleActivityComplete` na LessonPage (modal + progresso).
+   */
+  const recordDecision = useCallback(
+    (choiceId: string) => {
+      if (!currentActivity) return;
 
-    addDecision({
-      activityId: currentActivity.id,
-      activityTitle: currentActivity.title,
-      choice: option.label,
-      timestamp: new Date(),
-      description: option.impact,
-    });
+      const fromOptions = currentActivity.options?.find((o) => o.id === choiceId);
+      if (fromOptions) {
+        addDecision({
+          activityId: currentActivity.id,
+          activityTitle: currentActivity.title,
+          choice: fromOptions.label,
+          timestamp: new Date(),
+          description: fromOptions.impact,
+        });
+        addGitLogEntry({
+          activityId: currentActivity.id,
+          message: `decision: ${fromOptions.label} escolhido`,
+          filesChanged: currentActivity.targetFiles ?? [],
+          type: 'decision',
+        });
+        return;
+      }
 
-    addGitLogEntry({
-      activityId: currentActivity.id,
-      message: `decision: ${option.label} escolhido`,
-      filesChanged: currentActivity.targetFiles,
-      type: 'decision',
-    });
-
-    const responseKey = `act-3-${optionId.replace('opt-', '')}`;
-    await triggerAIResponse(responseKey);
-    
-    completeActivity(currentActivity.id);
-  }, [currentActivity, addDecision, addGitLogEntry, triggerAIResponse, completeActivity]);
+      const fromChoices = currentActivity.choices?.find((c) => c.id === choiceId);
+      if (fromChoices) {
+        addDecision({
+          activityId: currentActivity.id,
+          activityTitle: currentActivity.title,
+          choice: fromChoices.label,
+          timestamp: new Date(),
+          description: fromChoices.description,
+        });
+        addGitLogEntry({
+          activityId: currentActivity.id,
+          message: `escolha: ${fromChoices.label}`,
+          filesChanged: currentActivity.targetFiles ?? [],
+          type: 'decision',
+        });
+      }
+    },
+    [currentActivity, addDecision, addGitLogEntry]
+  );
 
   const handleCodeSubmit = useCallback(async (code: string, filePath: string) => {
     updateFile(filePath, code);
@@ -151,7 +172,7 @@ export function useActivityPage() {
     aiResponse,
     canAdvance,
     handleActivityComplete,
-    handleDecision,
+    recordDecision,
     handleCodeSubmit,
     triggerAIResponse,
     goToNextActivity,

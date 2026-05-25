@@ -435,7 +435,7 @@ export function PromoBadge() {
 - retornar "FizzBuzz" quando múltiplo de 15
 - retornar o próprio número como string nos demais casos
 
-Corrija o algoritmo para que todos os testes passem.`,
+Corrija o algoritmo para cobrir todos os casos descritos acima.`,
     targetFiles: ['src/utils/fizzbuzz.ts'],
     status: ActivityStatus.LOCKED,
     aiGeneratedCode: `export function fizzbuzz(n: number): string {
@@ -444,11 +444,6 @@ Corrija o algoritmo para que todos os testes passem.`,
   if (n % 5 === 0) result += 'Buzz';
   return result;
 }`,
-    testCases: [
-      { description: 'n=3 retorna Fizz', input: '3', expectedOutput: 'Fizz' },
-      { description: 'n=5 retorna Buzz', input: '5', expectedOutput: 'Buzz' },
-      { description: 'n=15 retorna FizzBuzz', input: '15', expectedOutput: 'FizzBuzz' },
-    ],
   },
   {
     id: 'act-10',

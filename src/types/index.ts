@@ -133,12 +133,6 @@ export interface Activity {
   correctOrder?: string[];
   steps?: Step[];  
   bugChallenges?: bugChallenges[];
-  /** only applies when type === ActivityType.FIX_THE_CODE */
-  testCases?: {
-    input: string;
-    expectedOutput: string;
-    description: string;
-  }[];
   bestOption?: BestOption[];
   correctImplementationId?: string;
   commands?: TerminalCommandStep[];
@@ -183,10 +177,4 @@ export interface CodeBlock {
   code: string;
   indentLevel?: number;
   isDistractor?: boolean;
-}
-/** result from executing a test case */
-export interface TestResult {
-  description: string;
-  passed: boolean;
-  output?: string;
 }

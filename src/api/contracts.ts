@@ -42,11 +42,6 @@ export interface ActivityPayload {
   instructions: string;
   targetFiles: string[];
   options?: unknown[];
-  testCases?: {
-    input: string;
-    expectedOutput: string;
-    description: string;
-  }[];
 }
 
 /** Progress submission for completed activities */

@@ -75,7 +75,7 @@ export default function LessonPage() {
     project,
     gitLog,
     handleActivityComplete: originalHandleActivityComplete,
-    handleDecision,
+    recordDecision,
     handleCodeSubmit,
     triggerAIResponse,
     goToNextActivity,
@@ -227,9 +227,15 @@ export default function LessonPage() {
         return (
           <FillTheBlanks
             activity={currentActivity}
-            onSubmit={(code) => {
-              handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'act-2-success', true);
+            onSubmit={(code, isCorrect) => {
+              if (isCorrect) {
+                handleCodeSubmit(code, currentActivity.targetFiles[0]);
+              }
+              handleActivityComplete(
+                currentActivity.id,
+                isCorrect ? 'act-fill-success' : 'act-fill-failure',
+                isCorrect
+              );
             }}
           />
         );
@@ -255,7 +261,7 @@ export default function LessonPage() {
           <ReadAndChoose
             activity={currentActivity}
             onDecide={(choiceId) => {
-              handleDecision(choiceId);
+              recordDecision(choiceId);
               const isCorrect = choiceId === 'opt-list-products';
               const responseKey = isCorrect ? 'default-success' : 'default-failure';
               handleActivityComplete(currentActivity.id, responseKey, isCorrect);
@@ -305,10 +311,15 @@ export default function LessonPage() {
           <DecisionFork
             activity={currentActivity}
             onDecide={(optionId) => {
-              handleDecision(optionId);
-              const responseKey = optionId === 'context' ? 'act-3-context'
-                : optionId === 'zustand' ? 'act-3-zustand'
-                  : 'act-3-localstorage';
+              recordDecision(optionId);
+              const responseKey =
+                optionId === 'opt-context'
+                  ? 'act-3-context'
+                  : optionId === 'opt-zustand'
+                    ? 'act-3-zustand'
+                    : optionId === 'opt-localstorage'
+                      ? 'act-3-localstorage'
+                      : 'default-success';
               handleActivityComplete(currentActivity.id, responseKey, true);
             }}
           />
@@ -447,8 +458,12 @@ export default function LessonPage() {
         return (
           <StepThrough
             activity={currentActivity}
-            onSubmit={() => {
-              handleActivityComplete(currentActivity.id, 'act-step-through-success', true);
+            onSubmit={(isCorrect) => {
+              handleActivityComplete(
+                currentActivity.id,
+                isCorrect ? 'act-step-through-success' : 'act-step-through-failure',
+                isCorrect
+              );
             }}
           />
         );

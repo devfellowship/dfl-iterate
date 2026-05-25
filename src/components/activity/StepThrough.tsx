@@ -1,134 +1,93 @@
-import React, { useState } from 'react';
 import { Activity } from '@/types';
-import { CodeDisplay } from '../organisms';
-import Controls from '../molecules/Controls/Controls';
-import VariablesDisplay from '../molecules/VariablesDisplay/VariablesDisplay';
-import useStepThrough from '../../hooks/useStepThrough';
-import useCardGame from '../../hooks/useCardGame';
-import { ActivityGameCard } from '../game/ActivityGameCard'; 
-import { GameButton } from '../game/GameButton'; 
+import { ActivityGameCard, GameButton } from '@/components/game';
+import { CodeDisplay } from '@/components/organisms';
+import VariablesDisplay from '@/components/molecules/VariablesDisplay/VariablesDisplay';
+import { useStepThrough } from '@/hooks/useStepThrough';
 
 export interface StepThroughProps {
   activity: Activity;
-  onSubmit: (results: Record<number, string>) => void;
+  onSubmit: (isCorrect: boolean) => void;
 }
 
 export function StepThrough({ activity, onSubmit }: StepThroughProps) {
   const {
+    steps,
     currentStep,
-    answers,
-    handleNext: handleStepNext,
-    handleBack: handleStepBack,
-    handleAnswerChange,
     currentStepData,
-  } = useStepThrough(activity);
+    answers,
+    setAnswer,
+    goToNext,
+    goToPrevious,
+    isFirstStep,
+    isLastStep,
+    canSubmit,
+    handleSubmit,
+  } = useStepThrough(activity, { onSubmit });
 
-  const {
-    handleNext: handleCardNext,
-    handleBack: handleCardBack,
-    handleCardSelection,
-    currentCardData,
-  } = useCardGame(activity);
-
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = () => {
-    setSubmitted(true);
-    
-  };
-
-  return (
-    <div className="flex h-screen">
-      <CodeDisplay code={activity.aiGeneratedCode} currentLine={currentStep} />
-      <VariablesDisplay variables={currentStepData.variables} />
-
+  if (!currentStepData || steps.length === 0) {
+    return (
       <ActivityGameCard
         type={activity.type}
         title={activity.title}
-        question={activity.instructions}
-        actions={
-          !submitted && (
-            <GameButton
-              onClick={handleSubmit}
-              disabled={!selectedId}
-              variant="primary"
-            >
-              Confirmar correção
-            </GameButton>
-          )
-        }
+        question="Atividade sem passos configurados"
+        actions={null}
       >
-        <div className="mb-6">
-          <h3 className="font-bold mb-2">Código com erro:</h3>
-          <pre className="bg-black text-green-400 p-4 rounded-xl text-sm overflow-auto">
-            <code>{activity.aiGeneratedCode}</code>
-          </pre>
-        </div>
-        
-        <div className="space-y-4">
-          {activity.choices?.map(option => (
-            <label
-              key={option.id}
-              className={`block border rounded-xl p-4 cursor-pointer transition ${
-                selectedId === option.id
-                  ? 'border-primary ring-2 ring-primary/30'
-                  : 'border-border'
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                <input
-                  type="radio"
-                  name="fix-option"
-                  checked={selectedId === option.id}
-                  onChange={() => setSelectedId(option.id)}
-                  disabled={submitted}
-                  className="mt-1"
-                />
-
-                <div className="flex-1">
-                  <pre className="bg-muted p-3 rounded-lg text-sm overflow-auto">
-                    <code>{option.code}</code>
-                  </pre>
-
-                  {submitted && selectedId === option.id && (
-                    <p
-                      className={`mt-3 text-sm ${
-                        option.isCorrect ? 'text-green-500' : 'text-red-500'
-                      }`}
-                    >
-                      {option.explanation}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </label>
-          ))}
+        <div className="flex-1 flex items-center justify-center text-sm text-muted-foreground">
+          Esta atividade não tem `steps` no dummy.
         </div>
       </ActivityGameCard>
+    );
+  }
 
-      <div className="controls">
-        <Controls
-          onBack={() => {
-            handleStepBack();
-            handleCardBack();
-          }}
-          onNext={() => {
-            handleStepNext();
-            handleCardNext();
-          }}
-          question={currentStepData.question}
-          answer={answers[currentStep] || ''}
-          onAnswerChange={(e) => handleAnswerChange(currentStep, e.target.value)}
-          onCardSelect={(e) => handleCardSelection(currentStep, e.target.value)}
-          onSubmit={() => onSubmit(answers)}
-          cards={currentCardData.cards}
-        />
-      </div>
+  const code = activity.aiGeneratedCode ?? '';
+  const highlightedLine = (currentStepData.lineNumber ?? 1) - 1;
 
-      <div className="card-display">
-        <h2>Cartas Atuais: {currentCardData.cards.join(', ')}</h2>
+  return (
+    <ActivityGameCard
+      type={activity.type}
+      title={activity.title}
+      question={`Passo ${currentStep + 1} de ${steps.length} — ${currentStepData.question}`}
+      actions={
+        <>
+          <GameButton onClick={goToPrevious} disabled={isFirstStep} variant="tertiary">
+            Voltar
+          </GameButton>
+          {!isLastStep && (
+            <GameButton onClick={goToNext} variant="secondary">
+              Avançar
+            </GameButton>
+          )}
+          {isLastStep && (
+            <GameButton onClick={handleSubmit} disabled={!canSubmit} variant="primary">
+              Enviar
+            </GameButton>
+          )}
+        </>
+      }
+    >
+      <div className="flex-1 flex overflow-hidden gap-4">
+        <div className="w-[70%] overflow-auto rounded-lg border border-border bg-muted/30">
+          <CodeDisplay code={code} currentLine={highlightedLine} />
+        </div>
+
+        <div className="w-[30%] flex flex-col gap-4 overflow-auto">
+          <VariablesDisplay variables={currentStepData.variables ?? {}} />
+
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-bold text-foreground" htmlFor="step-answer">
+              Sua resposta
+            </label>
+            <input
+              id="step-answer"
+              type="text"
+              value={answers[currentStep] ?? ''}
+              onChange={(e) => setAnswer(currentStep, e.target.value)}
+              placeholder="Digite o valor esperado"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </ActivityGameCard>
   );
 }
