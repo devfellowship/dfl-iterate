@@ -97,6 +97,7 @@ export default Header;`,
         id: 'opt-list-products',
         label: 'Lista de produtos',
         description: 'Inicializa uma lista de produtos',
+        isCorrect: true,
       },
       {
         id: 'opt-add-product',

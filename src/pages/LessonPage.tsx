@@ -14,6 +14,7 @@ import {
   FixTheCode,
   StepThrough,
   FillTheBlanks,
+  ReadAndChoose,
 } from '@/components/activity';
 import { DynamicPreview } from '@/components/preview';
 import { GitLog } from '@/components/project';
@@ -30,7 +31,6 @@ import { lessonsData } from '@/test-utils/lessons.dummy';
 import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { BestImplementation } from '@/components/activity/BestImplementation';
-import { ReadAndChoose } from '@/components/molecules/ReadAndChoose/ReadAndChoose';
 import { ParsonsProblem } from '@/components/activity/ParsonsProblem';
 import { REPLChallenge } from '@/components/activity/REPLChallenge';
 import { SpotTheBug } from '@/components/activity/SpotTheBug';
@@ -260,11 +260,13 @@ export default function LessonPage() {
         return (
           <ReadAndChoose
             activity={currentActivity}
-            onDecide={(choiceId) => {
+            onSubmit={(choiceId, isCorrect) => {
               recordDecision(choiceId);
-              const isCorrect = choiceId === 'opt-list-products';
-              const responseKey = isCorrect ? 'default-success' : 'default-failure';
-              handleActivityComplete(currentActivity.id, responseKey, isCorrect);
+              handleActivityComplete(
+                currentActivity.id,
+                isCorrect ? 'default-success' : 'default-failure',
+                isCorrect
+              );
             }}
           />
         );

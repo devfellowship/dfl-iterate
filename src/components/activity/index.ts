@@ -16,3 +16,4 @@ export { BestImplementation } from './BestImplementation';
 export { PredictOutput } from './PredictOutput';
 export { TrueOrFalse } from './TrueOrFalse';
 export { StepThrough } from './StepThrough';
+export { ReadAndChoose } from './ReadAndChoose';

@@ -1,24 +1,19 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Activity, ChooseOption } from '@/types';
-import { Check, Sparkles } from 'lucide-react';
-import { cn } from '@devfellowship/components';
-import { ActivityGameCard } from '@/components/game';
-import { GameButton } from '@/components/game';
+import { Sparkles } from 'lucide-react';
+import { Activity } from '@/types';
+import { ActivityGameCard, GameButton } from '@/components/game';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { ChooseCard } from '@/components/atoms/ChooseCard/ChooseCard';
 import { useReadAndChoose } from '@/hooks/useReadAndChoose';
 
-
 interface ReadAndChooseProps {
   activity: Activity;
-  onDecide: (optionId: string) => void;
+  onSubmit: (choiceId: string, isCorrect: boolean) => void;
 }
 
-export function ReadAndChoose({ activity, onDecide }: ReadAndChooseProps) {
+export function ReadAndChoose({ activity, onSubmit }: ReadAndChooseProps) {
   const code = activity.aiGeneratedCode || '';
-  const { selectedOption, setSelectedOption, isConfirming, handleConfirm} =
-  useReadAndChoose({ onDecide});
+  const { selectedOption, setSelectedOption, isConfirming, handleConfirm } =
+    useReadAndChoose(activity, { onSubmit });
 
   return (
     <ActivityGameCard
@@ -26,8 +21,8 @@ export function ReadAndChoose({ activity, onDecide }: ReadAndChooseProps) {
       title={activity.title}
       question={activity.objective || ''}
       actions={
-        <GameButton 
-          onClick={handleConfirm} 
+        <GameButton
+          onClick={handleConfirm}
           disabled={!selectedOption || isConfirming}
           variant="primary"
           icon={isConfirming ? <Sparkles className="w-5 h-5 animate-pulse" /> : undefined}
@@ -62,6 +57,5 @@ export function ReadAndChoose({ activity, onDecide }: ReadAndChooseProps) {
         </div>
       </div>
     </ActivityGameCard>
-    
   );
 }
