@@ -3,21 +3,86 @@ import { ActivityType, ActivityStatus } from '@/enums';
 
 export const activitiesData: Activity[] = [
     {
-    id: 'act-fill-1',
-    lessonId: 'lesson-1',
-    order: 1,
-    type: ActivityType.FILL_THE_BLANKS,
-    title: 'Preenchendo o código',
-    objective: 'O código tem lacunas e precisa ser completado corretamente.',
-    instructions: `Substitua cada lacuna pelo valor correto.
+        id: 'act-01',
+        lessonId: 'lesson-1',
+        order: 1,
+        type: ActivityType.TRUE_OR_FALSE,
+        title: 'Verdadeiro ou Falso: Funções Puras',
+        objective: 'Teste seu conhecimento sobre funções puras em JavaScript.',
+        instructions: `Uma função pura sempre retorna o mesmo resultado para os mesmos argumentos e não produz efeitos colaterais.`,
+        targetFiles: [],
+        status: ActivityStatus.CURRENT,
+        trueFalseConfig: {
+            correctAnswer: true,
+            explanation: 'Funções puras são previsíveis e testáveis, pois não dependem de estado externo ou variáveis mutáveis.',
+        },
+    },
+    {
+        id: 'act-02',
+        lessonId: 'lesson-1',
+        order: 2,
+        type: ActivityType.READ_AND_CHOOSE,
+        title: 'O que esse trecho de código faz?',
+        objective: 'Leia o trecho e identifique o que ele faz.',
+        instructions: 'Leia o código abaixo e escolha a opção que descreve melhor o que ele faz.',
+        targetFiles: ['src/context/', 'src/hooks/'],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `const products = [
+    { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
+    { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
+    { name: 'Bandagem Elástica', price: 'R$ 29,90', emoji: '🩹' },
+    { name: 'Protetor Bucal', price: 'R$ 49,90', emoji: '😬' },
+  ];`,
+        choices: [
+            {
+                id: 'opt-list-products',
+                label: 'Lista de produtos',
+                description: 'Inicializa uma lista de produtos',
+                isCorrect: true,
+            },
+            {
+                id: 'opt-add-product',
+                label: 'Adicionar produtos',
+                description: 'Adiciona um novo produto à lista',
+            },
+            {
+                id: 'opt-iterate-products',
+                label: 'Itera sobre a lista de produtos',
+                description: 'Itera sobre a lista de produtos e exibe no console',
+            },
+        ],
+    },
+    {
+        id: 'act-03',
+        lessonId: 'lesson-1',
+        order: 3,
+        type: ActivityType.PREDICT_OUTPUT,
+        title: 'Prevendo o output',
+        objective: 'Simule mentalmente a execução do código antes de rodar.',
+        instructions: 'Leia o código abaixo e digite exatamente o que vai aparecer no console.',
+        targetFiles: ['src/pages/CheckoutPage.tsx'],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `let total = 0;
+    for (let i = 1; i <= 3; i++) {total += i;}
+    console.log(total);`,
+        expectedOutput: '6',
+    },
+    {
+        id: 'act-04',
+        lessonId: 'lesson-1',
+        order: 4,
+        type: ActivityType.FILL_THE_BLANKS,
+        title: 'Preenchendo o código',
+        objective: 'O código tem lacunas e precisa ser completado corretamente.',
+        instructions: `Substitua cada lacuna pelo valor correto.
 
 Sua missão:
 1. Leia o código gerado
 2. Preencha cada espaço marcado
 3. Valide até todas as lacunas ficarem corretas.`,
-    targetFiles: ['src/components/Header.tsx'],
-    status: ActivityStatus.CURRENT,
-    aiGeneratedCode: `import React from 'react';
+        targetFiles: ['src/components/Header.tsx'],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `import React from 'react';
 
 function Header() {
   return (
@@ -33,109 +98,91 @@ function Header() {
 }
 
 export default Header;`,
-    blanks: [
-      {
-        id: 'header-class',
-        line: 5,
-        startColumn: 24,
-        endColumn: 26,
-        correctAnswer: 'site-header',
-        hint: 'Use uma classe semântica para o header.',
-      },
-      {
-        id: 'header-alt',
-        line: 6,
-        startColumn: 33,
-        endColumn: 35,
-        correctAnswer: 'BoxShop',
-        hint: 'A imagem precisa de texto alternativo.',
-      },
-      {
-        id: 'header-cart-count',
-        line: 10,
-        startColumn: 35,
-        endColumn: 37,
-        correctAnswer: '3',
-        options: ['0', '1', '3', '5'],
-        hint: 'Use o valor exibido no layout atual.',
-      },
-    ],
-  },
-  {
-    id: 'act-11',
-    lessonId: 'lesson-1',
-    order: 11,
-    type: ActivityType.PREDICT_OUTPUT,
-    title: 'Predict Output',
-    objective: '',
-    instructions: 'Digite o que vai aparecer no console...',
-    targetFiles: ['src/pages/CheckoutPage.tsx'],
-    status: ActivityStatus.CURRENT,
-    aiGeneratedCode:`let total = 0;
-    for (let i = 1; i <= 3; i++) {total += i;}
-    console.log(total);`,
-    expectedOutput: '6'
-  },
-  {
-    id: 'act-1',
-    lessonId: 'lesson-1',
-    order: 2,
-    type: ActivityType.READ_AND_CHOOSE,
-    title: 'O que esse trecho de código faz?',
-    objective: '',
-    instructions: `É um trecho.`,
-    targetFiles: ['src/context/', 'src/hooks/'],
-    status: ActivityStatus.LOCKED,
-    aiGeneratedCode: `const products = [
-    { name: 'Luva de Boxe Pro', price: 'R$ 299,90', emoji: '🥊' },
-    { name: 'Saco de Pancada', price: 'R$ 459,90', emoji: '🎯' },
-    { name: 'Bandagem Elástica', price: 'R$ 29,90', emoji: '🩹' },
-    { name: 'Protetor Bucal', price: 'R$ 49,90', emoji: '😬' },
-  ];`,
-    choices: [
-      {
-        id: 'opt-list-products',
-        label: 'Lista de produtos',
-        description: 'Inicializa uma lista de produtos',
-        isCorrect: true,
-      },
-      {
-        id: 'opt-add-product',
-        label: 'Adicionar produtos',
-        description: 'Adiciona um novo produto à lista',
-      },
-      {
-        id: 'opt-iterate-products',
-        label: 'Itera sobre a lista de produtos',
-        description: 'Itera sobre a lista de produtos e exibe no console',
-      },
-    ],
-  },
-  {
-    id: 'act-2',
-    lessonId: 'lesson-1',
-    order: 2,
-    type: ActivityType.TRUE_OR_FALSE,
-    title: 'Verdadeiro ou Falso: Funções Puras',
-    objective: 'Teste seu conhecimento sobre funções puras em JavaScript.',
-    instructions: `Uma função pura sempre retorna o mesmo resultado para os mesmos argumentos e não produz efeitos colaterais.`,
-    targetFiles: [],
-    status: ActivityStatus.LOCKED,
-    trueFalseConfig: {
-      correctAnswer: true,
-      explanation: 'Funções puras são previsíveis e testáveis, pois não dependem de estado externo ou variáveis mutáveis.',
+        blanks: [
+            {
+                id: 'header-class',
+                line: 5,
+                startColumn: 24,
+                endColumn: 26,
+                correctAnswer: 'site-header',
+                hint: 'Use uma classe semântica para o header.',
+            },
+            {
+                id: 'header-alt',
+                line: 6,
+                startColumn: 33,
+                endColumn: 35,
+                correctAnswer: 'BoxShop',
+                hint: 'A imagem precisa de texto alternativo.',
+            },
+            {
+                id: 'header-cart-count',
+                line: 10,
+                startColumn: 35,
+                endColumn: 37,
+                correctAnswer: '3',
+                options: ['0', '1', '3', '5'],
+                hint: 'Use o valor exibido no layout atual.',
+            },
+        ],
     },
-
-
-  },
-  {
-    id: 'act-3',
-    lessonId: 'lesson-1',
-    order: 3,
-    type: ActivityType.QUALITY_REVIEW,
-    title: 'Revisão do Header Gerado',
-    objective: 'A IA gerou um componente Header para o BoxShop. Avalie se está pronto para produção.',
-    instructions: `A IA gerou o código abaixo usando Cloud Code.
+    {
+        id: 'act-05',
+        lessonId: 'lesson-1',
+        order: 5,
+        type: ActivityType.SPOT_THE_BUG,
+        title: 'Encontre o bug',
+        objective: 'Identifique a linha que contém um bug no código.',
+        instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
+        targetFiles: ['src/components/ReviewManager.tsx'],
+        status: ActivityStatus.LOCKED,
+        bugChallenges: [
+            {
+                code: `import { useState } from 'react';\nexport const FormatData = (): JSX.Element => {\nconst data: number[] = [1, 2, 3];\nif (data = null) return <span>Sem dados</span>;\nreturn <div>{data.join(', ')}</div>;\n};`,
+                bugLine: 4,
+                explanation: 'Atribuição (=) em vez de comparação.',
+                tip: 'Use === para comparar valores em condições.',
+            },
+            {
+                code: `interface User {\nname: string;\nage: number;\n}\nexport const UserCard = (props: { user?: User }): JSX.Element => {\nreturn (\n<div>\n<h2>{props.user.name}</h2>\n<p>{props.user?.age}</p>\n</div>\n);\n};`,
+                bugLine: 8,
+                explanation: 'Acesso a propriedade de objeto possivelmente undefined.',
+                tip: 'Use optional chaining (props.user?.name).',
+            },
+            {
+                code: `export const Sum = (): number => {\nconst a = 5;\nconst b = 3;\nreturn\na + b;\n};`,
+                bugLine: 4,
+                explanation: 'Quebra de linha após o return.',
+                tip: 'O JavaScript encerra o return se houver quebra de linha.',
+            },
+            {
+                code: `export const DoubledList = (): number[] => {\nconst numbers: number[] = [1, 2, 3];\nconst result = numbers.map((n: number): number => {\nn * 2;\n});\nreturn result;\n};`,
+                bugLine: 4,
+                explanation: 'Falta do return dentro do map.',
+                tip: 'Funções com {} precisam de return explícito.',
+            },
+            {
+                code: `import { useState } from 'react';\nexport const Counter = (): JSX.Element => {\nconst [value, setValue] = useState<number>(0);\nconst handleClick = (): void => {\nvalue++;\n};\nreturn <button onClick={handleClick}>{value}</button>;\n};`,
+                bugLine: 5,
+                explanation: 'Mutação direta de estado.',
+                tip: 'Use o setter: setValue(value + 1).',
+            },
+            {
+                code: `interface Props {\nonClick: () => void;\n}\nexport const Button = (props: Props): JSX.Element => {\nreturn (\n<button onClick={props.onClick()}>\nClick\n</button>\n);\n};`,
+                bugLine: 6,
+                explanation: 'Função executada durante a renderização.',
+                tip: 'Passe apenas a referência: onClick={props.onClick}.',
+            },
+        ],
+    },
+    {
+        id: 'act-06',
+        lessonId: 'lesson-1',
+        order: 6,
+        type: ActivityType.QUALITY_REVIEW,
+        title: 'Revisão do Header Gerado',
+        objective: 'A IA gerou um componente Header para o BoxShop. Avalie se está pronto para produção.',
+        instructions: `A IA gerou o código abaixo usando Cloud Code.
 
 Sua missão:
 1. Leia o código gerado
@@ -143,9 +190,9 @@ Sua missão:
 3. Decida: aprovar, pedir nova geração, ou editar manualmente
 
 Dica: Preste atenção em hardcoded values e falta de tipagem.`,
-    targetFiles: ['src/components/Header.tsx'],
-    status: ActivityStatus.LOCKED,
-    aiGeneratedCode: `import React from 'react';
+        targetFiles: ['src/components/Header.tsx'],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `import React from 'react';
 
 function Header() {
   return (
@@ -161,24 +208,239 @@ function Header() {
 }
 
 export default Header;`,
-    expectedIssues: [
-      'Sem atributo alt na imagem',
-      'Usando inline styles',
-      'Falta de semântica HTML (div ao invés de header/nav)',
-      'Número do carrinho hardcoded',
-      'Sem TypeScript types',
-    ],
-    bugLine: 14,
-    xpReward: 25,
-  },
-  {
-    id: 'act-4',
-    lessonId: 'lesson-1',
-    order: 4,
-    type: ActivityType.CONSTRAINED_EDIT,
-    title: 'Refatorando o ProductCard',
-    objective: 'O ProductCard funciona, mas tem problemas de performance. Melhore sem alterar a estrutura.',
-    instructions: `O componente ProductCard está causando re-renders desnecessários.
+        expectedIssues: [
+            'Sem atributo alt na imagem',
+            'Usando inline styles',
+            'Falta de semântica HTML (div ao invés de header/nav)',
+            'Número do carrinho hardcoded',
+            'Sem TypeScript types',
+        ],
+        bugLine: 14,
+        xpReward: 25,
+    },
+    {
+        id: 'act-07',
+        lessonId: 'lesson-1',
+        order: 7,
+        type: ActivityType.FIX_WITH_CHOICES,
+        title: 'Corrigir CheckoutPage',
+        objective: 'Escolha a correção mais segura para o erro de `undefined`.',
+        instructions: 'Escolha a melhor correção.',
+        targetFiles: ['src/pages/CheckoutPage.tsx'],
+        status: ActivityStatus.LOCKED,
+        fixOptions: [
+            {
+                id: 'fix-1',
+                code: 'const items = cart?.items;',
+                explanation: 'Evita crash mas não garante array.',
+                isCorrect: false,
+            },
+            {
+                id: 'fix-2',
+                code: 'const items = cart?.items ?? [];',
+                explanation: 'Garante array seguro mesmo se undefined.',
+                isCorrect: true,
+            },
+            {
+                id: 'fix-3',
+                code: 'try { ... } catch {}',
+                explanation: 'Esconde o erro.',
+                isCorrect: false,
+            },
+        ],
+    },
+    {
+        id: 'act-08',
+        lessonId: 'lesson-1',
+        order: 8,
+        type: ActivityType.PARSONS_PROBLEM,
+        title: 'Organize o Código do ProductCard',
+        objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
+        instructions: 'Os blocos de código estão embaralhados. Organize-os na ordem correta para criar um componente ProductCard funcional.',
+        targetFiles: [],
+        status: ActivityStatus.LOCKED,
+        codeBlocks: [
+            { id: 'b1', code: "import { Product } from '@/types';" },
+            { id: 'b2', code: 'export function ProductCard({ product }: { product: Product }) {' },
+            { id: 'b3', code: '  return (' },
+            { id: 'b4', code: '    <article className="card">' },
+            { id: 'b5', code: '      <h2>{product.name}</h2>' },
+            { id: 'b6', code: '      <p>R$ {product.price.toFixed(2)}</p>' },
+            { id: 'b7', code: '    </article>' },
+            { id: 'b8', code: '  );' },
+            { id: 'b9', code: '}' },
+        ],
+        correctOrder: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9'],
+    },
+    {
+        id: 'act-09',
+        lessonId: 'lesson-1',
+        order: 9,
+        type: ActivityType.STEP_THROUGH,
+        title: 'Simulação de Execução de Código',
+        objective: 'Componente interativo onde o usuário simula execução passo a passo do código.',
+        instructions: `Pergunta: "Qual o valor de X agora?" Input para resposta a cada step`,
+        targetFiles: [],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
+        steps: [
+            {
+                lineNumber: 1,
+                question: 'Qual o valor de X agora?',
+                correctAnswer: '5',
+                variables: { x: 5, y: 0, z: 0 },
+            },
+            {
+                lineNumber: 2,
+                question: 'Qual o valor de Y agora?',
+                correctAnswer: '10',
+                variables: { x: 5, y: 10, z: 0 },
+            },
+            {
+                lineNumber: 3,
+                question: 'Qual o valor de Z agora?',
+                correctAnswer: '15',
+                variables: { x: 5, y: 10, z: 15 },
+            },
+        ],
+    },
+    {
+        id: 'act-10',
+        lessonId: 'lesson-1',
+        order: 10,
+        type: ActivityType.DECISION_FORK,
+        title: 'Arquitetura de Estado',
+        objective: 'O projeto vai crescer. Escolha como gerenciar o estado do carrinho.',
+        instructions: `O BoxShop precisa de gerenciamento de estado para o carrinho.
+
+Analise as opções e escolha uma abordagem. Sua decisão afetará as próximas activities e a estrutura do projeto.
+
+Não existe resposta "errada" - cada opção tem trade-offs.`,
+        targetFiles: ['src/context/', 'src/hooks/'],
+        status: ActivityStatus.LOCKED,
+        options: [
+            {
+                id: 'opt-context',
+                label: 'React Context + useReducer',
+                description: 'Solução nativa do React, sem dependências extras.',
+                impact: 'Criará CartContext.tsx e useCart.ts',
+            },
+            {
+                id: 'opt-zustand',
+                label: 'Zustand',
+                description: 'Store minimalista, API simples, ótimo DX.',
+                impact: 'Criará stores/cartStore.ts',
+            },
+            {
+                id: 'opt-localstorage',
+                label: 'LocalStorage + Custom Hook',
+                description: 'Persiste automaticamente, sem setup complexo.',
+                impact: 'Criará hooks/usePersistedCart.ts',
+            },
+        ],
+    },
+    {
+        id: 'act-11',
+        lessonId: 'lesson-1',
+        order: 11,
+        type: ActivityType.BEST_IMPLEMENTATION,
+        title: 'Escolha a Melhor Implementação',
+        objective: 'Analise as implementações da função de filtro e escolha a mais eficiente.',
+        instructions: `Três devs implementaram a mesma função de filtro de produtos.
+
+Analise cada versão considerando:
+- Complexidade de tempo e espaço
+- Legibilidade
+- Linhas de código
+
+Escolha a implementação que você levaria para produção.`,
+        targetFiles: ['src/utils/filterProducts.ts'],
+        status: ActivityStatus.LOCKED,
+        bestOption: [
+            {
+                id: 'impl-1',
+                code: `function filterProducts(products: Product[], query: string): Product[] {
+  const result: Product[] = [];
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+      result.push(products[i]);
+    }
+  }
+  return result;
+}`,
+                metrics: {
+                    timeComplexity: 'O(n)',
+                    spaceComplexity: 'O(k)',
+                    linesOfCode: 8,
+                    readability: 2,
+                },
+                explanation: 'Loop imperativo com indexOf. Funciona, mas verboso e recalcula toLowerCase a cada iteração.',
+            },
+            {
+                id: 'impl-2',
+                code: `function filterProducts(products: Product[], query: string): Product[] {
+  const lowerQuery = query.toLowerCase();
+  return products.filter(p => p.name.toLowerCase().includes(lowerQuery));
+}`,
+                metrics: {
+                    timeComplexity: 'O(n)',
+                    spaceComplexity: 'O(k)',
+                    linesOfCode: 3,
+                    readability: 5,
+                },
+                explanation: 'Usa filter + includes de forma declarativa. Otimiza o toLowerCase do query fora do loop.',
+            },
+            {
+                id: 'impl-3',
+                code: `function filterProducts(products: Product[], query: string): Product[] {
+  const lowerQuery = query.toLowerCase();
+  return products.reduce((acc: Product[], p) => {
+    if (p.name.toLowerCase().includes(lowerQuery)) acc.push(p);
+    return acc;
+  }, []);
+}`,
+                metrics: {
+                    timeComplexity: 'O(n)',
+                    spaceComplexity: 'O(k)',
+                    linesOfCode: 6,
+                    readability: 3,
+                },
+                explanation: 'Usa reduce desnecessariamente para o que é essencialmente um filter — mais complexo sem ganho.',
+            },
+        ],
+        correctImplementationId: 'impl-2',
+    },
+    {
+        id: 'act-12',
+        lessonId: 'lesson-1',
+        order: 12,
+        type: ActivityType.FIX_THE_CODE,
+        title: 'Corrigindo FizzBuzz',
+        objective: 'O código a seguir deveria retornar a string correta para FizzBuzz, mas está incompleto.',
+        instructions: `A função abaixo deveria:
+- retornar "Fizz" quando o número for múltiplo de 3
+- retornar "Buzz" quando múltiplo de 5
+- retornar "FizzBuzz" quando múltiplo de 15
+- retornar o próprio número como string nos demais casos
+
+Corrija o algoritmo para cobrir todos os casos descritos acima.`,
+        targetFiles: ['src/utils/fizzbuzz.ts'],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `export function fizzbuzz(n: number): string {
+  let result = '';
+  if (n % 3 === 0) result += 'Fizz';
+  if (n % 5 === 0) result += 'Buzz';
+  return result;
+}`,
+    },
+    {
+        id: 'act-13',
+        lessonId: 'lesson-1',
+        order: 13,
+        type: ActivityType.CONSTRAINED_EDIT,
+        title: 'Refatorando o ProductCard',
+        objective: 'O ProductCard funciona, mas tem problemas de performance. Melhore sem alterar a estrutura.',
+        instructions: `O componente ProductCard está causando re-renders desnecessários.
 
 Sua missão:
 1. Identifique o problema de performance
@@ -186,79 +448,21 @@ Sua missão:
 3. Não altere a estrutura do componente
 
 Restrição: Você só pode editar as linhas 8-12 e 18-22.`,
-    targetFiles: ['src/components/ProductCard.tsx'],
-    status: ActivityStatus.LOCKED,
-    editableRegions: [
-      { startLine: 8, endLine: 12, hint: 'Memoize este cálculo' },
-      { startLine: 18, endLine: 22, hint: 'Evite criar nova função a cada render' },
-    ],
-  },
-  {
-    id: 'act-5',
-    lessonId: 'lesson-1',
-    order: 4,
-    type: ActivityType.PARSONS_PROBLEM,
-    title: 'Organize o Código do ProductCard',
-    objective: 'Arraste os blocos de código para formar um componente ProductCard funcional.',
-    instructions: 'Os blocos de código estão embaralhados. Organize-os na ordem correta para criar um componente ProductCard funcional.',
-    targetFiles: [],
-    status: ActivityStatus.LOCKED,
-    codeBlocks: [
-      { id: 'b1', code: "import { Product } from '@/types';" },
-      { id: 'b2', code: 'export function ProductCard({ product }: { product: Product }) {' },
-      { id: 'b3', code: '  return (' },
-      { id: 'b4', code: '    <article className="card">' },
-      { id: 'b5', code: '      <h2>{product.name}</h2>' },
-      { id: 'b6', code: '      <p>R$ {product.price.toFixed(2)}</p>' },
-      { id: 'b7', code: '    </article>' },
-      { id: 'b8', code: '  );' },
-      { id: 'b9', code: '}' },
-    ],
-    correctOrder: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9'],
-  },
-  {
-    id: 'act-4',
-    lessonId: 'lesson-1',
-    order: 5,
-    type: ActivityType.DECISION_FORK,
-    title: 'Arquitetura de Estado',
-    objective: 'O projeto vai crescer. Escolha como gerenciar o estado do carrinho.',
-    instructions: `O BoxShop precisa de gerenciamento de estado para o carrinho.
-
-Analise as opções e escolha uma abordagem. Sua decisão afetará as próximas activities e a estrutura do projeto.
-
-Não existe resposta "errada" - cada opção tem trade-offs.`,
-    targetFiles: ['src/context/', 'src/hooks/'],
-    status: ActivityStatus.LOCKED,
-    options: [
-      {
-        id: 'opt-context',
-        label: 'React Context + useReducer',
-        description: 'Solução nativa do React, sem dependências extras.',
-        impact: 'Criará CartContext.tsx e useCart.ts',
-      },
-      {
-        id: 'opt-zustand',
-        label: 'Zustand',
-        description: 'Store minimalista, API simples, ótimo DX.',
-        impact: 'Criará stores/cartStore.ts',
-      },
-      {
-        id: 'opt-localstorage',
-        label: 'LocalStorage + Custom Hook',
-        description: 'Persiste automaticamente, sem setup complexo.',
-        impact: 'Criará hooks/usePersistedCart.ts',
-      },
-    ],
-  },
-  {
-    id: 'act-6',
-    lessonId: 'lesson-1',
-    order: 6,
-    type: ActivityType.BREAK_AND_FIX,
-    title: 'Debug: Checkout Quebrado',
-    objective: 'Uma mudança automática quebrou o checkout. Encontre e corrija o problema.',
-    instructions: `⚠️ PROJETO QUEBRADO
+        targetFiles: ['src/components/ProductCard.tsx'],
+        status: ActivityStatus.LOCKED,
+        editableRegions: [
+            { startLine: 8, endLine: 12, hint: 'Memoize este cálculo' },
+            { startLine: 18, endLine: 22, hint: 'Evite criar nova função a cada render' },
+        ],
+    },
+    {
+        id: 'act-14',
+        lessonId: 'lesson-1',
+        order: 14,
+        type: ActivityType.BREAK_AND_FIX,
+        title: 'Debug: Checkout Quebrado',
+        objective: 'Uma mudança automática quebrou o checkout. Encontre e corrija o problema.',
+        instructions: `⚠️ PROJETO QUEBRADO
 
 Uma atualização de dependências causou erro no checkout.
 O build está falhando.
@@ -269,9 +473,9 @@ Sua missão:
 3. Corrija o código para o projeto voltar a funcionar
 
 Erro atual: "TypeError: Cannot read property 'map' of undefined"`,
-    targetFiles: ['src/pages/CheckoutPage.tsx'],
-    status: ActivityStatus.LOCKED,
-    aiGeneratedCode: `// Código com bug intencional
+        targetFiles: ['src/pages/CheckoutPage.tsx'],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `// Código com bug intencional
 import { useCart } from '@/hooks/useCart';
 
 export function CheckoutPage() {
@@ -292,18 +496,18 @@ export function CheckoutPage() {
     </div>
   );
 }`,
-  },
-  {
-    id: 'act-7',
-    lessonId: 'lesson-1',
-    order: 7,
-    type: ActivityType.VIDEO_CHALLENGE,
-    title: 'Aprenda useMemo na Prática',
-    objective: 'Assista como um dev sênior otimiza performance e aplique o mesmo pattern.',
-    instructions: 'Após assistir o vídeo, implemente useMemo no componente para evitar recálculos desnecessários.',
-    targetFiles: ['src/components/ProductList.tsx'],
-    status: ActivityStatus.LOCKED,
-    aiGeneratedCode: `import { useState } from 'react';
+    },
+    {
+        id: 'act-15',
+        lessonId: 'lesson-1',
+        order: 15,
+        type: ActivityType.VIDEO_CHALLENGE,
+        title: 'Aprenda useMemo na Prática',
+        objective: 'Assista como um dev sênior otimiza performance e aplique o mesmo pattern.',
+        instructions: 'Após assistir o vídeo, implemente useMemo no componente para evitar recálculos desnecessários.',
+        targetFiles: ['src/components/ProductList.tsx'],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `import { useState } from 'react';
 
 interface Product {
   id: string;
@@ -336,23 +540,23 @@ export function ProductList({ products }: { products: Product[] }) {
     </div>
   );
 }`,
-    videoConfig: {
-      youtubeId: 'ohrTAqng3uo',
-      title: 'Arquitetura final do seu E-Commerce de Boxe',
-      duration: '10:38',
+        videoConfig: {
+            youtubeId: 'ohrTAqng3uo',
+            title: 'Arquitetura final do seu E-Commerce de Boxe',
+            duration: '10:38',
+        },
     },
-  },
-  {
-    id: 'act-8',
-    lessonId: 'lesson-1',
-    order: 8,
-    type: ActivityType.VISUAL_IMPLEMENTATION,
-    title: 'Implemente o Badge de Promoção',
-    objective: 'Veja o design do badge de "PROMOÇÃO" e implemente o CSS.',
-    instructions: 'A imagem mostra como o badge deve ficar. Escreva o CSS/JSX para replicar o design.',
-    targetFiles: ['src/components/PromoBadge.tsx'],
-    status: ActivityStatus.LOCKED,
-    aiGeneratedCode: `// Implemente o badge de promoção
+    {
+        id: 'act-16',
+        lessonId: 'lesson-1',
+        order: 16,
+        type: ActivityType.VISUAL_IMPLEMENTATION,
+        title: 'Implemente o Badge de Promoção',
+        objective: 'Veja o design do badge de "PROMOÇÃO" e implemente o CSS.',
+        instructions: 'A imagem mostra como o badge deve ficar. Escreva o CSS/JSX para replicar o design.',
+        targetFiles: ['src/components/PromoBadge.tsx'],
+        status: ActivityStatus.LOCKED,
+        aiGeneratedCode: `// Implemente o badge de promoção
 export function PromoBadge() {
   return (
     <span className="promo-badge">
@@ -367,249 +571,46 @@ export function PromoBadge() {
 // - Texto branco em caps
 // - Sombra suave
 // - Animação pulse sutil`,
-    visualConfig: {
-      imageUrl: 'https://placehold.co/400x120/dc2626/ffffff?text=🔥+PROMOÇÃO+-50%25&font=montserrat',
-      caption: 'Badge de promoção - Design aprovado',
-      expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',      
-    },
-  },
-  
-  {
-  id: 'act-8',
-  lessonId: 'lesson-1',
-  order: 7,
-  type: ActivityType.SPOT_THE_BUG,
-  title: 'Spot the Bug',
-  objective: 'Identify the line that contains a bug in the code.',
-  instructions: 'Encontre a linha que contém o bug no código abaixo e clique em confirmar.',
-  targetFiles: ['src/components/ReviewManager.tsx'],
-  status: ActivityStatus.LOCKED,
-  bugChallenges: [
-    {
-      code: `import { useState } from 'react';\nexport const FormatData = (): JSX.Element => {\nconst data: number[] = [1, 2, 3];\nif (data = null) return <span>Sem dados</span>;\nreturn <div>{data.join(', ')}</div>;\n};`,
-      bugLine: 4,
-      explanation: 'Atribuição (=) em vez de comparação.',
-      tip: 'Use === para comparar valores em condições.'
-    },
-    {
-      code: `interface User {\nname: string;\nage: number;\n}\nexport const UserCard = (props: { user?: User }): JSX.Element => {\nreturn (\n<div>\n<h2>{props.user.name}</h2>\n<p>{props.user?.age}</p>\n</div>\n);\n};`,
-      bugLine: 8,
-      explanation: 'Acesso a propriedade de objeto possivelmente undefined.',
-      tip: 'Use optional chaining (props.user?.name).'
-    },
-    {
-      code: `export const Sum = (): number => {\nconst a = 5;\nconst b = 3;\nreturn\na + b;\n};`,
-      bugLine: 4,
-      explanation: 'Quebra de linha após o return.',
-      tip: 'O JavaScript encerra o return se houver quebra de linha.'
-    },
-    {
-      code: `export const DoubledList = (): number[] => {\nconst numbers: number[] = [1, 2, 3];\nconst result = numbers.map((n: number): number => {\nn * 2;\n});\nreturn result;\n};`,
-      bugLine: 4,
-      explanation: 'Falta do return dentro do map.',
-      tip: 'Funções com {} precisam de return explícito.'
-    },
-    {
-      code: `import { useState } from 'react';\nexport const Counter = (): JSX.Element => {\nconst [value, setValue] = useState<number>(0);\nconst handleClick = (): void => {\nvalue++;\n};\nreturn <button onClick={handleClick}>{value}</button>;\n};`,
-      bugLine: 5,
-      explanation: 'Mutação direta de estado.',
-      tip: 'Use o setter: setValue(value + 1).'
-    },
-    {
-      code: `interface Props {\nonClick: () => void;\n}\nexport const Button = (props: Props): JSX.Element => {\nreturn (\n<button onClick={props.onClick()}>\nClick\n</button>\n);\n};`,
-      bugLine: 6,
-      explanation: 'Função executada durante a renderização.',
-      tip: 'Passe apenas a referência: onClick={props.onClick}.'
-    }
-  ]
-},
-  {
-    id: 'act-9',
-    lessonId: 'lesson-1',
-    order: 8,
-    type: ActivityType.FIX_THE_CODE,
-    title: 'Corrigindo FizzBuzz',
-    objective: 'O código a seguir deveria retornar a string correta para FizzBuzz, mas está incompleto.',
-    instructions: `A função abaixo deveria:
-- retornar "Fizz" quando o número for múltiplo de 3
-- retornar "Buzz" quando múltiplo de 5
-- retornar "FizzBuzz" quando múltiplo de 15
-- retornar o próprio número como string nos demais casos
-
-Corrija o algoritmo para cobrir todos os casos descritos acima.`,
-    targetFiles: ['src/utils/fizzbuzz.ts'],
-    status: ActivityStatus.LOCKED,
-    aiGeneratedCode: `export function fizzbuzz(n: number): string {
-  let result = '';
-  if (n % 3 === 0) result += 'Fizz';
-  if (n % 5 === 0) result += 'Buzz';
-  return result;
-}`,
-  },
-  {
-    id: 'act-10',
-    lessonId: 'lesson-1',
-    order: 9,
-    type: ActivityType.FIX_WITH_CHOICES,
-    title: 'Corrigir CheckoutPage',
-    objective: 'Resolver erro de undefined',
-    instructions: 'Escolha a melhor correção.',
-    targetFiles: ['src/pages/CheckoutPage.tsx'],
-    status: ActivityStatus.LOCKED,
-    fixOptions: [
-      {
-        id: 'fix-1',
-        code: 'const items = cart?.items;',
-        explanation: 'Evita crash mas não garante array.',
-        isCorrect: false,
-      },
-      {
-        id: 'fix-2',
-        code: 'const items = cart?.items ?? [];',
-        explanation: 'Garante array seguro mesmo se undefined.',
-        isCorrect: true,
-      },
-      {
-        id: 'fix-3',
-        code: 'try { ... } catch {}',
-        explanation: 'Esconde o erro.',
-        isCorrect: false,
-      },
-    ],
-  },
-  {
-    id: 'act-11',
-    lessonId: 'lesson-1',
-    order: 11,
-    type: ActivityType.BEST_IMPLEMENTATION,
-    title: 'Escolha a Melhor Implementação',
-    objective: 'Analise as implementações da função de filtro e escolha a mais eficiente.',
-    instructions: `Três devs implementaram a mesma função de filtro de produtos.
-
-Analise cada versão considerando:
-- Complexidade de tempo e espaço
-- Legibilidade
-- Linhas de código
-
-Escolha a implementação que você levaria para produção.`,
-    targetFiles: ['src/utils/filterProducts.ts'],
-    status: ActivityStatus.LOCKED,
-    bestOption: [
-      {
-        id: 'impl-1',
-        code: `function filterProducts(products: Product[], query: string): Product[] {
-  const result: Product[] = [];
-  for (let i = 0; i < products.length; i++) {
-    if (products[i].name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
-      result.push(products[i]);
-    }
-  }
-  return result;
-}`,
-        metrics: {
-          timeComplexity: 'O(n)',
-          spaceComplexity: 'O(k)',
-          linesOfCode: 8,
-          readability: 2,
+        visualConfig: {
+            imageUrl: 'https://placehold.co/400x120/dc2626/ffffff?text=🔥+PROMOÇÃO+-50%25&font=montserrat',
+            caption: 'Badge de promoção - Design aprovado',
+            expectedOutput: 'Badge vermelho com texto branco, sombra e animação pulse',
         },
-        explanation: 'Loop imperativo com indexOf. Funciona, mas verboso e recalcula toLowerCase a cada iteração.',
-      },
-      {
-        id: 'impl-2',
-        code: `function filterProducts(products: Product[], query: string): Product[] {
-  const lowerQuery = query.toLowerCase();
-  return products.filter(p => p.name.toLowerCase().includes(lowerQuery));
-}`,
-        metrics: {
-          timeComplexity: 'O(n)',
-          spaceComplexity: 'O(k)',
-          linesOfCode: 3,
-          readability: 5,
-        },
-        explanation: 'Usa filter + includes de forma declarativa. Otimiza o toLowerCase do query fora do loop.',
-      },
-      {
-        id: 'impl-3',
-        code: `function filterProducts(products: Product[], query: string): Product[] {
-  const lowerQuery = query.toLowerCase();
-  return products.reduce((acc: Product[], p) => {
-    if (p.name.toLowerCase().includes(lowerQuery)) acc.push(p);
-    return acc;
-  }, []);
-}`,
-        metrics: {
-          timeComplexity: 'O(n)',
-          spaceComplexity: 'O(k)',
-          linesOfCode: 6,
-          readability: 3,
-        },
-        explanation: 'Usa reduce desnecessariamente para o que é essencialmente um filter — mais complexo sem ganho.',
-      },
-    ],
-    correctImplementationId: 'impl-2',
-  },
-  {
-    id: 'act-20',
-    lessonId: 'lesson-1',
-    order: 12,
-    type: ActivityType.REPL_CHALLENGE,
-    title: 'Primeiros Passos com Git',
-    objective: 'Inicialize um repositório e faça seu primeiro commit.',
-    instructions: `Você acabou de criar o projeto BoxShop localmente.\n\nAgora precisa versionar o código usando Git.\n\nExecute os comandos na ordem correta para inicializar o repositório e registrar o primeiro commit.`,
-    targetFiles: ['.git/'],
-    status: ActivityStatus.LOCKED,
-    initialPrompt: '$ ',
-    commands: [
-      {
-        command: 'git init',
-        description: 'Inicializa o repositório Git local',
-        output: 'Initialized empty Git repository in /boxshop/.git/',
-        validation: 'exact',
-      },
-      {
-        command: 'git add .',
-        description: 'Adiciona todos os arquivos ao stage',
-        output: '',
-        validation: 'exact',
-      },
-      {
-        command: 'git commit -m "feat: initial commit"',
-        description: 'Cria o primeiro commit do projeto',
-        output: '[main (root-commit) a1b2c3d] feat: initial commit\n 12 files changed, 248 insertions(+)',
-        validation: 'exact',
-      },
-    ],
-  },
-  {
-    id: 'act-21',
-    lessonId: 'lesson-1',
-    order: 13,
-    type: ActivityType.STEP_THROUGH,
-    title: 'Simulação de Execução de Código',
-    aiGeneratedCode: `let x = 5;\nlet y = 10;\nlet z = x + y;\nconsole.log(z);`,
-    objective: 'Componente interativo onde o usuário simula execução passo a passo do código.',
-    instructions: `Pergunta: "Qual o valor de X agora?" Input para resposta a cada step`,
-    targetFiles: [],
-    status: ActivityStatus.LOCKED,
-    steps: [
-      {
-        lineNumber: 1,
-        question: "Qual o valor de X agora?",
-        correctAnswer: "5",
-        variables: { x: 5, y: 0, z: 0 },
-      },
-      {
-        lineNumber: 2,
-        question: "Qual o valor de Y agora?",
-        correctAnswer: "10",
-        variables: { x: 5, y: 10, z: 0 },
-      },
-      {
-        lineNumber: 3,
-        question: "Qual o valor de Z agora?",
-        correctAnswer: "15",
-        variables: { x: 5, y: 10, z: 15 },
-      },
-    ],
-  },
+    },
+    {
+        id: 'act-17',
+        lessonId: 'lesson-1',
+        order: 17,
+        type: ActivityType.REPL_CHALLENGE,
+        title: 'Primeiros Passos com Git',
+        objective: 'Inicialize um repositório e faça seu primeiro commit.',
+        instructions: `Você acabou de criar o projeto BoxShop localmente.
+
+Agora precisa versionar o código usando Git.
+
+Execute os comandos na ordem correta para inicializar o repositório e registrar o primeiro commit.`,
+        targetFiles: ['.git/'],
+        status: ActivityStatus.LOCKED,
+        initialPrompt: '$ ',
+        commands: [
+            {
+                command: 'git init',
+                description: 'Inicializa o repositório Git local',
+                output: 'Initialized empty Git repository in /boxshop/.git/',
+                validation: 'exact',
+            },
+            {
+                command: 'git add .',
+                description: 'Adiciona todos os arquivos ao stage',
+                output: '',
+                validation: 'exact',
+            },
+            {
+                command: 'git commit -m "feat: initial commit"',
+                description: 'Cria o primeiro commit do projeto',
+                output: '[main (root-commit) a1b2c3d] feat: initial commit\n 12 files changed, 248 insertions(+)',
+                validation: 'exact',
+            },
+        ],
+    },
 ];

@@ -59,7 +59,74 @@ src/
 <!-- END GENERATED:claude/base -->
 
 <!-- BEGIN MANUAL:repo/local-notes -->
-<!-- repo-specific notes live here -->
+
+## Padrões ouro do projeto (leitura obrigatória antes de PR)
+
+O iterate tem **dois eixos de padrão** que toda nova feature deve seguir. Antes de criar arquivo novo, abra a referência e copie a estrutura.
+
+### 1. Padrão de atividade (vertical — `activity → page`)
+
+> Como uma activity comunica sucesso/erro para a `LessonPage`.
+
+**Referência:** `src/components/activity/FixTheCode.tsx` + `src/hooks/useFixTheCode.ts`
+
+Regras:
+1. **Hook** com assinatura `useFoo(activity, callbacks)`:
+   - `callbacks` é objeto (`{ onSubmit, onApprove, ... }`), nunca prop solta.
+   - `useEffect` em `[activity.id]` resetando estado interno ao trocar de atividade.
+   - Toda regra de negócio (cálculo de `isCorrect`, derivações) vive aqui.
+2. **Componente** fino, dentro de `<ActivityGameCard>`:
+   - Só consome o hook e renderiza UI.
+   - Sem `useState` de regra de negócio.
+3. **Callback `onSubmit`** dispara em sucesso **E** em erro (a página decide o modal).
+4. **Aluno pode tentar de novo** em qualquer activity — não há "game over" na 1ª tentativa.
+5. **`LessonPage` case** segue o template:
+   ```tsx
+   <Foo
+     activity={currentActivity}
+     onSubmit={(payload, isCorrect) => {
+       handleActivityComplete(
+         currentActivity.id,
+         isCorrect ? 'act-foo-success' : 'act-foo-failure',
+         isCorrect
+       );
+     }}
+   />
+   ```
+6. **Acerto vem do dado** (`activity.choices[i].isCorrect`, `activity.steps[i].correctAnswer`, etc.), nunca de string mágica na page.
+
+### 2. Padrão de dados (horizontal — `componente → service`)
+
+> Como dado externo entra na aplicação.
+
+**Referência:** `src/pages/HomePage.tsx` + `src/hooks/useLessons.ts` + `src/services/lessons.service.ts`
+
+Fluxo obrigatório:
+```
+componente → hook de query (useQuery) → service (async) → dummy/fetch
+```
+
+Regras:
+1. **Service** em `src/services/<recurso>.service.ts`:
+   - Funções `async`, sempre retornam `Promise`.
+   - Sem React (nada de hooks, JSX, useState).
+   - "Recurso não existe" = `throw new Error(...)` (React Query vira `isError`).
+2. **Query key** em `src/lib/queryKeys.ts` — factory pattern. Nunca chave string solta.
+3. **Hook de query** em `src/hooks/use<Recurso>.ts`:
+   - Só `useQuery({ queryKey, queryFn })`. Sem UI.
+   - Devolve o objeto cru do React Query (`data`, `isPending`, `isError`, `refetch`).
+4. **Componente** trata estados:
+   - `isPending` → texto/skeleton de carregamento.
+   - `isError` → mensagem + botão "Tentar de novo" (`refetch()`).
+   - Sucesso → render normal com `data`.
+
+### Convenções gerais
+
+- `// Origin: agent` no topo de arquivos gerados por IA.
+- Imports absolutos (`@/components`, `@/hooks`, etc.) — relativos só dentro da mesma feature.
+- Não criar tipo novo de `ActivityType` sem: enum + componente + hook + dummy + case em `LessonPage`.
+- Não mexer em `src/components/ui/` (shadcn/ui gerenciado).
+
 <!-- END MANUAL:repo/local-notes -->## Edge Functions
 
 Edge functions are owned by `dfl-schema`. Do NOT add or modify files under `supabase/functions/` in this repo.

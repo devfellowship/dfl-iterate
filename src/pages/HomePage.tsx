@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Lesson } from '@/types';
-import { lessonsData } from '@/test-utils/lessons.dummy';
+import { useLessons } from '@/hooks';
 import { Clock, Layers, ArrowRight } from 'lucide-react';
 import { Button } from '@devfellowship/components';
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const { data: lessons = [], isPending, isError, refetch } = useLessons();
 
   const handleStartLesson = (lessonId: string) => {
     navigate(`/lesson/${lessonId}`);
@@ -43,7 +44,7 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          {/* Lessons Grid */}
+          {/* Lessons Grid (com loading / erro) */}
           <motion.div
             className="max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
@@ -54,17 +55,29 @@ export default function HomePage() {
               Escolha uma trilha para começar
             </h2>
 
-            <div className="grid gap-6">
-              {lessonsData.map((lesson, index) => (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={lesson}
-                  index={index}
-                  onStart={() => handleStartLesson(lesson.id)}
-                />
-              ))}
-            </div>
-
+            {isPending ? (
+              <div className="text-center text-muted-foreground py-12">
+                Carregando lições...
+              </div>
+            ) : isError ? (
+              <div className="flex flex-col items-center gap-4 py-12">
+                <p className="text-muted-foreground text-center max-w-md">
+                  Não foi possível carregar as lições.
+                </p>
+                <Button onClick={() => refetch()}>Tentar de novo</Button>
+              </div>
+            ) : (
+              <div className="grid gap-6">
+                {lessons.map((lesson, index) => (
+                  <LessonCard
+                    key={lesson.id}
+                    lesson={lesson}
+                    index={index}
+                    onStart={() => handleStartLesson(lesson.id)}
+                  />
+                ))}
+              </div>
+            )}
           </motion.div>
         </div>
       </main>

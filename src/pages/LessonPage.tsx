@@ -82,7 +82,7 @@ export default function LessonPage() {
     goToActivity,
     setProjectBroken,
     setProjectOK,
-  } = useActivityPage();
+  } = useActivityPage(lessonId ?? '');
 
   // Compute completed activities for preview state
   const completedActivities = useMemo(() =>
@@ -95,18 +95,29 @@ export default function LessonPage() {
   // Dynamic preview state - based on current activity index for time travel
   const previewState = usePreviewState(currentActivityIndex, completedActivities, project.decisions);
 
-  // Handle activity completion with result modal
+  /**
+   * Orquestra a conclusão de uma atividade (modal, som, XP/lives, histórico e
+   * — apenas em caso de sucesso — desbloqueia a próxima atividade.
+   *
+   * @param activityId  Id da atividade que terminou.
+   * @param responseKey Chave em `aiMessageTemplates` / `aiResponses` para
+   *                    selecionar o feedback exibido ao aluno.
+   * @param isCorrect   Resultado da tentativa do aluno. Usado como fallback
+   *                    para `isSuccess` quando o template não cobrir a chave,
+   *                    e para gatilhar (ou não) o avanço para a próxima
+   *                    atividade. Default `true` (atividade considerada certa).
+   */
   const handleActivityComplete = useCallback((
     activityId: string,
     responseKey?: string,
-    forceSuccess: boolean = true
+    isCorrect: boolean = true
   ) => {
     const template = responseKey
       ? aiMessageTemplates[responseKey]
       : aiMessageTemplates['default-success']
       ?? aiMessageTemplates['default-failure'];
 
-    const isSuccess = template?.isSuccess ?? forceSuccess;
+    const isSuccess = template?.isSuccess ?? isCorrect;
     const feedback = template?.message ?? aiMessageTemplates['default-success'].message ?? aiMessageTemplates['default-failure'].message;
     const earnedXP = isSuccess ? 25 : 0;
     const isLastActivity = currentActivityIndex === activities.length - 1;
@@ -233,7 +244,7 @@ export default function LessonPage() {
               }
               handleActivityComplete(
                 currentActivity.id,
-                isCorrect ? 'act-fill-success' : 'act-fill-failure',
+                isCorrect ? 'fill-the-blanks-success' : 'fill-the-blanks-failure',
                 isCorrect
               );
             }}
@@ -279,7 +290,7 @@ export default function LessonPage() {
               handleActivityComplete(currentActivity.id, 'spot-the-bug-success', true)
             }
             onError={() => 
-              handleActivityComplete(currentActivity.id, 'spot-the-bug-fail', false)
+              handleActivityComplete(currentActivity.id, 'spot-the-bug-failure', false)
             }
           />
         );
@@ -288,11 +299,11 @@ export default function LessonPage() {
         return (
           <QualityReview
             activity={currentActivity}
-            onApprove={() => handleActivityComplete(currentActivity.id, 'act-1-feedback-approve', false)}
-            onRegenerate={() => triggerAIResponse('act-1-generate')}
+            onApprove={() => handleActivityComplete(currentActivity.id, 'quality-review-approve', false)}
+            onRegenerate={() => triggerAIResponse('quality-review-generate')}
             onEdit={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'act-1-feedback-edit', true);
+              handleActivityComplete(currentActivity.id, 'quality-review-edit', true);
             }}
           />
         );
@@ -303,7 +314,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onSubmit={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'act-2-success', true);
+              handleActivityComplete(currentActivity.id, 'constrained-edit-success', true);
             }}
           />
         );
@@ -316,11 +327,11 @@ export default function LessonPage() {
               recordDecision(optionId);
               const responseKey =
                 optionId === 'opt-context'
-                  ? 'act-3-context'
+                  ? 'decision-fork-context'
                   : optionId === 'opt-zustand'
-                    ? 'act-3-zustand'
+                    ? 'decision-fork-zustand'
                     : optionId === 'opt-localstorage'
-                      ? 'act-3-localstorage'
+                      ? 'decision-fork-localstorage'
                       : 'default-success';
               handleActivityComplete(currentActivity.id, responseKey, true);
             }}
@@ -335,12 +346,12 @@ export default function LessonPage() {
             at CheckoutPage (CheckoutPage.tsx:7:18)"
             onFix={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'act-4-success', true);
+              handleActivityComplete(currentActivity.id, 'break-and-fix-success', true);
             }}
             onError={() => {
-              handleActivityComplete(currentActivity.id, 'act-4-wrong', false);
+              handleActivityComplete(currentActivity.id, 'break-and-fix-failure', false);
             }}
-            onRequestHint={() => triggerAIResponse('act-4-hint')}
+            onRequestHint={() => triggerAIResponse('break-and-fix-hint')}
           />
         );
 
@@ -350,7 +361,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onComplete={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'act-5-success', true);
+              handleActivityComplete(currentActivity.id, 'video-challenge-success', true);
             }}
           />
         );
@@ -361,7 +372,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onComplete={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'act-6-success', true);
+              handleActivityComplete(currentActivity.id, 'visual-implementation-success', true);
             }}
           />
         );
@@ -372,7 +383,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onSubmit={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'act-7-fix-code-success', true);
+              handleActivityComplete(currentActivity.id, 'fix-the-code-success', true);
             }}
           />
         );
@@ -399,11 +410,12 @@ export default function LessonPage() {
             activity={currentActivity}
             onSubmit={(selectedId) => {
               const selected = currentActivity.fixOptions?.find(f => f.id === selectedId);
+              const isCorrect = Boolean(selected?.isCorrect);
 
               handleActivityComplete(
                 currentActivity.id,
-                selected?.isCorrect ? 'act-fix-success' : 'act-fix-wrong',
-                selected?.isCorrect
+                isCorrect ? 'fix-with-choices-success' : 'fix-with-choices-failure',
+                isCorrect
               );
             }}
           />
@@ -416,7 +428,7 @@ export default function LessonPage() {
             onSubmit={(executedCommands) => {
               handleActivityComplete(
                 currentActivity.id,
-                'act-terminal-success',
+                'repl-challenge-success',
                 true
               );
             }}
@@ -432,7 +444,7 @@ export default function LessonPage() {
               
               const isCorrect = JSON.stringify(orderedIds) === JSON.stringify(correctOrder);
 
-              const responseKey = isCorrect ? 'act-parsons-success' : 'act-parsons-wrong';
+              const responseKey = isCorrect ? 'parsons-problem-success' : 'parsons-problem-failure';
 
               handleActivityComplete(
                 currentActivity.id,
@@ -463,7 +475,7 @@ export default function LessonPage() {
             onSubmit={(isCorrect) => {
               handleActivityComplete(
                 currentActivity.id,
-                isCorrect ? 'act-step-through-success' : 'act-step-through-failure',
+                isCorrect ? 'step-through-success' : 'step-through-failure',
                 isCorrect
               );
             }}
@@ -475,6 +487,41 @@ export default function LessonPage() {
     }
   };
 
+  // Guards: lição inexistente ou sem atividades cadastradas.
+  // Tem que vir DEPOIS de todos os hooks acima (Rules of Hooks).
+  if (!lesson) {
+    return (
+      <div className="h-screen bg-background flex flex-col items-center justify-center gap-4 p-4">
+        <h1 className="text-2xl font-bold text-foreground">Lição não encontrada</h1>
+        <p className="text-muted-foreground text-center max-w-md">
+          Esta lição não existe ou foi removida.
+        </p>
+        <button
+          onClick={() => navigate('/')}
+          className="px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold hover:brightness-110 transition"
+        >
+          Voltar para lições
+        </button>
+      </div>
+    );
+  }
+
+  if (activities.length === 0) {
+    return (
+      <div className="h-screen bg-background flex flex-col items-center justify-center gap-4 p-4">
+        <h1 className="text-2xl font-bold text-foreground">{lesson.title}</h1>
+        <p className="text-muted-foreground text-center max-w-md">
+          Esta lição ainda não tem atividades cadastradas.
+        </p>
+        <button
+          onClick={() => navigate('/')}
+          className="px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold hover:brightness-110 transition"
+        >
+          Voltar para lições
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen bg-background flex flex-col overflow-hidden">

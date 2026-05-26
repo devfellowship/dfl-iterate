@@ -4,8 +4,8 @@ export interface AIMessageTemplate {
 }
 
 export const aiMessageTemplates: Record<string, AIMessageTemplate> = {
-  // Quality Review - Aprovou código ruim
-  'act-1-feedback-approve': {
+  // Quality Review — aprovou código ruim
+  'quality-review-approve': {
     isSuccess: false,
     message: `Você aprovou o código, mas existem alguns problemas:
 
@@ -16,9 +16,9 @@ export const aiMessageTemplates: Record<string, AIMessageTemplate> = {
 
 Dica: Na próxima vez, verifique esses pontos antes de aprovar.`,
   },
-  
-  // Quality Review - Editou manualmente
-  'act-1-feedback-edit': {
+
+  // Quality Review — editou manualmente
+  'quality-review-edit': {
     isSuccess: true,
     message: `Excelente! Você identificou os problemas e corrigiu manualmente.
 
@@ -29,9 +29,9 @@ Pontos que você melhorou:
 
 Isso é o que diferencia um dev júnior de um pleno: **revisar criticamente** o output da IA.`,
   },
-  
-  // Constrained Edit - Sucesso
-  'act-2-success': {
+
+  // Constrained Edit — sucesso
+  'constrained-edit-success': {
     isSuccess: true,
     message: `Ótimo trabalho na refatoração!
 
@@ -42,25 +42,27 @@ Você aplicou corretamente:
 Performance é crucial em listas grandes. Esses patterns vão te salvar em produção.`,
   },
 
-  'act-fix-success': {
+  // Fix With Choices — sucesso
+  'fix-with-choices-success': {
     isSuccess: true,
     message: `Excelente! 🎉
   Você identificou corretamente o problema e aplicou a solução ideal.
 
-  Continue assim!`
+  Continue assim!`,
   },
 
-  'act-fix-wrong': {
+  // Fix With Choices — falha
+  'fix-with-choices-failure': {
     isSuccess: false,
     message: `Quase lá! 😅
 
   A correção escolhida não resolve completamente o problema.
 
-  Revise a lógica e tente novamente.`
+  Revise a lógica e tente novamente.`,
   },
-  
-  // Decision Fork - Context
-  'act-3-context': {
+
+  // Decision Fork — Context
+  'decision-fork-context': {
     isSuccess: true,
     message: `Boa escolha! Context + useReducer é a abordagem nativa do React.
 
@@ -75,9 +77,9 @@ Performance é crucial em listas grandes. Esses patterns vão te salvar em produ
 
 Não existe escolha "errada" aqui - cada abordagem tem trade-offs.`,
   },
-  
-  // Decision Fork - Zustand
-  'act-3-zustand': {
+
+  // Decision Fork — Zustand
+  'decision-fork-zustand': {
     isSuccess: true,
     message: `Boa escolha! Zustand é uma opção leve e pragmática.
 
@@ -93,8 +95,8 @@ Não existe escolha "errada" aqui - cada abordagem tem trade-offs.`,
 Não existe escolha "errada" aqui - cada abordagem tem trade-offs.`,
   },
 
-  // Decision Fork - LocalStorage
-  'act-3-localstorage': {
+  // Decision Fork — LocalStorage
+  'decision-fork-localstorage': {
     isSuccess: true,
     message: `Escolha pragmática! LocalStorage + Custom Hook.
 
@@ -109,9 +111,9 @@ Não existe escolha "errada" aqui - cada abordagem tem trade-offs.`,
 
 Solução simples e eficaz para muitos casos!`,
   },
-  
-  // Break & Fix - Sucesso
-  'act-4-success': {
+
+  // Break & Fix — sucesso
+  'break-and-fix-success': {
     isSuccess: true,
     message: `Debug finalizado com sucesso! 🎉
 
@@ -122,9 +124,9 @@ Você identificou que \`items\` podia ser \`undefined\` e adicionou:
 
 Esse tipo de bug é MUITO comum quando se usa dados de APIs ou stores. Sempre valide antes de iterar!`,
   },
-  
-  // Break & Fix - Ainda quebrado
-  'act-4-wrong': {
+
+  // Break & Fix — ainda quebrado
+  'break-and-fix-failure': {
     isSuccess: false,
     message: `O projeto ainda está quebrado.
 
@@ -135,8 +137,8 @@ Isso significa que \`items\` é \`undefined\` quando o código tenta fazer \`.ma
 **Dica:** Como você pode garantir que \`items\` sempre seja um array antes de iterar?`,
   },
 
-  // Video Challenge - Sucesso
-  'act-5-success': {
+  // Video Challenge — sucesso
+  'video-challenge-success': {
     isSuccess: true,
     message: `Excelente aplicação do useMemo! 🎬
 
@@ -148,8 +150,8 @@ Você aprendeu com o vídeo e aplicou corretamente:
 Isso evita recálculos a cada re-render. Performance importa!`,
   },
 
-  // Visual Implementation - Sucesso
-  'act-6-success': {
+  // Visual Implementation — sucesso
+  'visual-implementation-success': {
     isSuccess: true,
     message: `Design implementado com sucesso! 🎨
 
@@ -160,26 +162,27 @@ Você replicou o visual de referência:
 
 Transformar design em código é uma habilidade essencial. Você está evoluindo!`,
   },
-  // Fix the Code - Sucesso
-  'act-7-fix-code-success': {
+
+  // Fix the Code — sucesso
+  'fix-the-code-success': {
     isSuccess: true,
     message: `Ótimo trabalho! Você corrigiu o algoritmo e os testes passaram.
 
 Sempre escreva casos de teste para código crítico – isso ajuda a encontrar bugs cedo!`,
   },
 
-  // Spot The Bug - Sucesso
+  // Spot The Bug — sucesso
   'spot-the-bug-success': {
     isSuccess: true,
-    message: `Excelente olho clínico! 🎉 
+    message: `Excelente olho clínico! 🎉
     
 Saber identificar esses detalhes rapidamente é uma habilidade essencial — evita bugs em produção e poupa tempo de todo o time.`,
   },
 
-  // Spot The Bug - Falha (DICAS)
-  'spot-the-bug-fail': {
+  // Spot The Bug — falha (dicas)
+  'spot-the-bug-failure': {
     isSuccess: false,
-    message: `Ops, essa linha parece estar correta. 
+    message: `Ops, essa linha parece estar correta.
     
 **Dicas para encontrar o bug:**
 • Verifique se as variáveis usadas foram realmente declaradas.

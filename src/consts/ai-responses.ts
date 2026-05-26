@@ -1,5 +1,5 @@
 export const aiResponses: Record<string, { text: string; delay: number }> = {
-  'act-1-generate': {
+  'quality-review-generate': {
     text: `Gerando componente Header para BoxShop...
 
 Analisando requisitos:
@@ -31,8 +31,8 @@ export default Header;
 ✅ Componente gerado! Revise o código antes de aprovar.`,
     delay: 2000,
   },
-  
-  'act-1-feedback-approve': {
+
+  'quality-review-approve': {
     text: `⚠️ Você aprovou o código, mas existem alguns problemas:
 
 1. **Acessibilidade**: A imagem não tem atributo \`alt\`
@@ -45,8 +45,8 @@ Dica: Na próxima vez, verifique esses pontos antes de aprovar.
 O código foi aplicado, mas considere refatorar depois.`,
     delay: 1500,
   },
-  
-  'act-1-feedback-edit': {
+
+  'quality-review-edit': {
     text: `✅ Excelente! Você identificou problemas e corrigiu manualmente.
 
 Pontos que você melhorou:
@@ -60,16 +60,7 @@ Próxima activity desbloqueada!`,
     delay: 1500,
   },
 
-  'act-2-hint': {
-    text: `💡 Dica: Para evitar recálculos desnecessários, considere usar \`useMemo\` para valores computados.
-
-Para funções que são passadas como props ou usadas em event handlers, \`useCallback\` pode ajudar a manter a referência estável.
-
-Lembre-se: otimização prematura é a raiz de todo mal, mas em componentes que re-renderizam frequentemente (como cards em uma lista), essas otimizações fazem diferença!`,
-    delay: 1200,
-  },
-
-  'act-2-success': {
+  'constrained-edit-success': {
     text: `✅ Perfeito! Você otimizou o ProductCard corretamente.
 
 Mudanças aplicadas:
@@ -80,7 +71,7 @@ O componente agora evita re-renders desnecessários. Próxima activity desbloque
     delay: 1500,
   },
 
-  'act-3-context': {
+  'decision-fork-context': {
     text: `🎯 Você escolheu React Context + useReducer
 
 Uma escolha sólida! Esta abordagem:
@@ -96,7 +87,7 @@ Criando arquivos: CartContext.tsx e useCart.ts...`,
     delay: 1800,
   },
 
-  'act-3-zustand': {
+  'decision-fork-zustand': {
     text: `🎯 Você escolheu Zustand
 
 Excelente escolha! Esta abordagem:
@@ -112,7 +103,7 @@ Criando arquivo: stores/cartStore.ts...`,
     delay: 1800,
   },
 
-  'act-3-localstorage': {
+  'decision-fork-localstorage': {
     text: `🎯 Você escolheu LocalStorage + Custom Hook
 
 Escolha pragmática! Esta abordagem:
@@ -128,7 +119,7 @@ Criando arquivo: hooks/usePersistedCart.ts...`,
     delay: 1800,
   },
 
-  'act-4-hint': {
+  'break-and-fix-hint': {
     text: `🔍 Analisando o erro...
 
 O erro "Cannot read property 'map' of undefined" indica que você está tentando iterar sobre algo que é \`undefined\`.
@@ -140,7 +131,7 @@ Dica: Quando consumimos dados de um hook ou contexto, precisamos garantir que os
     delay: 1400,
   },
 
-  'act-4-success': {
+  'break-and-fix-success': {
     text: `✅ Bug corrigido! Projeto funcionando novamente.
 
 Você aplicou defensive coding:
@@ -153,7 +144,7 @@ Esta é uma lição importante: **nunca confie que dados externos existem**. Sem
     delay: 1600,
   },
 
-  'act-fill-success': {
+  'fill-the-blanks-success': {
     text: `✅ Todas as lacunas preenchidas corretamente.
 
 Você não só completou o código — você entendeu **por que** cada peça vai onde vai. Esse exercício treina o que mais aparece no dia a dia: ler um snippet existente e completar com o valor/símbolo certo.
@@ -162,7 +153,7 @@ Próxima atividade desbloqueada.`,
     delay: 1500,
   },
 
-  'act-fill-failure': {
+  'fill-the-blanks-failure': {
     text: `❌ Algumas lacunas ainda não estão certas.
 
 Como revisar sem chutar:
@@ -174,7 +165,7 @@ Ajuste e clique em **Validar código** de novo. Você pode tentar quantas vezes 
     delay: 1500,
   },
 
-  'act-step-through-success': {
+  'step-through-success': {
     text: `✅ Você simulou a execução do código corretamente, linha por linha.
 
 Esse exercício treina o que mais diferencia um dev iniciante de um dev sênior: **rodar o código mentalmente** antes de pedir pro computador rodar.
@@ -183,7 +174,7 @@ Toda vez que você revisar um PR, leia assim — passo a passo — em vez de só
     delay: 1500,
   },
 
-  'act-step-through-failure': {
+  'step-through-failure': {
     text: `❌ Algum dos valores não bateu com a execução real.
 
 Dica para revisar:
