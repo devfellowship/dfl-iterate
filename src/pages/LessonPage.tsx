@@ -28,7 +28,7 @@ import {
 import { useActivityPage, useAIHistory, useSoundEffects, usePreviewState } from '@/hooks';
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { lessonsData } from '@/test-utils/lessons.dummy';
-import { aiMessageTemplates } from '@/test-utils/ai-messages.dummy';
+import { activityFeedback } from '@/consts/activity-feedback';
 import { FixWithChoices } from '@/components/activity/FixWithChoices';
 import { BestImplementation } from '@/components/activity/BestImplementation';
 import { ParsonsProblem } from '@/components/activity/ParsonsProblem';
@@ -96,34 +96,33 @@ export default function LessonPage() {
   const previewState = usePreviewState(currentActivityIndex, completedActivities, project.decisions);
 
   /**
-   * Orquestra a conclusão de uma atividade (modal, som, XP/lives, histórico e
-   * — apenas em caso de sucesso — desbloqueia a próxima atividade.
+   * Orquestra a conclusão de uma atividade: toca som, mostra modal, atualiza
+   * XP/lives e histórico — e, APENAS em caso de sucesso, desbloqueia a próxima.
+   *
+   * `isCorrect` é a fonte de verdade do resultado. `responseKey` serve só para
+   * escolher a MENSAGEM mostrada ao aluno. Quando `responseKey` é omitido,
+   * cai automaticamente em `default-success` / `default-failure`.
    *
    * @param activityId  Id da atividade que terminou.
-   * @param responseKey Chave em `aiMessageTemplates` / `aiResponses` para
-   *                    selecionar o feedback exibido ao aluno.
-   * @param isCorrect   Resultado da tentativa do aluno. Usado como fallback
-   *                    para `isSuccess` quando o template não cobrir a chave,
-   *                    e para gatilhar (ou não) o avanço para a próxima
-   *                    atividade. Default `true` (atividade considerada certa).
+   * @param isCorrect   Se o aluno acertou. Decide som, XP/lives e progressão.
+   * @param responseKey Chave opcional em `activityFeedback` com a mensagem
+   *                    específica a exibir. Default: `default-success`/`failure`.
    */
   const handleActivityComplete = useCallback((
     activityId: string,
+    isCorrect: boolean,
     responseKey?: string,
-    isCorrect: boolean = true
   ) => {
-    const template = responseKey
-      ? aiMessageTemplates[responseKey]
-      : aiMessageTemplates['default-success']
-      ?? aiMessageTemplates['default-failure'];
+    const key = responseKey ?? (isCorrect ? 'default-success' : 'default-failure');
+    const feedback = activityFeedback[key];
+    const fallbackKey = isCorrect ? 'default-success' : 'default-failure';
+    const message =
+      feedback?.modalMessage ?? activityFeedback[fallbackKey]?.modalMessage ?? '';
 
-    const isSuccess = template?.isSuccess ?? isCorrect;
-    const feedback = template?.message ?? aiMessageTemplates['default-success'].message ?? aiMessageTemplates['default-failure'].message;
-    const earnedXP = isSuccess ? 25 : 0;
+    const earnedXP = isCorrect ? 25 : 0;
     const isLastActivity = currentActivityIndex === activities.length - 1;
 
-    // Play sound
-    if (isSuccess) {
+    if (isCorrect) {
       if (isLastActivity) {
         playCelebration();
       } else {
@@ -134,34 +133,30 @@ export default function LessonPage() {
       playError();
     }
 
-    // Add to AI history
     addMessage({
       activityId,
       activityTitle: currentActivity?.title ?? 'Activity',
       activityOrder: currentActivityIndex + 1,
-      message: feedback,
-      isSuccess,
+      message,
+      isSuccess: isCorrect,
     });
 
-    // Update game state
-    if (isSuccess) {
+    if (isCorrect) {
       setXp(prev => prev + earnedXP);
     } else {
       setLives(prev => Math.max(0, prev - 1));
     }
 
-    // Show result modal
     setResultData({
-      isSuccess,
+      isSuccess: isCorrect,
       xpEarned: earnedXP,
-      feedback,
+      feedback: message,
       activityTitle: currentActivity?.title ?? 'Activity',
-      isLastActivity: isSuccess && isLastActivity,
+      isLastActivity: isCorrect && isLastActivity,
     });
     setShowResult(true);
 
-    // Only call original complete if success
-    if (isSuccess) {
+    if (isCorrect) {
       originalHandleActivityComplete(activityId, responseKey);
     }
   }, [currentActivity, currentActivityIndex, activities.length, addMessage, originalHandleActivityComplete, playSuccess, playError, playCelebration]);
@@ -244,8 +239,8 @@ export default function LessonPage() {
               }
               handleActivityComplete(
                 currentActivity.id,
-                isCorrect ? 'fill-the-blanks-success' : 'fill-the-blanks-failure',
-                isCorrect
+                isCorrect,
+                isCorrect ? 'fill-the-blanks-success' : 'fill-the-blanks-failure'
               );
             }}
           />
@@ -258,11 +253,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onSubmit={(answer) => {
               const isCorrect = answer === currentActivity.trueFalseConfig?.correctAnswer;
-              handleActivityComplete(
-                currentActivity.id,
-                isCorrect ? 'default-success' : 'default-failure',
-                isCorrect
-              );
+              handleActivityComplete(currentActivity.id, isCorrect);
             }}
           />
         );
@@ -273,11 +264,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onSubmit={(choiceId, isCorrect) => {
               recordDecision(choiceId);
-              handleActivityComplete(
-                currentActivity.id,
-                isCorrect ? 'default-success' : 'default-failure',
-                isCorrect
-              );
+              handleActivityComplete(currentActivity.id, isCorrect);
             }}
           />
         );
@@ -286,11 +273,11 @@ export default function LessonPage() {
         return (
           <SpotTheBug
             activity={currentActivity}
-            onSuccess={() => 
-              handleActivityComplete(currentActivity.id, 'spot-the-bug-success', true)
+            onSuccess={() =>
+              handleActivityComplete(currentActivity.id, true, 'spot-the-bug-success')
             }
-            onError={() => 
-              handleActivityComplete(currentActivity.id, 'spot-the-bug-failure', false)
+            onError={() =>
+              handleActivityComplete(currentActivity.id, false, 'spot-the-bug-failure')
             }
           />
         );
@@ -299,11 +286,11 @@ export default function LessonPage() {
         return (
           <QualityReview
             activity={currentActivity}
-            onApprove={() => handleActivityComplete(currentActivity.id, 'quality-review-approve', false)}
+            onApprove={() => handleActivityComplete(currentActivity.id, false, 'quality-review-approve')}
             onRegenerate={() => triggerAIResponse('quality-review-generate')}
             onEdit={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'quality-review-edit', true);
+              handleActivityComplete(currentActivity.id, true, 'quality-review-edit');
             }}
           />
         );
@@ -314,7 +301,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onSubmit={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'constrained-edit-success', true);
+              handleActivityComplete(currentActivity.id, true, 'constrained-edit-success');
             }}
           />
         );
@@ -332,8 +319,8 @@ export default function LessonPage() {
                     ? 'decision-fork-zustand'
                     : optionId === 'opt-localstorage'
                       ? 'decision-fork-localstorage'
-                      : 'default-success';
-              handleActivityComplete(currentActivity.id, responseKey, true);
+                      : undefined;
+              handleActivityComplete(currentActivity.id, true, responseKey);
             }}
           />
         );
@@ -346,10 +333,10 @@ export default function LessonPage() {
             at CheckoutPage (CheckoutPage.tsx:7:18)"
             onFix={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'break-and-fix-success', true);
+              handleActivityComplete(currentActivity.id, true, 'break-and-fix-success');
             }}
             onError={() => {
-              handleActivityComplete(currentActivity.id, 'break-and-fix-failure', false);
+              handleActivityComplete(currentActivity.id, false, 'break-and-fix-failure');
             }}
             onRequestHint={() => triggerAIResponse('break-and-fix-hint')}
           />
@@ -361,7 +348,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onComplete={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'video-challenge-success', true);
+              handleActivityComplete(currentActivity.id, true, 'video-challenge-success');
             }}
           />
         );
@@ -372,7 +359,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onComplete={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'visual-implementation-success', true);
+              handleActivityComplete(currentActivity.id, true, 'visual-implementation-success');
             }}
           />
         );
@@ -383,7 +370,7 @@ export default function LessonPage() {
             activity={currentActivity}
             onSubmit={(code) => {
               handleCodeSubmit(code, currentActivity.targetFiles[0]);
-              handleActivityComplete(currentActivity.id, 'fix-the-code-success', true);
+              handleActivityComplete(currentActivity.id, true, 'fix-the-code-success');
             }}
           />
         );
@@ -393,13 +380,8 @@ export default function LessonPage() {
           <BestImplementation
             activity={currentActivity}
             onSubmit={(selectedId) => {
-              handleActivityComplete(
-                currentActivity.id,
-                selectedId === currentActivity.correctImplementationId
-                  ? 'default-success'
-                  : 'default-failure',
-                selectedId === currentActivity.correctImplementationId
-              );
+              const isCorrect = selectedId === currentActivity.correctImplementationId;
+              handleActivityComplete(currentActivity.id, isCorrect);
             }}
           />
         );
@@ -414,8 +396,8 @@ export default function LessonPage() {
 
               handleActivityComplete(
                 currentActivity.id,
-                isCorrect ? 'fix-with-choices-success' : 'fix-with-choices-failure',
-                isCorrect
+                isCorrect,
+                isCorrect ? 'fix-with-choices-success' : 'fix-with-choices-failure'
               );
             }}
           />
@@ -425,12 +407,8 @@ export default function LessonPage() {
         return (
           <REPLChallenge
             activity={currentActivity}
-            onSubmit={(executedCommands) => {
-              handleActivityComplete(
-                currentActivity.id,
-                'repl-challenge-success',
-                true
-              );
+            onSubmit={() => {
+              handleActivityComplete(currentActivity.id, true, 'repl-challenge-success');
             }}
           />
         );
@@ -441,15 +419,12 @@ export default function LessonPage() {
             activity={currentActivity} 
             onSubmit={(orderedIds) => {
               const correctOrder = currentActivity.correctOrder || [];
-              
               const isCorrect = JSON.stringify(orderedIds) === JSON.stringify(correctOrder);
-
-              const responseKey = isCorrect ? 'parsons-problem-success' : 'parsons-problem-failure';
 
               handleActivityComplete(
                 currentActivity.id,
-                responseKey,
-                isCorrect
+                isCorrect,
+                isCorrect ? 'parsons-problem-success' : 'parsons-problem-failure'
               );
             }}
           />
@@ -460,10 +435,10 @@ export default function LessonPage() {
           <PredictOutput 
             activity={currentActivity} 
             onSubmit={() => {
-              handleActivityComplete(currentActivity.id, 'default-success', true);
+              handleActivityComplete(currentActivity.id, true);
             }}
             onError={() => {
-              handleActivityComplete(currentActivity.id, 'default-failure', false);
+              handleActivityComplete(currentActivity.id, false);
             }}
           />
         );
@@ -475,8 +450,8 @@ export default function LessonPage() {
             onSubmit={(isCorrect) => {
               handleActivityComplete(
                 currentActivity.id,
-                isCorrect ? 'step-through-success' : 'step-through-failure',
-                isCorrect
+                isCorrect,
+                isCorrect ? 'step-through-success' : 'step-through-failure'
               );
             }}
           />

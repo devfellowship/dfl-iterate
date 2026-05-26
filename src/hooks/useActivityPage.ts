@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { Activity } from '@/types';
 import { ActivityStatus, ActivityType, ProjectStatus } from '@/enums';
 import { activitiesData } from '@/test-utils/activities.dummy';
-import { aiResponses } from '@/consts/ai-responses';
+import { activityFeedback } from '@/consts/activity-feedback';
 import { useProject } from './useProject';
 import { useAIStreaming } from './useAIStreaming';
 
@@ -60,9 +60,9 @@ export function useActivityPage(lessonId: string) {
   );
 
   const triggerAIResponse = useCallback(async (responseKey: string) => {
-    const response = aiResponses[responseKey];
-    if (response) {
-      await streamText(response.text, 15);
+    const feedback = activityFeedback[responseKey];
+    if (feedback?.streamText) {
+      await streamText(feedback.streamText, 15);
     }
   }, [streamText]);
 
@@ -84,8 +84,8 @@ export function useActivityPage(lessonId: string) {
    *
    * Este método é chamado pela `LessonPage` APENAS quando o aluno acerta
    * a atividade — a checagem de sucesso/falha vive na página (que decide
-   * com base em `aiMessageTemplates[responseKey].isSuccess` + `isCorrect`).
-   * O hook não precisa, portanto, ser informado do resultado.
+   * com base no `isCorrect` passado para `handleActivityComplete`). O hook
+   * não precisa, portanto, ser informado do resultado.
    */
   const handleActivityComplete = useCallback(async (activityId: string, responseKey?: string) => {
     completeActivity(activityId);
