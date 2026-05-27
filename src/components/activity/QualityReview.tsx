@@ -1,4 +1,3 @@
-// Origin: agent
 import { Activity } from '@/types';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { ActivityGameCard } from '@/components/game';

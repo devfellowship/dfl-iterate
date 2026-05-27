@@ -1,4 +1,3 @@
-// Origin: agent
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Activity, Step } from '@/types';
 

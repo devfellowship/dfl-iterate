@@ -1,4 +1,3 @@
-// Origin: agent
 import { useQuery } from '@tanstack/react-query';
 import { getLessons } from '@/services';
 import { queryKeys } from '@/lib/queryKeys';
@@ -9,7 +8,7 @@ import { queryKeys } from '@/lib/queryKeys';
  * Como ler:
  *   componente  →  hook de query  →  service  →  (dummy / fetch)
  *
- * Regras desta camada (replicar igualzinho para qualquer novo hook de dados):
+ * Regras desta camada (replicar para qualquer novo hook de dados):
  * 1. `useQuery` é o coração — recebe `queryKey` + `queryFn`.
  * 2. `queryKey` SEMPRE vem de `@/lib/queryKeys` (sem string solta).
  * 3. `queryFn` é uma função do service em `@/services` (assíncrona, sem React).

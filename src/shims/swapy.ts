@@ -1,4 +1,3 @@
-// Origin: agent
 /**
  * Minimal stand-in for `swapy` when the package is missing from `node_modules`
  * (e.g. failed `npm install`). Vite resolves `swapy` → this file via `vite.config.ts`.

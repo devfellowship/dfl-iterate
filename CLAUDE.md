@@ -1,15 +1,19 @@
 # Managed merge scaffold for dfl-iterate/CLAUDE.md
+
 # Human edits belong only inside MANUAL blocks.
 
 <!-- BEGIN GENERATED:claude/base -->
 <!-- render-meta: repo=dfl-iterate; mode=merge; hash=640d418553259ac721dbaf5d2213a49e0ff32d652f7eb48c80c5e337470bdc84 -->
+
 # CLAUDE.md — dfl-iterate
 
 ## Quick Context
+
 Gamified coding exercise platform — Duolingo-style lessons with code editing, AI feedback, and progress pills.
 React SPA (Vite + TypeScript), Monaco Editor, Framer Motion, shadcn/ui, Tailwind.
 
 ## Architecture
+
 ```
 src/
 ├── pages/           # HomePage, LessonPage, Index, NotFound
@@ -33,6 +37,7 @@ src/
 ```
 
 ## How to Work Here
+
 - `npm run dev` — local dev server
 - `npm run test` — Vitest tests
 - Activity types are the core abstraction: each type (FixTheCode, BreakAndFix, etc.) has its own component + hook
@@ -41,17 +46,20 @@ src/
 - Sound effects via useSoundEffects (gamification UX)
 
 ## Contracts
+
 - **Activities**: Each has a type enum, component, and dedicated hook
 - **AI**: useAIStreaming → backend AI endpoint for code review/hints
 - **Progress**: ProgressPills track lesson completion, CelebrationOverlay on success
 - **Preview**: DynamicPreview renders user code in sandboxed iframe
 
 ## Ecosystem Context
+
 - Part of **dfl-learn** LMS ecosystem (gamified layer)
 - Related: **dfl-tracks** (learning paths), **dfl-skill-evals** (assessments)
 - Standalone: no Supabase dependency yet — uses mock data/consts
 
 ## Rules
+
 - Don't touch `src/components/ui/` — shadcn/ui managed
 - New activity types need: component + hook + enum entry + dummy data
 - Tests required for activity logic (see test/components/)
@@ -71,6 +79,7 @@ O iterate tem **dois eixos de padrão** que toda nova feature deve seguir. Antes
 **Referência:** `src/components/activity/FixTheCode.tsx` + `src/hooks/useFixTheCode.ts`
 
 Regras:
+
 1. **Hook** com assinatura `useFoo(activity, callbacks)`:
    - `callbacks` é objeto (`{ onSubmit, onApprove, ... }`), nunca prop solta.
    - `useEffect` em `[activity.id]` resetando estado interno ao trocar de atividade.
@@ -87,8 +96,8 @@ Regras:
      onSubmit={(payload, isCorrect) => {
        handleActivityComplete(
          currentActivity.id,
-         isCorrect ? 'act-foo-success' : 'act-foo-failure',
-         isCorrect
+         isCorrect ? "act-foo-success" : "act-foo-failure",
+         isCorrect,
        );
      }}
    />
@@ -102,11 +111,13 @@ Regras:
 **Referência:** `src/pages/HomePage.tsx` + `src/hooks/useLessons.ts` + `src/services/lessons.service.ts`
 
 Fluxo obrigatório:
+
 ```
 componente → hook de query (useQuery) → service (async) → dummy/fetch
 ```
 
 Regras:
+
 1. **Service** em `src/services/<recurso>.service.ts`:
    - Funções `async`, sempre retornam `Promise`.
    - Sem React (nada de hooks, JSX, useState).
@@ -122,7 +133,6 @@ Regras:
 
 ### Convenções gerais
 
-- `// Origin: agent` no topo de arquivos gerados por IA.
 - Imports absolutos (`@/components`, `@/hooks`, etc.) — relativos só dentro da mesma feature.
 - Não criar tipo novo de `ActivityType` sem: enum + componente + hook + dummy + case em `LessonPage`.
 - Não mexer em `src/components/ui/` (shadcn/ui gerenciado).

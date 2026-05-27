@@ -1,4 +1,3 @@
-// Origin: agent
 import { useEffect, useMemo, useState } from 'react';
 import { Activity, CodeBlank } from '@/types';
 
