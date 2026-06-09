@@ -1,9 +1,45 @@
 name: Auto-assign PR author
 
+# Public repo: cannot call the PRIVATE devfellowship/dfl-ci reusable workflow
+# (public->private reusable-workflow calls are blocked by GitHub -> startup_failure)
+# and cannot use the org-scoped self-hosted dfl-runner (allows_public=false).
+# Inlined here on ubuntu-latest. Public-repo carve-out authorized by Tainan
+# TG 2026-06-06 (see CLAUDE.md "🚦 CI green merge policy — repos PÚBLICOS").
+# Housekeeping only — never a merge gate (continue-on-error on step + job).
 on:
   pull_request_target:
     types: [opened, reopened, synchronize]
+
 jobs:
   assign:
-    uses: devfellowship/dfl-ci/.github/workflows/auto-assign.yml@main
-    secrets: inherit
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Assign PR author (best-effort)
+        continue-on-error: true
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const author = context.payload.pull_request.user.login;
+            const type = context.payload.pull_request.user.type; // "User" or "Bot"
+
+            // [bot] accounts (dependabot, renovate, etc.) cannot be assigned — skip cleanly.
+            if (type === 'Bot' || author.endsWith('[bot]')) {
+              core.info(`Author "${author}" is a bot account; skipping self-assign (bots can't be assignees).`);
+              return;
+            }
+
+            try {
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                assignees: [author],
+              });
+              core.info(`Assigned PR #${context.payload.pull_request.number} to ${author}.`);
+            } catch (err) {
+              core.warning(`Could not assign PR author "${author}" (non-blocking): ${err.message}`);
+            }

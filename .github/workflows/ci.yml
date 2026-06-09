@@ -1,13 +1,45 @@
 name: CI
 
+# Public repo: cannot call the PRIVATE devfellowship/dfl-ci reusable workflows
+# (GitHub blocks public->private reusable-workflow calls -> "workflow file issue"
+# startup_failure, zero jobs) and cannot use the org-scoped self-hosted dfl-runner
+# (runner-group allows_public=false). So CI is inlined here on ubuntu-latest.
+# Public-repo carve-out authorized by Tainan TG 2026-06-06 (see CLAUDE.md
+# "🚦 CI green merge policy — Exceção escopada — repos PÚBLICOS devfellowship/*").
 on:
   pull_request:
+  push:
+    branches: [main]
 
 permissions:
   contents: read
   pull-requests: write
 
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  review:
-    uses: devfellowship/dfl-ci/.github/workflows/ci.yml@main
-    secrets: inherit
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
