@@ -5,10 +5,13 @@
  * Fellows: não importem este arquivo nas tasks finais.
  */
 import type {
+  ActivityEvent,
   Announcement,
   DailyChallenge,
   LeaderboardEntry,
+  LearningResume,
   LessonProgress,
+  NotificationsSummary,
   UserAchievement,
   UserPreferences,
   UserProfile,
@@ -104,6 +107,60 @@ export const previewDailyChallenge: DailyChallenge = {
   expiresAt: '2026-05-28T23:59:59.000Z',
   targetLessonId: 'lesson-1',
 };
+
+export const previewLearningResume: LearningResume = {
+  lessonId: 'lesson-1',
+  lessonTitle: 'E-commerce Frontend com AI',
+  completedActivities: 5,
+  totalActivities: 17,
+  lastVisitedAt: '2026-05-27T18:30:00.000Z',
+  percent: 29,
+};
+
+export const previewNotifications: NotificationsSummary = {
+  unreadCount: 2,
+  items: [
+    {
+      id: 'notif-1',
+      title: 'Nova conquista desbloqueada',
+      read: false,
+      createdAt: '2026-05-28T08:00:00.000Z',
+    },
+    {
+      id: 'notif-2',
+      title: 'Seu streak está em risco!',
+      read: false,
+      createdAt: '2026-05-27T20:15:00.000Z',
+    },
+    {
+      id: 'notif-3',
+      title: 'Bem-vindo ao iterate',
+      read: true,
+      createdAt: '2026-05-01T10:00:00.000Z',
+    },
+  ],
+};
+
+export const previewActivityEvents: ActivityEvent[] = [
+  {
+    id: 'evt-1',
+    type: 'lesson_completed',
+    label: 'Você completou a activity act-05',
+    occurredAt: '2026-05-27T18:30:00.000Z',
+  },
+  {
+    id: 'evt-2',
+    type: 'achievement_unlocked',
+    label: 'Conquista desbloqueada: Sequência de fogo',
+    occurredAt: '2026-05-25T09:00:00.000Z',
+  },
+  {
+    id: 'evt-3',
+    type: 'streak_milestone',
+    label: 'Streak de 3 dias alcançado',
+    occurredAt: '2026-05-25T09:00:00.000Z',
+  },
+];
 
 export const previewLeaderboard: LeaderboardEntry[] = [
   {

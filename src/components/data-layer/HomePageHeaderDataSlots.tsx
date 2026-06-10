@@ -14,9 +14,12 @@ import {
   UserStatsBadge,
   AppearanceSettingsPanel,
   AchievementsList,
+  NotificationBellIcon,
+  NotificationList,
 } from '@/components/data-layer';
 import {
   previewAchievements,
+  previewNotifications,
   previewUserPreferences,
   previewUserProfile,
   previewUserStats,
@@ -30,10 +33,12 @@ import { PreviewSectionLabel } from './PreviewSectionLabel';
  * Fellow T4: substituir mock por `useGetUserStats()`.
  * Fellow T6: drawer 🏆 → `useGetUserAchievements()`.
  * Fellow T2: drawer ⚙️ → `useGetUserPreferences()`.
+ * Fellow T10: drawer 🔔 → `useGetNotifications()`.
  */
 export function HomePageHeaderDataSlots() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
@@ -60,6 +65,35 @@ export function HomePageHeaderDataSlots() {
           <div className="overflow-y-auto px-4 pb-2">
             <PreviewSectionLabel taskId="T6" />
             <AchievementsList achievements={previewAchievements} />
+          </div>
+          <DrawerClose asChild>
+            <Button variant="outline" className="mx-4 mb-4">
+              Fechar
+            </Button>
+          </DrawerClose>
+        </DrawerContent>
+      </Drawer>
+
+      {/* SLOT T10 */}
+      <Drawer open={notificationsOpen} onOpenChange={setNotificationsOpen}>
+        <DrawerTrigger asChild>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-9 w-9 shrink-0"
+            aria-label="Notificações"
+          >
+            <NotificationBellIcon unreadCount={previewNotifications.unreadCount} />
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="max-h-[85vh]">
+          <DrawerHeader>
+            <DrawerTitle>Notificações</DrawerTitle>
+          </DrawerHeader>
+          <div className="overflow-y-auto px-4 pb-2">
+            <PreviewSectionLabel taskId="T10" />
+            <NotificationList summary={previewNotifications} />
           </div>
           <DrawerClose asChild>
             <Button variant="outline" className="mx-4 mb-4">
