@@ -3,12 +3,14 @@
  *
  * MAPA DE INTEGRAÇÃO (fellows conectam hooks aqui):
  *
- * GameHeader (`/lesson/:id`)          HomePage (`/`)
- * ├─ T1 UserProfileCard (compact)     ├─ T7 DailyChallengeBanner (topo do main)
+ * HomePage header (`/`)               HomePage body (`/`)
+ * ├─ T1 UserProfileCard (compact)     ├─ T7 DailyChallengeBanner
  * ├─ T4 UserStatsBadge                ├─ T3 AnnouncementList
- * ├─ T6 AchievementsList (no drawer)  ├─ T5 LessonProgressBar (em cada LessonCard)
+ * ├─ T6 AchievementsList (drawer)     ├─ T5 LessonProgressBar (LessonCard)
  * └─ T2 AppearanceSettingsPanel       └─ T8 LeaderboardTable
- *     (dentro do modal ⚙️)
+ *     (drawer ⚙️)
+ *
+ * GameHeader (`/lesson/:id`) — vidas/streak/xp da sessão + botão voltar ao início.
  *
  * Estes componentes não importam React Query — só recebem props.
  */
@@ -23,3 +25,6 @@ export { DailyChallengeBanner } from './DailyChallengeBanner';
 export { LeaderboardTable } from './LeaderboardTable';
 
 export type * from './types';
+
+export { HomePageHeaderDataSlots } from './HomePageHeaderDataSlots';
+export { HomePageTopDataSlots, HomePageBottomDataSlots } from './HomePageDataSlots';

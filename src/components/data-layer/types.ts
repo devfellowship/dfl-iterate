@@ -20,7 +20,6 @@ export interface UserPreferences {
   theme: ThemePreference;
   soundEffectsEnabled: boolean;
   language: 'pt-BR' | 'en-US';
-  reducedMotion: boolean;
 }
 
 export type AnnouncementSeverity = 'info' | 'warning' | 'success';

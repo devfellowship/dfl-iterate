@@ -3,7 +3,7 @@ import { Flame, Heart, Zap } from 'lucide-react';
 import type { UserStats } from './types';
 
 /**
- * Integração: T4 — `GameHeader`, ao lado do perfil (T1).
+ * Integração: T4 — header da `HomePage` (`HomePageHeaderDataSlots`).
  * Fellow: `useGetUserStats` no container; passe `stats` via props.
  */
 
@@ -16,7 +16,7 @@ export function UserStatsBadge({ stats, className }: UserStatsBadgeProps) {
   return (
     <div
       className={cn(
-        'hidden sm:flex items-center gap-2 text-xs font-semibold',
+        'flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-semibold',
         className,
       )}
       data-testid="user-stats-badge"

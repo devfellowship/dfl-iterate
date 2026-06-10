@@ -505,6 +505,7 @@ export default function LessonPage() {
         lives={lives}
         streak={streak}
         xp={xp}
+        onBack={() => navigate('/')}
       />
 
       {/* Progress Pills */}

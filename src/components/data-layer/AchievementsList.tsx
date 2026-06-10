@@ -3,7 +3,7 @@ import { Lock } from 'lucide-react';
 import type { UserAchievement } from './types';
 
 /**
- * Integração: T6 — dentro de `Drawer`/`Sheet` no `GameHeader` (ícone troféu).
+ * Integração: T6 — drawer 🏆 no header da `HomePage` (`HomePageHeaderDataSlots`).
  * Fellow: `useGetUserAchievements` no container; passe `achievements` via props.
  */
 

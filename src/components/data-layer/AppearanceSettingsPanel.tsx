@@ -1,10 +1,10 @@
 import { cn } from '@devfellowship/components';
-import { Monitor, Moon, Sun, Volume2, VolumeX, Languages, Accessibility } from 'lucide-react';
+import { Monitor, Moon, Sun, Volume2, VolumeX, Languages } from 'lucide-react';
 import type { ThemePreference, UserPreferences } from './types';
 
 /**
- * Integração: T2 — dentro de `Dialog`/`Sheet` no `GameHeader` (ícone ⚙️).
- * Fellow: abre modal no container; passe `preferences` via props.
+ * Integração: T2 — drawer ⚙️ no header da `HomePage` (`HomePageHeaderDataSlots`).
+ * Fellow: substitui mock por `useGetUserPreferences()` no container.
  */
 
 const THEME_LABELS: Record<ThemePreference, string> = {
@@ -52,11 +52,6 @@ export function AppearanceSettingsPanel({
       icon: <Languages className="h-4 w-4 text-muted-foreground" />,
       label: 'Idioma',
       value: LANGUAGE_LABELS[preferences.language],
-    },
-    {
-      icon: <Accessibility className="h-4 w-4 text-muted-foreground" />,
-      label: 'Animações reduzidas',
-      value: preferences.reducedMotion ? 'Ativado' : 'Desativado',
     },
   ];
 

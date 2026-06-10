@@ -2,7 +2,7 @@ import { cn } from '@devfellowship/components';
 import type { UserProfile } from './types';
 
 /**
- * Integração: T1 — `GameHeader` (variant `compact`) ou `HomePage`.
+ * Integração: T1 — header da `HomePage` (`HomePageHeaderDataSlots`, variant `compact`).
  * Fellow: `useGetUserProfile` no container; passe `profile` via props.
  */
 export interface UserProfileCardProps {
