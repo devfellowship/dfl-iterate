@@ -125,7 +125,6 @@ export function HomePageHeaderDataSlots() {
         </DrawerTrigger>
         <DrawerContent className="max-h-[85vh]">
           <div className="overflow-y-auto px-4 pb-2 pt-2">
-            <PreviewSectionLabel taskId="T2" />
             {isPreferencesPending && <p>Carregando preferências…</p>}
             {isPreferencesError && (
               <div>
