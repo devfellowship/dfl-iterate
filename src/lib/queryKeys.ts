@@ -18,4 +18,8 @@ export const queryKeys = {
   activities: {
     byLesson: (lessonId: string) => ['activities', { lessonId }] as const,
   },
+  userStats: {
+    current: ['userStats', 'current'] as const,
+    byUserId: (userId: string) => ['userStats', { userId }] as const,
+  },
 } as const;

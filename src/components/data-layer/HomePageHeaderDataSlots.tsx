@@ -22,9 +22,9 @@ import {
   previewNotifications,
   previewUserPreferences,
   previewUserProfile,
-  previewUserStats,
 } from '@/components/data-layer/preview.mock';
 import { PreviewSectionLabel } from './PreviewSectionLabel';
+import { useGetUserStats } from '@/hooks';
 
 /**
  * Preview + slots T1, T2, T4, T6 no header da `HomePage`.
@@ -40,10 +40,30 @@ export function HomePageHeaderDataSlots() {
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
+  const {
+    data: stats,
+    isError,
+    isPending,
+    refetch,
+  } = useGetUserStats();
+
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
       {/* SLOT T4 */}
-      <UserStatsBadge stats={previewUserStats} className="flex" />
+      {isError ? (
+        <div className="flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          <span>Não foi possível carregar seus stats.</span>
+          <Button variant="outline" size="sm" onClick={() => refetch()}>
+            Tentar de novo
+          </Button>
+        </div>
+      ) : stats ? (
+        <UserStatsBadge stats={stats} className="flex" />
+      ) : (
+        <span className="rounded-full border border-border bg-muted/25 px-3 py-2 text-sm text-muted-foreground">
+          Carregando stats...
+        </span>
+      )}
 
       {/* SLOT T6 */}
       <Drawer open={achievementsOpen} onOpenChange={setAchievementsOpen}>
