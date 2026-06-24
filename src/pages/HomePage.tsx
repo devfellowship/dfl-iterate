@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Lesson } from '@/types';
 import { useLessons } from '@/hooks';
-import { Clock, Layers, ArrowRight } from 'lucide-react';
+import { Clock, Layers, ArrowRight, Loader2, RefreshCw } from 'lucide-react';
 import { Button } from '@devfellowship/components';
 import {
   HomePageTopDataSlots,
@@ -12,10 +12,20 @@ import { HomePageHeaderDataSlots } from '@/components/data-layer/HomePageHeaderD
 import { LessonProgressBar } from '@/components/data-layer';
 import { previewLessonProgress } from '@/components/data-layer/preview.mock';
 import { PreviewSectionLabel } from '@/components/data-layer/PreviewSectionLabel';
+import { LeaderboardTable } from '@/components/data-layer/LeaderboardTable';
+import { useGetLeaderboard } from '@/hooks/useGetLeaderBoardTable';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { data: lessons = [], isPending, isError, refetch } = useLessons();
+
+  const {
+    data: leaderboardEntries = [],
+    isLoading: isLeaderboardLoading,
+    isError: isLeaderboardError,
+    isFetching: isLeaderboardFetching,
+    refetch: refetchLeaderboard,
+  } = useGetLeaderboard(10);
 
   const handleStartLesson = (lessonId: string) => {
     navigate(`/lesson/${lessonId}`);
@@ -91,6 +101,33 @@ export default function HomePage() {
           </motion.div>
 
           <HomePageBottomDataSlots />
+
+          <motion.div
+            className="max-w-4xl mx-auto mt-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            {isLeaderboardLoading ? (
+              <div className="flex items-center justify-center gap-2 py-10 text-sm text-muted-foreground">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Carregando ranking…
+              </div>
+            ) : isLeaderboardError ? (
+              <div className="flex flex-col items-center gap-3 py-10 text-sm text-muted-foreground">
+                <p>Não foi possível carregar o ranking.</p>
+                <Button
+                  onClick={() => refetchLeaderboard()}
+                  disabled={isLeaderboardFetching}
+                >
+                  <RefreshCw className={`h-3.5 w-3.5 mr-1.5 ${isLeaderboardFetching ? 'animate-spin' : ''}`} />
+                  Tentar novamente
+                </Button>
+              </div>
+            ) : (
+              <LeaderboardTable entries={leaderboardEntries} />
+            )}
+          </motion.div>
         </div>
       </main>
 
