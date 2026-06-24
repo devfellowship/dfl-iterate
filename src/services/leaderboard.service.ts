@@ -9,8 +9,9 @@ export async function getLeaderboard(limit: number): Promise<LeaderboardEntry[]>
         throw new Error('Leaderboard data is empty or not available.');
     }
 
-    return [...leaderboardData]
+    const leaderBoardDataSorted = [...leaderboardData]
         .sort((a, b) => a.rank - b.rank)
         .slice(0, limit);
-
+    
+    return leaderBoardDataSorted;
 };
