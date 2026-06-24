@@ -18,4 +18,8 @@ export const queryKeys = {
   activities: {
     byLesson: (lessonId: string) => ['activities', { lessonId }] as const,
   },
+  leaderboard: {
+     all: ['leaderboard'] as const,
+     list: (limit: number) => ['leaderboard', 'list', limit] as const,
+   },
 } as const;
