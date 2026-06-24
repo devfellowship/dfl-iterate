@@ -1,4 +1,4 @@
-import { LeaderboardEntry } from '@/types';
+import type { LeaderboardEntry } from '@/types/LeaderboardEntry';
 
 export const leaderboardData: LeaderboardEntry[] = [
   {

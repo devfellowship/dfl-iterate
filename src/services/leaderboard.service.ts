@@ -1,6 +1,6 @@
 import { leaderboardData } from '@/test-utils/leaderboard.dummy';
 import { simulateNetworkDelay } from '@/services/activities.service';
-import type { LeaderboardEntry } from '@/types';
+import type { LeaderboardEntry } from '@/types/LeaderboardEntry';
 
 export async function getLeaderboard(limit: number): Promise<LeaderboardEntry[]> {
     await simulateNetworkDelay();

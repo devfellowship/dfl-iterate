@@ -1,6 +1,6 @@
 import { cn } from '@devfellowship/components';
 import { Trophy } from 'lucide-react';
-import type { LeaderboardEntry } from './types';
+import type { LeaderboardEntry } from '@/types/LeaderboardEntry';
 
 /**
  * Integração: T8 — seção "Ranking" na `HomePage` (abaixo do grid de lições).
