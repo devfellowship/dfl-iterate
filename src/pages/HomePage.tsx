@@ -25,7 +25,7 @@ export default function HomePage() {
     isError: isLeaderboardError,
     isFetching: isLeaderboardFetching,
     refetch: refetchLeaderboard,
-  } = useGetLeaderboard(10);
+  } = useGetLeaderboard();
 
   const handleStartLesson = (lessonId: string) => {
     navigate(`/lesson/${lessonId}`);

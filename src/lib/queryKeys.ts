@@ -20,6 +20,6 @@ export const queryKeys = {
   },
   leaderboard: {
      all: ['leaderboard'] as const,
-     list: (limit: number) => ['leaderboard', 'list', limit] as const,
+     list: () => ['leaderboard', 'list'] as const,
    },
 } as const;

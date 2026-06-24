@@ -2,7 +2,7 @@ import { leaderboardData } from '@/test-utils/leaderboard.dummy';
 import { simulateNetworkDelay } from '@/services/activities.service';
 import type { LeaderboardEntry } from '@/types/LeaderboardEntry';
 
-export async function getLeaderboard(limit: number): Promise<LeaderboardEntry[]> {
+export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
     await simulateNetworkDelay();
 
     if (!leaderboardData || leaderboardData.length === 0) {
@@ -11,7 +11,6 @@ export async function getLeaderboard(limit: number): Promise<LeaderboardEntry[]>
 
     const leaderBoardDataSorted = [...leaderboardData]
         .sort((a, b) => a.rank - b.rank)
-        .slice(0, limit);
     
     return leaderBoardDataSorted;
 };
