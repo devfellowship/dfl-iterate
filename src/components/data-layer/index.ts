@@ -33,7 +33,7 @@ export { ContinueLearningCard } from './ContinueLearningCard';
 export { NotificationBellIcon, NotificationList } from './NotificationBell';
 export { RecentActivityFeed } from './RecentActivityFeed';
 
-export type * from './types';
+export * from './types';
 
 export { HomePageHeaderDataSlots } from './HomePageHeaderDataSlots';
 export { HomePageTopDataSlots, HomePageBottomDataSlots } from './HomePageDataSlots';
