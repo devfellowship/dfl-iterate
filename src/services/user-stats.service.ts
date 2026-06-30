@@ -8,5 +8,10 @@ const simulateNetworkDelay = () =>
 
 export async function getUserStats(): Promise<UserStats> {
   await simulateNetworkDelay();
+
+  if (!userStatsData) {
+    throw new Error('User stats not found');
+  }
+
   return userStatsData;
 }

@@ -41,29 +41,29 @@ export function HomePageHeaderDataSlots() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   const {
-    data: stats,
-    isError,
-    isPending,
-    refetch,
+    data: userStatsData,
+    isError: userStatsIsError,
+    isPending: userStatsIsPending,
+    refetch: userStatsRefetch,
   } = useGetUserStats();
 
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
       {/* SLOT T4 */}
-      {isError ? (
-        <div className="flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-          <span>Não foi possível carregar seus stats.</span>
-          <Button variant="outline" size="sm" onClick={() => refetch()}>
-            Tentar de novo
-          </Button>
-        </div>
-      ) : stats ? (
-        <UserStatsBadge stats={stats} className="flex" />
-      ) : (
+      {userStatsIsPending ? (
         <span className="rounded-full border border-border bg-muted/25 px-3 py-2 text-sm text-muted-foreground">
           Carregando stats...
         </span>
-      )}
+      ) : userStatsIsError ? (
+        <div className="flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          <span>Não foi possível carregar seus stats.</span>
+          <Button variant="outline" size="sm" onClick={() => userStatsRefetch()}>
+            Tentar de novo
+          </Button>
+        </div>
+      ) : userStatsData ? (
+        <UserStatsBadge stats={userStatsData} className="flex" />
+      ) : null}
 
       {/* SLOT T6 */}
       <Drawer open={achievementsOpen} onOpenChange={setAchievementsOpen}>
