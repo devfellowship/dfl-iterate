@@ -178,3 +178,12 @@ export interface CodeBlock {
   indentLevel?: number;
   isDistractor?: boolean;
 }
+
+export interface LeaderboardEntry {
+  rank: number;
+  userId: string;
+  displayName: string;
+  avatarUrl: string;
+  totalXp: number;
+  isCurrentUser: boolean;
+}
