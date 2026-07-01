@@ -3,12 +3,6 @@ import { LessonsProgressData } from '@/test-utils/lesson-progress.dummy';
 import type { LessonProgress } from '@/components/data-layer';
 import type { Lesson } from '@/types';
 
-type LessonProgressPayload = {
-  lessonId: string;
-  completedActivities: number;
-  totalActivities: number;
-};
-
 /**
  * Camada de dados das lições.
  *
@@ -41,7 +35,7 @@ export async function getLessonById(id: string): Promise<Lesson> {
   return lesson;
 }
 
-export async function getLessonProgressData(): Promise<LessonProgressPayload[]> {
+export async function getLessonProgressData(): Promise<LessonProgress[]> {
   await simulateNetworkDelay();
   return LessonsProgressData;
 }
@@ -52,7 +46,6 @@ export async function getLessonProgress(lessonId: string): Promise<LessonProgres
   if (!lesson) {
     throw new Error(`Lesson progress not found: ${lessonId}`);
   }
-
   return {
     lessonId: lesson.lessonId,
     completedActivities: lesson.completedActivities,

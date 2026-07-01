@@ -45,7 +45,7 @@ export interface LessonProgress {
   lessonId: string;
   completedActivities: number;
   totalActivities: number;
-  percent: number;
+  percent: number | null;
 }
 
 export interface UserAchievement {
