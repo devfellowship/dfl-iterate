@@ -1,4 +1,6 @@
-export const LessonsProgressData = [
+import type { LessonProgress } from '@/types/LessonProgress';
+
+export const LessonsProgressData: LessonProgress[] = [
   {
     lessonId: 'lesson-1',
     completedActivities: 5,
