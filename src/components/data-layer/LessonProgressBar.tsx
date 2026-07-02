@@ -1,5 +1,5 @@
 import { cn } from '@devfellowship/components';
-import type { LessonProgress } from '@/components/data-layer/types';
+import type { LessonProgress } from '@/types/LessonProgress';
 
 export interface LessonProgressBarProps {
   progress: LessonProgress;
@@ -18,17 +18,17 @@ export function LessonProgressBar({ progress, className }: LessonProgressBarProp
       <div
         className="h-2 w-full overflow-hidden rounded-full bg-muted"
         role="progressbar"
-        aria-valuenow={progress.percent ?? 0}
+        aria-valuenow={progress.percent}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-label={`${progress.percent ?? 0}% concluído`}
+        aria-label={`${progress.percent}% concluído`}
       >
         <div
           className="h-full rounded-full bg-primary transition-all duration-300"
-          style={{ width: `${progress.percent ?? 0}%` }}
+          style={{ width: `${progress.percent}%` }}
         />
       </div>
-      <p className="text-xs font-medium text-foreground">{progress.percent ?? 0}% concluído</p>
+      <p className="text-xs font-medium text-foreground">{progress.percent}% concluído</p>
     </div>
   );
 }

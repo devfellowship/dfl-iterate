@@ -1,6 +1,6 @@
 import { lessonsData } from '@/test-utils/lessons.dummy';
 import { LessonsProgressData } from '@/test-utils/lesson-progress.dummy';
-import type { LessonProgress } from '@/components/data-layer';
+import type { LessonProgress } from '@/types/LessonProgress';
 import type { Lesson } from '@/types';
 
 /**
@@ -42,14 +42,12 @@ export async function getLessonProgressData(): Promise<LessonProgress[]> {
 
 export async function getLessonProgress(lessonId: string): Promise<LessonProgress> {
   await simulateNetworkDelay();
-  const lesson = LessonsProgressData.find((l) => l.lessonId === lessonId);
+  const lessonsProgress = LessonsProgressData;
+  const lesson = lessonsProgress.find((l) => l.lessonId === lessonId);
   if (!lesson) {
     throw new Error(`Lesson progress not found: ${lessonId}`);
   }
-  return {
-    lessonId: lesson.lessonId,
-    completedActivities: lesson.completedActivities,
-    totalActivities: lesson.totalActivities,
-    percent: Math.round((lesson.completedActivities / lesson.totalActivities) * 100),
-  };
+  lesson.percent = Math.round((lesson.completedActivities / lesson.totalActivities) * 100);
+  
+  return lesson;
 }
