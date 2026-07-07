@@ -25,6 +25,7 @@ import {
   previewUserStats,
 } from '@/components/data-layer/preview.mock';
 import { PreviewSectionLabel } from './PreviewSectionLabel';
+import { useGetUserProfile } from '@/hooks';
 
 /**
  * Preview + slots T1, T2, T4, T6 no header da `HomePage`.
@@ -39,6 +40,25 @@ export function HomePageHeaderDataSlots() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const {
+    data,
+    isPending,
+    isError,
+    refetch,
+  } = useGetUserProfile();
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return (
+      <>
+        <span>Erro</span>
+        <Button onClick={() => refetch()}>
+          Tentar de novo
+        </Button>
+      </>
+    );
+  }
 
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
@@ -130,7 +150,9 @@ export function HomePageHeaderDataSlots() {
       </Drawer>
 
       {/* SLOT T1 */}
-      <UserProfileCard profile={previewUserProfile} variant="compact" />
+      <UserProfileCard 
+      profile={data} 
+      variant="compact" />
     </div>
   );
 }
