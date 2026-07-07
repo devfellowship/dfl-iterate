@@ -18,4 +18,7 @@ export const queryKeys = {
   activities: {
     byLesson: (lessonId: string) => ['activities', { lessonId }] as const,
   },
+  userProfile: {
+    current: ["user-profile"] as const,
+  },
 } as const;
