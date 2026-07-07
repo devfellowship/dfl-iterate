@@ -4,9 +4,9 @@
  * REMOVER quando fellows integrarem hooks reais — substituir por useGet* + dummy/service.
  * Fellows: não importem este arquivo nas tasks finais.
  */
+import type { Announcement } from '@/types';
 import type {
   ActivityEvent,
-  Announcement,
   DailyChallenge,
   LeaderboardEntry,
   LearningResume,
@@ -40,33 +40,6 @@ export const previewUserStats: UserStats = {
   currentStreak: 3,
   livesRemaining: 4,
 };
-
-export const previewAnnouncements: Announcement[] = [
-  {
-    id: 'ann-1',
-    title: 'Manutenção programada',
-    body: 'No domingo, 02h–04h, o iterate ficará indisponível para atualizações.',
-    severity: 'warning',
-    publishedAt: '2026-05-20T10:00:00.000Z',
-    expiresAt: '2026-06-30T23:59:59.000Z',
-  },
-  {
-    id: 'ann-2',
-    title: 'Novas activities disponíveis',
-    body: 'A lição E-commerce Frontend agora tem 17 activities para praticar.',
-    severity: 'success',
-    publishedAt: '2026-05-15T08:00:00.000Z',
-    expiresAt: null,
-  },
-  {
-    id: 'ann-3',
-    title: 'Dica da semana',
-    body: 'Use o histórico de IA para revisar feedbacks das activities anteriores.',
-    severity: 'info',
-    publishedAt: '2026-05-10T12:00:00.000Z',
-    expiresAt: null,
-  },
-];
 
 export const previewLessonProgress: LessonProgress = {
   lessonId: 'lesson-1',
