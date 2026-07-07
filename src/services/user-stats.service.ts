@@ -1,4 +1,4 @@
-import { userStatsData } from '@/test-utils/user-stats.dummy';
+import { userStatsData as userStatsDummy } from '@/test-utils/user-stats.dummy';
 import type { UserStats } from '@/types/UserStats';
 
 const SIMULATED_LATENCY_MS = 300;
@@ -8,6 +8,8 @@ const simulateNetworkDelay = () =>
 
 export async function getUserStats(): Promise<UserStats> {
   await simulateNetworkDelay();
+
+  const userStatsData = userStatsDummy;
 
   if (!userStatsData) {
     throw new Error('User stats not found');
