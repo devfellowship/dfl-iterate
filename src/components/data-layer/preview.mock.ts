@@ -4,9 +4,9 @@
  * REMOVER quando fellows integrarem hooks reais — substituir por useGet* + dummy/service.
  * Fellows: não importem este arquivo nas tasks finais.
  */
+import type { Announcement } from '@/types';
 import type {
   ActivityEvent,
-  Announcement,
   DailyChallenge,
   LeaderboardEntry,
   LearningResume,

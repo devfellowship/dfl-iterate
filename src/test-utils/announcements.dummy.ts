@@ -1,4 +1,4 @@
-import { Announcement } from "@/components/data-layer";
+import type { Announcement } from '@/types';
 
 export const announcementsData: Announcement[] = [
     {

@@ -22,17 +22,6 @@ export interface UserPreferences {
   language: 'pt-BR' | 'en-US';
 }
 
-export type AnnouncementSeverity = 'info' | 'warning' | 'success';
-
-export interface Announcement {
-  id: string;
-  title: string;
-  body: string;
-  severity: AnnouncementSeverity;
-  publishedAt: string;
-  expiresAt: string | null;
-}
-
 export interface UserStats {
   userId: string;
   totalXp: number;

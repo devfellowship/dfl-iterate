@@ -1,5 +1,5 @@
 import { announcementsData } from '@/test-utils/announcements.dummy';
-import type { Announcement } from '@/components/data-layer/types';
+import type { Announcement } from '@/types';
 
 /**
  * Camada de dados dos avisos.

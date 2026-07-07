@@ -1,6 +1,6 @@
 import { cn } from '@devfellowship/components';
 import { AlertCircle, CheckCircle2, Info } from 'lucide-react';
-import type { Announcement, AnnouncementSeverity } from './types';
+import type { Announcement, AnnouncementSeverity } from '@/types';
 
 /**
  * Integração: T3 — seção "Avisos" na `HomePage` (acima do grid de lições).
