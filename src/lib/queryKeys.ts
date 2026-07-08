@@ -12,10 +12,13 @@
  */
 export const queryKeys = {
   lessons: {
-    all: ['lessons'] as const,
-    byId: (id: string) => ['lessons', id] as const,
+    all: ["lessons"] as const,
+    byId: (id: string) => ["lessons", id] as const,
   },
   activities: {
-    byLesson: (lessonId: string) => ['activities', { lessonId }] as const,
+    byLesson: (lessonId: string) => ["activities", { lessonId }] as const,
   },
-} as const;
+  activityEvents: {
+    recent: () => ['activityEvents', "recent"] as const,
+  },
+} as const; 

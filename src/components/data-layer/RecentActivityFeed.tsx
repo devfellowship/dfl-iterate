@@ -1,6 +1,6 @@
 import { cn } from '@devfellowship/components';
 import { Award, BookCheck, Flame } from 'lucide-react';
-import type { ActivityEvent, ActivityEventType } from './types';
+import type { ActivityEvent, ActivityEventType } from '@/types';
 
 /**
  * Integração: T11 — corpo da `HomePage` (`HomePageTopDataSlots`, abaixo dos avisos).
