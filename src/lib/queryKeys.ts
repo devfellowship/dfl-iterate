@@ -19,6 +19,6 @@ export const queryKeys = {
     byLesson: (lessonId: string) => ["activities", { lessonId }] as const,
   },
   activityEvents: {
-    recent: (limit: number) => ['activityEvents', "recent", limit] as const,
+    recent: () => ['activityEvents', "recent"] as const,
   },
 } as const; 

@@ -1,4 +1,4 @@
-import { ActivityEvent } from "@/components/data-layer";
+import { ActivityEvent } from "@/types";
 
 export const activitiesEventData: ActivityEvent[] = [
   {

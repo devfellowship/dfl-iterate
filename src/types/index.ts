@@ -178,3 +178,5 @@ export interface CodeBlock {
   indentLevel?: number;
   isDistractor?: boolean;
 }
+
+export * from "./ActivityEvent";
