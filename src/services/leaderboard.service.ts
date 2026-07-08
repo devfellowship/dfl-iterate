@@ -5,12 +5,9 @@ import type { LeaderboardEntry } from '@/types/LeaderboardEntry';
 export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
     await simulateNetworkDelay();
 
-    if (!leaderboardData || leaderboardData.length === 0) {
-        throw new Error('Leaderboard data is empty or not available.');
+    if (!leaderboardData) {
+        throw new Error('Leaderboard data is not available.');
     }
 
-    const leaderBoardDataSorted = [...leaderboardData]
-        .sort((a, b) => a.rank - b.rank)
-    
-    return leaderBoardDataSorted;
-};
+    return [...leaderboardData].sort((a, b) => a.rank - b.rank);
+}
