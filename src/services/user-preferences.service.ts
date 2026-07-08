@@ -1,5 +1,5 @@
 import { userPreferencesData } from '@/test-utils/user-preferences.dummy';
-import type { UserPreferences } from '@/types';
+import type { UserPreferences } from '@/types/UserPreferences';
 
 const SIMULATED_LATENCY_MS = 300;
 const simulateNetworkDelay = () =>

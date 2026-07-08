@@ -1,4 +1,4 @@
-import type { UserPreferences } from '@/types';
+import type { UserPreferences } from '@/types/UserPreferences';
 
 export const userPreferencesData: UserPreferences = {
   userId: 'user-1',
