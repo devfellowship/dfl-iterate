@@ -37,7 +37,11 @@ export async function getLessonById(id: string): Promise<Lesson> {
 
 export async function getLessonProgressData(): Promise<LessonProgress[]> {
   await simulateNetworkDelay();
-  return LessonsProgressData;
+  const lessonProgressDataResponse = LessonsProgressData;
+  if (!lessonProgressDataResponse) {
+  throw new Error("Progress not found");
+  }
+  return lessonProgressDataResponse;
 }
 
 export async function getLessonProgress(lessonId: string): Promise<LessonProgress> {
