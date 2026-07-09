@@ -1,10 +1,5 @@
 import { cn } from '@devfellowship/components';
-import type { LessonProgress } from './types';
-
-/**
- * Integração: T5 — dentro de cada `LessonCard` na `HomePage`.
- * Fellow: `useGetLessonProgress(lesson.id)` no card; passe `progress` via props.
- */
+import type { LessonProgress } from '@/types/LessonProgress';
 
 export interface LessonProgressBarProps {
   progress: LessonProgress;

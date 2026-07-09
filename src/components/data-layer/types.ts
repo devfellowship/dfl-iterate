@@ -41,13 +41,6 @@ export interface UserStats {
   livesRemaining: number;
 }
 
-export interface LessonProgress {
-  lessonId: string;
-  completedActivities: number;
-  totalActivities: number;
-  percent: number;
-}
-
 export interface UserAchievement {
   id: string;
   title: string;
