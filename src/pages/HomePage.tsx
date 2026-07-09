@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Lesson } from '@/types';
-import { useLessons, useLessonProgressBar } from '@/hooks';
+import { useLessons, useLessonProgressBarById } from '@/hooks';
 import { Clock, Layers, ArrowRight } from 'lucide-react';
 import { Button } from '@devfellowship/components';
 import {
@@ -113,7 +113,7 @@ interface LessonCardProps {
 }
 
 function LessonCard({ lesson, index, onStart }: LessonCardProps) {
-  const { data, isPending, isError, refetch } = useLessonProgressBar(lesson.id);
+  const { data, isPending, isError, refetch } = useLessonProgressBarById(lesson.id);
 
   return (
     <motion.div
