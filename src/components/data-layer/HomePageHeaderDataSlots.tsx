@@ -20,12 +20,10 @@ import {
 import {
   previewAchievements,
   previewNotifications,
-  previewUserPreferences,
   previewUserProfile,
   previewUserStats,
 } from '@/components/data-layer/preview.mock';
-import { PreviewSectionLabel } from './PreviewSectionLabel';
-
+import { useGetUserPreferences } from '@/hooks';
 /**
  * Preview + slots T1, T2, T4, T6 no header da `HomePage`.
  *
@@ -39,6 +37,13 @@ export function HomePageHeaderDataSlots() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const {
+    data: preferences,
+    isPending: isPreferencesPending,
+    isError: isPreferencesError,
+    refetch: refetchPreferences,
+  } = useGetUserPreferences();
+
 
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
@@ -103,7 +108,7 @@ export function HomePageHeaderDataSlots() {
         </DrawerContent>
       </Drawer>
 
-      {/* SLOT T2 */}
+    {/* SLOT T2 */}
       <Drawer open={settingsOpen} onOpenChange={setSettingsOpen}>
         <DrawerTrigger asChild>
           <Button
@@ -118,8 +123,18 @@ export function HomePageHeaderDataSlots() {
         </DrawerTrigger>
         <DrawerContent className="max-h-[85vh]">
           <div className="overflow-y-auto px-4 pb-2 pt-2">
-            <PreviewSectionLabel taskId="T2" />
-            <AppearanceSettingsPanel preferences={previewUserPreferences} />
+            {isPreferencesPending && <p>Carregando preferências…</p>}
+            {isPreferencesError && (
+              <div>
+                <p>Não foi possível carregar suas preferências.</p>
+                <Button type="button" variant="outline" onClick={() => refetchPreferences()}>
+                  Tentar de novo
+                </Button>
+              </div>
+            )}
+            {!isPreferencesPending && !isPreferencesError && preferences && (
+              <AppearanceSettingsPanel preferences={preferences} />
+            )}
           </div>
           <DrawerClose asChild>
             <Button variant="outline" className="mx-4 mb-4">
@@ -128,6 +143,7 @@ export function HomePageHeaderDataSlots() {
           </DrawerClose>
         </DrawerContent>
       </Drawer>
+
 
       {/* SLOT T1 */}
       <UserProfileCard profile={previewUserProfile} variant="compact" />
