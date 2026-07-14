@@ -1,5 +1,5 @@
 import { lessonsData } from '@/test-utils/lessons.dummy';
-import { LessonsProgressData } from '@/test-utils/lesson-progress.dummy';
+import { lessonsProgressData } from '@/test-utils/lesson-progress.dummy';
 import type { LessonProgress } from '@/types/LessonProgress';
 import type { Lesson } from '@/types';
 
@@ -37,7 +37,7 @@ export async function getLessonById(id: string): Promise<Lesson> {
 
 export async function getLessonProgressData(): Promise<LessonProgress[]> {
   await simulateNetworkDelay();
-  const lessonProgressDataResponse = LessonsProgressData;
+  const lessonProgressDataResponse = lessonsProgressData;
   if (!lessonProgressDataResponse) {
   throw new Error("Progress not found");
   }
@@ -46,7 +46,7 @@ export async function getLessonProgressData(): Promise<LessonProgress[]> {
 
 export async function getLessonProgress(lessonId: string): Promise<LessonProgress> {
   await simulateNetworkDelay();
-  const lessonsProgress = LessonsProgressData;
+  const lessonsProgress = lessonsProgressData;
   const lesson = lessonsProgress.find((l) => l.lessonId === lessonId);
   if (!lesson) {
     throw new Error(`Lesson progress not found: ${lessonId}`);
