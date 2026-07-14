@@ -1,4 +1,4 @@
-import { UserProfile } from '@/types';
+import { UserProfile } from '@/types/UserProfile';
 
 export const userProfileDummy: UserProfile = {
     id: "user-1",

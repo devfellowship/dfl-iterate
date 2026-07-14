@@ -4,15 +4,6 @@
  * Fellow: mova estas interfaces para `src/types/index.ts` na sua task
  * e atualize os imports nos componentes abaixo.
  */
-
-export interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  age: number;
-  avatarUrl: string;
-}
-
 export type ThemePreference = 'light' | 'dark' | 'system';
 
 export interface UserPreferences {

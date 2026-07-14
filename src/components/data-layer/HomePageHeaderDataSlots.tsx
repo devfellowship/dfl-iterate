@@ -26,6 +26,7 @@ import {
 } from '@/components/data-layer/preview.mock';
 import { PreviewSectionLabel } from './PreviewSectionLabel';
 import { useGetUserProfile } from '@/hooks';
+import { i } from 'framer-motion/client';
 
 /**
  * Preview + slots T1, T2, T4, T6 no header da `HomePage`.
@@ -40,25 +41,7 @@ export function HomePageHeaderDataSlots() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const {
-    data,
-    isPending,
-    isError,
-    refetch,
-  } = useGetUserProfile();
-  if (isPending) {
-    return <div>Loading...</div>;
-  }
-  if (isError) {
-    return (
-      <>
-        <span>Erro</span>
-        <Button onClick={() => refetch()}>
-          Tentar de novo
-        </Button>
-      </>
-    );
-  }
+  const {data: UserProfileData, isPending: isUserProfilePending, isError: isUserProfileError, refetch: userProfileRefetch, } = useGetUserProfile();
 
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
@@ -150,9 +133,22 @@ export function HomePageHeaderDataSlots() {
       </Drawer>
 
       {/* SLOT T1 */}
-      <UserProfileCard 
-      profile={data} 
-      variant="compact" />
+      {isUserProfilePending ? (
+            <div>Loading...</div>
+         ) : isUserProfileError ? (
+            <>
+              <span>Erro</span>
+              <Button onClick={() => userProfileRefetch()}>
+                Tentar de novo
+              </Button>
+            </>
+         ) : (
+            <UserProfileCard 
+              profile={UserProfileData} 
+              variant="compact" 
+            />
+         )
+      }
     </div>
   );
 }

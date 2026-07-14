@@ -1,5 +1,5 @@
 import { cn } from '@devfellowship/components';
-import type { UserProfile } from './types';
+import type { UserProfile } from "@/types/UserProfile";
 
 /**
  * Integração: T1 — header da `HomePage` (`HomePageHeaderDataSlots`, variant `compact`).

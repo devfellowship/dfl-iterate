@@ -1,14 +1,6 @@
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { StepVariableValue } from './StepVariableValue';
 
-export interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  age: number;
-  avatarUrl: string;
-}
-
 export interface Lesson {
   id: string;
   title: string;
