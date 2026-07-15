@@ -8,7 +8,8 @@ const simulateNetworkDelay = () =>
 
 export async function getRecentActivity(): Promise<ActivityEvent[]> {
   await simulateNetworkDelay();
-  return [...activitiesEventData]
+  const activityEvents = activitiesEventData;
+  return [...activityEvents]
     .sort((a, b) => b.occurredAt.localeCompare(a.occurredAt))
     .slice(0);
 }

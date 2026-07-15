@@ -16,7 +16,7 @@ import { useGetRecentActivity } from '@/hooks';
 
 /** SLOT T9, T7, T3, T11 — topo da HomePage (antes do hero) */
 export function HomePageTopDataSlots() {
-  const { data: activityEvents, isPending, isError, refetch } = useGetRecentActivity();
+  const { data: activityEvents, isPending: isActivityPending, isError: isActivityError, refetch: refetchActivity } = useGetRecentActivity();
   
   return (
     <div className="max-w-4xl mx-auto space-y-8 mb-12">
@@ -40,12 +40,12 @@ export function HomePageTopDataSlots() {
         <h2 className="text-lg font-semibold text-foreground mb-3">Atividade recente</h2>
         <PreviewSectionLabel taskId="T11" />
 
-        {isPending && <p>Carregando...</p>}
+        {isActivityPending && <p>Carregando...</p>}
 
-        {isError && (
+        {isActivityError && (
           <div>
             <p>Erro ao carregar atividade recente.</p>
-            <button onClick={() => refetch()}>Tentar de Novo</button>
+            <button onClick={() => refetchActivity()}>Tentar de Novo</button>
           </div>
         )}
 
