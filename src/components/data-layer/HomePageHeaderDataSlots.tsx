@@ -41,7 +41,7 @@ export function HomePageHeaderDataSlots() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const {data: UserProfileData, isPending: isUserProfilePending, isError: isUserProfileError, refetch: userProfileRefetch, } = useGetUserProfile();
+  const { data: userProfileData, isPending: isUserProfilePending, isError: isUserProfileError, refetch: userProfileRefetch, } = useGetUserProfile();
 
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
@@ -144,7 +144,7 @@ export function HomePageHeaderDataSlots() {
             </>
          ) : (
             <UserProfileCard 
-              profile={UserProfileData} 
+              profile={userProfileData} 
               variant="compact" 
             />
          )
