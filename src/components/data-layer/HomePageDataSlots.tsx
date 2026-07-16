@@ -53,7 +53,7 @@ export function HomePageTopDataSlots() {
             <Button onClick={() => refetchAnnouncements()}>Tentar de novo</Button>
           </div>
         ) : (
-          <AnnouncementList announcements={announcements} />
+          <AnnouncementList announcementsData={announcements} />
         )}
       </section>
 

@@ -29,12 +29,12 @@ const severityStyles: Record<
 };
 
 export interface AnnouncementListProps {
-  announcements: Announcement[];
+  announcementsData: Announcement[];
   className?: string;
 }
 
-export function AnnouncementList({ announcements, className }: AnnouncementListProps) {
-  if (announcements.length === 0) {
+export function AnnouncementList({ announcementsData, className }: AnnouncementListProps) {
+  if (announcementsData.length === 0) {
     return (
       <p
         className={cn('text-sm text-muted-foreground text-center py-4', className)}
@@ -47,7 +47,7 @@ export function AnnouncementList({ announcements, className }: AnnouncementListP
 
   return (
     <ul className={cn('space-y-3', className)} data-testid="announcement-list">
-      {announcements.map((item) => {
+      {announcementsData.map((item) => {
         const style = severityStyles[item.severity];
         const Icon = style.icon;
 

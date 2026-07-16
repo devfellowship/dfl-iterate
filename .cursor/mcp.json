@@ -1,0 +1,14 @@
+{
+    "mcpServers": {
+      "dfl-work": {
+        "command": "npx",
+        "args": [
+          "mcp-remote",
+          "https://plans.mcp.devfellowship.com/mcp",
+          "--transport", "http-only",
+          "--header","Authorization:${DFL_TOKEN}"
+        ],
+        "env": { "DFL_TOKEN": "Bearer eyJhbGciOiJFUzI1NiIsImtpZCI6ImU0OThiYjdlLTFiZTUtNDIyZS04MzRjLTRlY2E0MDAxNDc3MCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2llYXBteGloZHpqZ3F0bGpjbmZ1LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI4YTlkMWE5OC0yYzgzLTQ3MGItOWYwOS01OWVmNGM1ODJjZjMiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzgzOTU4ODQ4LCJpYXQiOjE3ODM5NTUyNDgsImVtYWlsIjoiZmFiaW9qcjI1MkBnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc4Mzk1NTI0OH1dLCJzZXNzaW9uX2lkIjoiZGQxYjE3NjgtYjdhNy00ZjIyLThiZGUtN2UwMThiNDFmYjY0IiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.uK2wK-l20u5zLZVxZ7cn6zuhHSvQIky_67cwZrLW35KKQeQ_5PTJt4vSVMBnCDMOie7jXtRAbPry72sHwZNxzg" }
+      }
+    }
+  }
