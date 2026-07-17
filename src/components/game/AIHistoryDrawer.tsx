@@ -4,7 +4,6 @@ import { X, ChevronDown, ChevronUp, CheckCircle2, XCircle } from 'lucide-react';
 import { AIMessage } from '@/hooks/useAIHistory';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { useT } from '@/i18n/LangContext';
 
 interface AIHistoryDrawerProps {
   isOpen: boolean;
@@ -13,7 +12,6 @@ interface AIHistoryDrawerProps {
 }
 
 export function AIHistoryDrawer({ isOpen, onClose, messages }: AIHistoryDrawerProps) {
-  const { t } = useT();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const toggleExpand = (id: string) => {
@@ -81,7 +79,7 @@ export function AIHistoryDrawer({ isOpen, onClose, messages }: AIHistoryDrawerPr
             <div className="flex items-center justify-between p-5 border-b border-border shrink-0">
               <div className="flex items-center gap-3">
                 <span className="text-xl">🤖</span>
-                <h2 className="font-display font-bold text-lg text-foreground">{t('game.aiHistoryDrawer.title')}</h2>
+                <h2 className="font-display font-bold text-lg text-foreground">AI History</h2>
                 <span className="px-2 py-0.5 rounded-full bg-primary/20 text-primary text-xs font-bold">
                   {messages.length}
                 </span>
@@ -99,8 +97,8 @@ export function AIHistoryDrawer({ isOpen, onClose, messages }: AIHistoryDrawerPr
               {messages.length === 0 ? (
                 <div className="text-center text-muted-foreground py-8">
                   <span className="text-3xl block mb-2">🤖</span>
-                  <p className="text-sm">{t('game.aiHistoryDrawer.emptyTitle')}</p>
-                  <p className="text-xs mt-1">{t('game.aiHistoryDrawer.emptyBody')}</p>
+                  <p className="text-sm">Nenhuma mensagem ainda.</p>
+                  <p className="text-xs mt-1">Complete atividades para ver o feedback do AI.</p>
                 </div>
               ) : (
                 messages.map((msg) => {
@@ -127,7 +125,7 @@ export function AIHistoryDrawer({ isOpen, onClose, messages }: AIHistoryDrawerPr
                               <XCircle size={16} className="text-destructive" />
                             )}
                             <span className="font-semibold text-sm text-foreground">
-                              {t('game.aiHistoryDrawer.activityPrefix')} {msg.activityOrder}
+                              Activity {msg.activityOrder}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">

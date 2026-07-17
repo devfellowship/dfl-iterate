@@ -1,12 +1,10 @@
 import { GripVertical } from 'lucide-react';
-import { useT } from '@/i18n/LangContext';
 
 interface TargetPlaceholderProps {
   index: number;
 }
 
 export function TargetPlaceholder({ index }: TargetPlaceholderProps) {
-  const { t } = useT();
   return (
     <div
       key={`target-placeholder-${index}`}
@@ -18,7 +16,7 @@ export function TargetPlaceholder({ index }: TargetPlaceholderProps) {
         className="flex items-center gap-3 p-3 bg-background border border-border rounded-lg shadow-sm cursor-grab active:cursor-grabbing hover:border-primary/50 transition-all"
       >
         <GripVertical className="w-4 h-4 text-muted-foreground transition-colors" />
-        <span className="text-xs text-muted-foreground">{t('atoms.targetPlaceholder.dropHere')}</span>
+        <span className="text-xs text-muted-foreground">Solte aqui</span>
       </div>
     </div>
   );

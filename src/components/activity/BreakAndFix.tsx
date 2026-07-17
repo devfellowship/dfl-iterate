@@ -5,7 +5,6 @@ import { CodeEditor } from '@/components/editor/CodeEditor';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game';
 import { AlertTriangle, Play, Terminal, Lightbulb } from 'lucide-react';
-import { useT } from '@/i18n/LangContext';
 
 interface BreakAndFixProps {
   activity: Activity;
@@ -16,7 +15,6 @@ interface BreakAndFixProps {
 }
 
 export function BreakAndFix({ activity, errorMessage, onFix, onError, onRequestHint }: BreakAndFixProps) {
-  const { t } = useT();
   const [code, setCode] = useState(activity.aiGeneratedCode || '');
   const [isTesting, setIsTesting] = useState(false);
 
@@ -40,19 +38,19 @@ export function BreakAndFix({ activity, errorMessage, onFix, onError, onRequestH
     <ActivityGameCard
       type={activity.type}
       title={activity.title}
-      question={t('activity.breakAndFix.question')}
+      question="Encontre e corrija o bug no código"
       actions={
         <>
-          <GameButton
-            onClick={handleTest}
+          <GameButton 
+            onClick={handleTest} 
             disabled={isTesting}
             variant="primary"
             icon={<Play className="w-5 h-5" />}
           >
-            {isTesting ? t('activity.breakAndFix.testing') : t('activity.breakAndFix.test')}
+            {isTesting ? 'Testando...' : 'Testar'}
           </GameButton>
           <GameButton onClick={onRequestHint} variant="tertiary" icon={<Lightbulb className="w-5 h-5" />}>
-            {t('activity.breakAndFix.hint')}
+            Dica
           </GameButton>
         </>
       }
@@ -66,7 +64,7 @@ export function BreakAndFix({ activity, errorMessage, onFix, onError, onRequestH
         >
           <div className="flex items-center gap-2 mb-2 text-destructive">
             <Terminal className="w-4 h-4" />
-            <span className="font-bold text-sm">{t('activity.breakAndFix.errorLabel')}</span>
+            <span className="font-bold text-sm">Error</span>
           </div>
           <div className="font-mono text-xs text-destructive/80 whitespace-pre-wrap">
             {errorMessage}

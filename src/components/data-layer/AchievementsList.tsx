@@ -1,7 +1,6 @@
 import { cn } from '@devfellowship/components';
 import { Lock } from 'lucide-react';
 import type { UserAchievement } from './types';
-import { useT } from '@/i18n/LangContext';
 
 /**
  * Integração: T6 — drawer 🏆 no header da `HomePage` (`HomePageHeaderDataSlots`).
@@ -22,11 +21,10 @@ function formatUnlockedDate(iso: string) {
 }
 
 export function AchievementsList({ achievements, className }: AchievementsListProps) {
-  const { t } = useT();
   if (achievements.length === 0) {
     return (
       <p className={cn('text-sm text-muted-foreground text-center py-6', className)}>
-        {t('achievements.empty')}
+        Nenhuma conquista cadastrada.
       </p>
     );
   }
@@ -57,11 +55,11 @@ export function AchievementsList({ achievements, className }: AchievementsListPr
               <p className="text-xs text-muted-foreground mt-0.5">{item.description}</p>
               {unlocked && item.unlockedAt && (
                 <p className="text-xs text-primary mt-1.5">
-                  {t('achievements.unlockedOn')} {formatUnlockedDate(item.unlockedAt)}
+                  Desbloqueada em {formatUnlockedDate(item.unlockedAt)}
                 </p>
               )}
               {!unlocked && (
-                <p className="text-xs text-muted-foreground mt-1.5">{t('achievements.locked')}</p>
+                <p className="text-xs text-muted-foreground mt-1.5">Bloqueada</p>
               )}
             </div>
           </li>

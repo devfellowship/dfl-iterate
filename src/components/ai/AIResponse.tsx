@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { cn } from '@devfellowship/components';
-import { useT } from '@/i18n/LangContext';
 
 interface AIResponseProps {
   text: string;
@@ -8,7 +7,6 @@ interface AIResponseProps {
 }
 
 export function AIResponse({ text, isStreaming }: AIResponseProps) {
-  const { t } = useT();
   if (!text && !isStreaming) return null;
 
   // Parse markdown-like syntax for code blocks
@@ -72,7 +70,7 @@ export function AIResponse({ text, isStreaming }: AIResponseProps) {
           <span className="text-lg">🤖</span>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-xs font-medium text-primary mb-2">{t('ai.aiResponse.assistantLabel')}</div>
+          <div className="text-xs font-medium text-primary mb-2">AI Assistant</div>
           <div className={cn(
             "text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed",
             isStreaming && "streaming-cursor"

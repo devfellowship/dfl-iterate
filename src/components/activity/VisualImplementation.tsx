@@ -7,7 +7,6 @@ import { GameButton } from '@/components/game/GameButton';
 import { CodeEditor } from '@/components/editor';
 import { ImageZoomModal } from './ImageZoomModal';
 import { ActivityType } from '@/enums';
-import { useT } from '@/i18n/LangContext';
 
 interface VisualImplementationProps {
   activity: Activity;
@@ -15,34 +14,33 @@ interface VisualImplementationProps {
 }
 
 export function VisualImplementation({ activity, onComplete }: VisualImplementationProps) {
-  const { t } = useT();
   const [isZoomed, setIsZoomed] = useState(false);
   const [code, setCode] = useState(activity.aiGeneratedCode || '');
 
   const visualConfig = activity.visualConfig;
-
+  
   if (!visualConfig) {
-    return <div>{t('activity.visualImplementation.missingConfig')}</div>;
+    return <div>Visual configuration missing</div>;
   }
 
   return (
     <ActivityGameCard
       type={ActivityType.VISUAL_IMPLEMENTATION}
       title={activity.title}
-      question={t('activity.visualImplementation.question')}
+      question="Aproxime seu código do design de referência"
       actions={
         <GameButton
           variant="primary"
           onClick={() => onComplete(code)}
         >
-          👁️ {t('activity.visualImplementation.compareButton')}
+          👁️ COMPARAR
         </GameButton>
       }
     >
       <div className="flex flex-col gap-4 flex-1 overflow-hidden">
         {/* Reference Image */}
         <div className="shrink-0">
-          <p className="text-sm text-muted-foreground mb-2 font-semibold">{t('activity.visualImplementation.referenceLabel')}</p>
+          <p className="text-sm text-muted-foreground mb-2 font-semibold">Referência</p>
           <motion.div
             className="relative rounded-xl overflow-hidden cursor-zoom-in border-2 border-border group"
             onClick={() => setIsZoomed(true)}
@@ -51,7 +49,7 @@ export function VisualImplementation({ activity, onComplete }: VisualImplementat
           >
             <img
               src={visualConfig.imageUrl}
-              alt={visualConfig.caption || t('activity.visualImplementation.designReferenceAlt')}
+              alt={visualConfig.caption || 'Design reference'}
               className="w-full h-auto max-h-48 object-contain bg-muted"
             />
             

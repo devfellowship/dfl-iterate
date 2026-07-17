@@ -1,5 +1,3 @@
-import { useT } from '@/i18n/LangContext';
-
 interface StatusInfoProps {
   correctOrder?: string[];
   solutionOrder: string[];
@@ -7,23 +5,22 @@ interface StatusInfoProps {
 }
 
 export function StatusInfo({ correctOrder, solutionOrder, blockCount }: StatusInfoProps) {
-  const { t } = useT();
   return (
     <div className="text-xs text-muted-foreground space-y-1">
       {correctOrder && correctOrder.length > 0 && (
         <p>
-          {t('atoms.statusInfo.correctOrder')} <span className="font-mono text-foreground">{correctOrder.join(' → ')}</span>
+          Ordem correta: <span className="font-mono text-foreground">{correctOrder.join(' → ')}</span>
         </p>
       )}
       <p>
         {solutionOrder.length > 0
-          ? `${t('atoms.statusInfo.currentOrder')} ${solutionOrder.join(' → ')}`
-          : t('atoms.statusInfo.dragAllBlocks')}
+          ? `Ordem atual: ${solutionOrder.join(' → ')}`
+          : 'Arraste todos os blocos para a área à direita e depois envie.'}
       </p>
-      <p className="text-primary">{t('atoms.statusInfo.blocksLoaded')} {blockCount}</p>
+      <p className="text-primary">Blocos carregados: {blockCount}</p>
       {blockCount === 0 && (
         <p className="text-red-500">
-          {t('atoms.statusInfo.noBlocksFound')}
+          Nenhum bloco encontrado. Verifique se a atividade possui `codeBlocks` no teste.
         </p>
       )}
     </div>

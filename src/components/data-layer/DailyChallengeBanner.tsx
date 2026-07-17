@@ -3,7 +3,6 @@ import { cn } from '@devfellowship/components';
 import { Button } from '@devfellowship/components';
 import { Sparkles, Timer } from 'lucide-react';
 import type { DailyChallenge } from './types';
-import { useT } from '@/i18n/LangContext';
 
 /**
  * Integração: T7 — topo da `HomePage`, abaixo do header de marketing.
@@ -15,16 +14,15 @@ export interface DailyChallengeBannerProps {
   className?: string;
 }
 
-function formatExpiry(iso: string, t: (k: string) => string) {
+function formatExpiry(iso: string) {
   const date = new Date(iso);
   const now = new Date();
   const isToday = date.toDateString() === now.toDateString();
-  if (isToday) return t('challenge.expiresToday');
-  return `${t('challenge.expiresOn')} ${date.toLocaleDateString('pt-BR')}`;
+  if (isToday) return 'Expira hoje';
+  return `Expira em ${date.toLocaleDateString('pt-BR')}`;
 }
 
 export function DailyChallengeBanner({ challenge, className }: DailyChallengeBannerProps) {
-  const { t } = useT();
   return (
     <section
       className={cn(
@@ -38,11 +36,11 @@ export function DailyChallengeBanner({ challenge, className }: DailyChallengeBan
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-primary/20 px-2.5 py-0.5 text-xs font-semibold text-primary">
               <Sparkles className="h-3.5 w-3.5" />
-              {t('challenge.daily')}
+              Desafio do dia
             </span>
             <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
               <Timer className="h-3.5 w-3.5" />
-              {formatExpiry(challenge.expiresAt, t)}
+              {formatExpiry(challenge.expiresAt)}
             </span>
             <span className="rounded-full bg-xp/15 px-2 py-0.5 text-xs font-bold text-xp">
               +{challenge.bonusXp} XP
@@ -52,7 +50,7 @@ export function DailyChallengeBanner({ challenge, className }: DailyChallengeBan
           <p className="text-sm text-muted-foreground max-w-xl">{challenge.description}</p>
         </div>
         <Button asChild className="shrink-0 w-full md:w-auto">
-          <Link to={`/lesson/${challenge.targetLessonId}`}>{t('challenge.view')}</Link>
+          <Link to={`/lesson/${challenge.targetLessonId}`}>Ver desafio</Link>
         </Button>
       </div>
     </section>

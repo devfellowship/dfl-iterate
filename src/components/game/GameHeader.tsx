@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, Heart, Flame, Zap } from 'lucide-react';
 import { Button } from '@devfellowship/components';
-import { useT } from '@/i18n/LangContext';
 
 interface GameHeaderProps {
   lives: number;
@@ -11,7 +10,6 @@ interface GameHeaderProps {
 }
 
 export function GameHeader({ lives, streak, xp, onBack }: GameHeaderProps) {
-  const { t } = useT();
   return (
     <header className="shrink-0 min-h-[4.5rem] h-[4.5rem] px-4 flex items-center justify-between border-b border-border bg-card/50 gap-3">
       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -24,7 +22,7 @@ export function GameHeader({ lives, streak, xp, onBack }: GameHeaderProps) {
             className="shrink-0 gap-1.5 pl-2 pr-3"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('game.gameHeader.home')}</span>
+            <span className="hidden sm:inline">Início</span>
           </Button>
         )}
         <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0">

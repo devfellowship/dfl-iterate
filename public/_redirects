@@ -1,5 +1,0 @@
-# SPA fallback — dfl-iterate is a React Router client-side-routed app.
-# Serve index.html for any path so deep links / refreshes resolve client-side.
-# This also covers the /en/* and /es/* locale trees — a hard refresh on
-# /en/lesson/<id> boots index.html and the router resolves the locale + page.
-/*    /index.html    200
