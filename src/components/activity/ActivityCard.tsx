@@ -3,6 +3,7 @@ import { Activity } from '@/types';
 import { ActivityType, ActivityStatus } from '@/enums';
 import { Check, Lock, Search, Scissors, GitFork, Bug, Wrench } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useT } from '@/i18n/LangContext';
 
 interface ActivityCardProps {
   activity: Activity;
@@ -21,17 +22,18 @@ const typeIcons = {
   [ActivityType.PREDICT_OUTPUT]: Wrench,
 };
 
-const typeLabels = {
-  [ActivityType.FILL_THE_BLANKS]: 'Fill the Blanks',
-  [ActivityType.READ_AND_CHOOSE]: 'Read And Choose',
-  [ActivityType.QUALITY_REVIEW]: 'Quality Review',
-  [ActivityType.CONSTRAINED_EDIT]: 'Constrained Edit',
-  [ActivityType.DECISION_FORK]: 'Decision Fork',
-  [ActivityType.BREAK_AND_FIX]: 'Break & Fix',
-  [ActivityType.PREDICT_OUTPUT]: 'Predict Output',
+const typeLabelKeys = {
+  [ActivityType.FILL_THE_BLANKS]: 'activity.activityCard.typeFillTheBlanks',
+  [ActivityType.READ_AND_CHOOSE]: 'activity.activityCard.typeReadAndChoose',
+  [ActivityType.QUALITY_REVIEW]: 'activity.activityCard.typeQualityReview',
+  [ActivityType.CONSTRAINED_EDIT]: 'activity.activityCard.typeConstrainedEdit',
+  [ActivityType.DECISION_FORK]: 'activity.activityCard.typeDecisionFork',
+  [ActivityType.BREAK_AND_FIX]: 'activity.activityCard.typeBreakAndFix',
+  [ActivityType.PREDICT_OUTPUT]: 'activity.activityCard.typePredictOutput',
 };
 
 export function ActivityCard({ activity, index, onClick, isActive }: ActivityCardProps) {
+  const { t } = useT();
   const Icon = typeIcons[activity.type];
   const isLocked = activity.status === ActivityStatus.LOCKED;
   const isCompleted = activity.status === ActivityStatus.COMPLETED;
@@ -79,7 +81,7 @@ export function ActivityCard({ activity, index, onClick, isActive }: ActivityCar
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs font-medium text-muted-foreground">
-              {index + 1}. {typeLabels[activity.type]}
+              {index + 1}. {t(typeLabelKeys[activity.type])}
             </span>
           </div>
           <h3 className="font-semibold text-foreground truncate">

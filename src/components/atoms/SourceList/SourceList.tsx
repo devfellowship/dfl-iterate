@@ -1,17 +1,19 @@
 import { GripVertical } from 'lucide-react';
 import { CodeBlock } from '@/types';
 import { SourceBlock } from '../SourceBlock/SourceBlock';
+import { useT } from '@/i18n/LangContext';
 
 interface SourceListProps {
   blocks: CodeBlock[];
 }
 
 export function SourceList({ blocks }: SourceListProps) {
+  const { t } = useT();
   return (
     <div className="space-y-3">
       <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
         <GripVertical className="w-3 h-3" />
-        Blocos Disponíveis
+        {t('atoms.sourceList.availableBlocks')}
       </h3>
 
       <div className="space-y-2">
