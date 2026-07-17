@@ -30,6 +30,7 @@ concurrency:
 
 jobs:
   deploy:
+    # Public repo: self-hosted dfl-runner blocked (allows_public=false). Authorized Tainan TG 2026-06-06.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

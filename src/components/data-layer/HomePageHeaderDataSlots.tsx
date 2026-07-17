@@ -24,6 +24,7 @@ import {
   previewUserStats,
 } from '@/components/data-layer/preview.mock';
 import { useGetUserPreferences } from '@/hooks';
+import { PreviewSectionLabel } from './PreviewSectionLabel';
 import { useT } from '@/i18n/LangContext';
 /**
  * Preview + slots T1, T2, T4, T6 no header da `HomePage`.
