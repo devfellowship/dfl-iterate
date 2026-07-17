@@ -24,6 +24,7 @@ import {
   previewUserStats,
 } from '@/components/data-layer/preview.mock';
 import { useGetUserPreferences } from '@/hooks';
+import { useT } from '@/i18n/LangContext';
 /**
  * Preview + slots T1, T2, T4, T6 no header da `HomePage`.
  *
@@ -34,6 +35,7 @@ import { useGetUserPreferences } from '@/hooks';
  * Fellow T10: drawer 🔔 → `useGetNotifications()`.
  */
 export function HomePageHeaderDataSlots() {
+  const { t } = useT();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -58,14 +60,14 @@ export function HomePageHeaderDataSlots() {
             variant="ghost"
             size="icon"
             className="h-9 w-9 shrink-0"
-            aria-label="Conquistas"
+            aria-label={t('header.achievements')}
           >
             <Trophy className="h-4 w-4 text-xp" />
           </Button>
         </DrawerTrigger>
         <DrawerContent className="max-h-[85vh]">
           <DrawerHeader>
-            <DrawerTitle>Conquistas</DrawerTitle>
+            <DrawerTitle>{t('header.achievements')}</DrawerTitle>
           </DrawerHeader>
           <div className="overflow-y-auto px-4 pb-2">
             <PreviewSectionLabel taskId="T6" />
@@ -73,7 +75,7 @@ export function HomePageHeaderDataSlots() {
           </div>
           <DrawerClose asChild>
             <Button variant="outline" className="mx-4 mb-4">
-              Fechar
+              {t('common.close')}
             </Button>
           </DrawerClose>
         </DrawerContent>
@@ -87,14 +89,14 @@ export function HomePageHeaderDataSlots() {
             variant="ghost"
             size="icon"
             className="h-9 w-9 shrink-0"
-            aria-label="Notificações"
+            aria-label={t('header.notifications')}
           >
             <NotificationBellIcon unreadCount={previewNotifications.unreadCount} />
           </Button>
         </DrawerTrigger>
         <DrawerContent className="max-h-[85vh]">
           <DrawerHeader>
-            <DrawerTitle>Notificações</DrawerTitle>
+            <DrawerTitle>{t('header.notifications')}</DrawerTitle>
           </DrawerHeader>
           <div className="overflow-y-auto px-4 pb-2">
             <PreviewSectionLabel taskId="T10" />
@@ -102,7 +104,7 @@ export function HomePageHeaderDataSlots() {
           </div>
           <DrawerClose asChild>
             <Button variant="outline" className="mx-4 mb-4">
-              Fechar
+              {t('common.close')}
             </Button>
           </DrawerClose>
         </DrawerContent>
@@ -116,19 +118,19 @@ export function HomePageHeaderDataSlots() {
             variant="ghost"
             size="icon"
             className="h-9 w-9 shrink-0"
-            aria-label="Preferências"
+            aria-label={t('header.preferences')}
           >
             <Settings className="h-4 w-4" />
           </Button>
         </DrawerTrigger>
         <DrawerContent className="max-h-[85vh]">
           <div className="overflow-y-auto px-4 pb-2 pt-2">
-            {isPreferencesPending && <p>Carregando preferências…</p>}
+            {isPreferencesPending && <p>{t('header.prefsLoading')}</p>}
             {isPreferencesError && (
               <div>
-                <p>Não foi possível carregar suas preferências.</p>
+                <p>{t('header.prefsError')}</p>
                 <Button type="button" variant="outline" onClick={() => refetchPreferences()}>
-                  Tentar de novo
+                  {t('common.retry')}
                 </Button>
               </div>
             )}
@@ -138,7 +140,7 @@ export function HomePageHeaderDataSlots() {
           </div>
           <DrawerClose asChild>
             <Button variant="outline" className="mx-4 mb-4">
-              Fechar
+              {t('common.close')}
             </Button>
           </DrawerClose>
         </DrawerContent>

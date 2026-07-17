@@ -1,6 +1,7 @@
 import { cn } from '@devfellowship/components';
 import { Award, BookCheck, Flame } from 'lucide-react';
 import type { ActivityEvent, ActivityEventType } from './types';
+import { useT } from '@/i18n/LangContext';
 
 /**
  * Integração: T11 — corpo da `HomePage` (`HomePageTopDataSlots`, abaixo dos avisos).
@@ -31,10 +32,11 @@ function formatOccurredAt(iso: string) {
 }
 
 export function RecentActivityFeed({ events, className }: RecentActivityFeedProps) {
+  const { t } = useT();
   if (events.length === 0) {
     return (
       <p className={cn('text-sm text-muted-foreground text-center py-6', className)}>
-        Nenhuma atividade recente.
+        {t('recentActivity.empty')}
       </p>
     );
   }
