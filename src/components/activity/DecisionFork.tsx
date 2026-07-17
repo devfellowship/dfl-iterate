@@ -5,6 +5,7 @@ import { Check, Sparkles } from 'lucide-react';
 import { cn } from '@devfellowship/components';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game';
+import { useT } from '@/i18n/LangContext';
 
 interface DecisionForkProps {
   activity: Activity;
@@ -12,6 +13,7 @@ interface DecisionForkProps {
 }
 
 export function DecisionFork({ activity, onDecide }: DecisionForkProps) {
+  const { t } = useT();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isConfirming, setIsConfirming] = useState(false);
 
@@ -28,15 +30,15 @@ export function DecisionFork({ activity, onDecide }: DecisionForkProps) {
     <ActivityGameCard
       type={activity.type}
       title={activity.title}
-      question="Qual abordagem você prefere?"
+      question={t('activity.decisionFork.question')}
       actions={
-        <GameButton 
-          onClick={handleConfirm} 
+        <GameButton
+          onClick={handleConfirm}
           disabled={!selectedOption || isConfirming}
           variant="primary"
           icon={isConfirming ? <Sparkles className="w-5 h-5 animate-pulse" /> : undefined}
         >
-          {isConfirming ? 'Aplicando...' : 'Confirmar'}
+          {isConfirming ? t('activity.decisionFork.applying') : t('activity.decisionFork.confirm')}
         </GameButton>
       }
     >
@@ -66,6 +68,7 @@ interface OptionCardProps {
 }
 
 function OptionCard({ option, index, isSelected, onSelect, disabled }: OptionCardProps) {
+  const { t } = useT();
   return (
     <motion.button
       onClick={onSelect}
@@ -103,7 +106,7 @@ function OptionCard({ option, index, isSelected, onSelect, disabled }: OptionCar
       </p>
       
       <div className="pt-3 border-t border-border">
-        <span className="text-xs font-bold text-primary uppercase tracking-wide">Impacto:</span>
+        <span className="text-xs font-bold text-primary uppercase tracking-wide">{t('activity.decisionFork.impactLabel')}</span>
         <p className="text-sm text-muted-foreground mt-1">
           {option.impact}
         </p>

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
+import { useT } from '@/i18n/LangContext';
 
 interface TerminalCommand {
   command: string;
@@ -22,10 +23,11 @@ function StepIcon({ status, index, currentStep }: { status: StepStatus; index: n
 }
 
 export function CommandStep({ commands, currentStep, stepStatus }: CommandStepProps) {
+  const { t } = useT();
   return (
     <div className="rounded-xl border border-border bg-card p-4 flex-1">
       <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3">
-        Progresso ({Math.min(currentStep, commands.length)}/{commands.length})
+        {t('molecules.commandSteps.progress')} ({Math.min(currentStep, commands.length)}/{commands.length})
       </p>
       <div className="flex flex-col gap-3">
         {commands.map((cmd, i) => (

@@ -2,6 +2,7 @@ import { ActivityType } from '@/enums';
 import { Activity } from '@/types';
 import { ActivityGameCard, GameButton } from '@/components/game';
 import { useFixWithChoices } from '@/hooks/useFixWithChoices';
+import { useT } from '@/i18n/LangContext';
 
 interface FixWithChoicesProps {
   activity: Activity;
@@ -9,6 +10,7 @@ interface FixWithChoicesProps {
 }
 
 export function FixWithChoices({ activity, onSubmit }: FixWithChoicesProps) {
+  const { t } = useT();
   const {
     selectedId,
     setSelectedId,
@@ -30,13 +32,13 @@ export function FixWithChoices({ activity, onSubmit }: FixWithChoicesProps) {
             disabled={!selectedId}
             variant="primary"
           >
-            Confirmar correção
+            {t('activity.fixWithChoices.confirmFix')}
           </GameButton>
         )
       }
     >
       <div className="mb-6">
-        <h3 className="font-bold mb-2">Código com erro:</h3>
+        <h3 className="font-bold mb-2">{t('activity.fixWithChoices.codeWithError')}</h3>
         <pre className="bg-black text-green-400 p-4 rounded-xl text-sm overflow-auto">
           <code>{activity.aiGeneratedCode}</code>
         </pre>
