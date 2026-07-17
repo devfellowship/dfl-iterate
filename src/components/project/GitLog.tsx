@@ -3,6 +3,7 @@ import { GitLogEntry } from '@/types';
 import { Terminal, X, CheckCircle, GitBranch, Wrench } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useT } from '@/i18n/LangContext';
 
 interface GitLogProps {
   entries: GitLogEntry[];
@@ -23,6 +24,7 @@ const typeColors: Record<string, string> = {
 };
 
 export function GitLog({ entries, isOpen, onToggle }: GitLogProps) {
+  const { t } = useT();
   return (
     <>
       {/* Button rendered externally now via LessonPage */}
@@ -47,7 +49,7 @@ export function GitLog({ entries, isOpen, onToggle }: GitLogProps) {
               <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                 <div className="flex items-center gap-2">
                   <Terminal className="w-5 h-5 text-primary" />
-                  <h2 className="font-bold text-lg">Git Log</h2>
+                  <h2 className="font-bold text-lg">{t('project.gitLog.title')}</h2>
                 </div>
                 <button onClick={onToggle} className="p-2 rounded-lg hover:bg-muted">
                   <X className="w-5 h-5 text-muted-foreground" />
@@ -71,7 +73,7 @@ export function GitLog({ entries, isOpen, onToggle }: GitLogProps) {
                         <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
                           <span>{formatDistanceToNow(entry.timestamp, { addSuffix: true, locale: ptBR })}</span>
                           <span>•</span>
-                          <span>{entry.filesChanged.length} arquivo(s)</span>
+                          <span>{entry.filesChanged.length} {t('project.gitLog.filesSuffix')}</span>
                         </div>
                       </div>
                     </motion.div>

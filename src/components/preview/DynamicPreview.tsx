@@ -4,6 +4,7 @@ import { RefreshCw, ExternalLink, AlertTriangle, ShoppingCart } from 'lucide-rea
 import { Button } from '@devfellowship/components';
 import { PreviewState } from '@/hooks/usePreviewState';
 import { ProjectStatus } from '@/enums';
+import { useT } from '@/i18n/LangContext';
 
 interface DynamicPreviewProps {
   status: ProjectStatus;
@@ -18,6 +19,7 @@ export function DynamicPreview({
   errorMessage,
   lastCompletedActivity 
 }: DynamicPreviewProps) {
+  const { t } = useT();
   const isBroken = status === ProjectStatus.BROKEN;
   const [showBadge, setShowBadge] = useState(false);
   const [currentBadge, setCurrentBadge] = useState<string | undefined>();
@@ -42,7 +44,7 @@ export function DynamicPreview({
             <div className="w-3 h-3 rounded-full bg-warning/60" />
             <div className="w-3 h-3 rounded-full bg-muted" />
           </div>
-          <span className="text-xs text-muted-foreground ml-2">BoxShop Preview</span>
+          <span className="text-xs text-muted-foreground ml-2">{t('preview.dynamicPreview.toolbarLabel')}</span>
         </div>
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon" className="h-7 w-7">
@@ -77,7 +79,7 @@ export function DynamicPreview({
             animate={{ opacity: 1 }}
           >
             <AlertTriangle className="w-16 h-16 text-red-500 mb-4" />
-            <h3 className="text-lg font-bold text-red-700 mb-2">Build Error</h3>
+            <h3 className="text-lg font-bold text-red-700 mb-2">{t('preview.dynamicPreview.buildErrorTitle')}</h3>
             <div className="bg-red-100 border border-red-200 rounded-lg p-4 max-w-md">
               <pre className="text-xs text-red-600 font-mono whitespace-pre-wrap">
                 {errorMessage || 'TypeError: Cannot read property \'map\' of undefined'}
