@@ -6,6 +6,7 @@ import { GameButton } from '@/components/game';
 import { Check, Info } from 'lucide-react';
 import { initialProjectFiles } from '@/test-utils/project.dummy';
 import { motion } from 'framer-motion';
+import { useT } from '@/i18n/LangContext';
 
 interface ConstrainedEditProps {
   activity: Activity;
@@ -13,6 +14,7 @@ interface ConstrainedEditProps {
 }
 
 export function ConstrainedEdit({ activity, onSubmit }: ConstrainedEditProps) {
+  const { t } = useT();
   const initialCode = useMemo(() => {
     const file = initialProjectFiles.find(f => f.path === activity.targetFiles[0]);
     return file?.content || '';
@@ -24,10 +26,10 @@ export function ConstrainedEdit({ activity, onSubmit }: ConstrainedEditProps) {
     <ActivityGameCard
       type={activity.type}
       title={activity.title}
-      question="Melhore o código nas regiões destacadas"
+      question={t('activity.constrainedEdit.question')}
       actions={
         <GameButton onClick={() => onSubmit(code)} variant="primary" icon={<Check className="w-5 h-5" />}>
-          Aplicar
+          {t('activity.constrainedEdit.apply')}
         </GameButton>
       }
     >
@@ -46,7 +48,7 @@ export function ConstrainedEdit({ activity, onSubmit }: ConstrainedEditProps) {
               >
                 <Info className="w-3.5 h-3.5 text-primary" />
                 <span className="text-foreground font-medium">
-                  Linhas {region.startLine}-{region.endLine}
+                  {t('activity.constrainedEdit.linesPrefix')} {region.startLine}-{region.endLine}
                 </span>
                 {region.hint && (
                   <span className="text-muted-foreground">• {region.hint}</span>
