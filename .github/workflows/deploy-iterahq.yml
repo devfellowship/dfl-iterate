@@ -1,0 +1,55 @@
+name: Deploy iterahq.dev
+
+# Auto-deploy the built SPA to the Cloudflare Pages project `itera-landing`
+# (production = iterahq.dev) on every push to main. Direct-upload via wrangler
+# (mirrors devfellowship/dfl-website's deploy-revera.yml — the canonical DR
+# deploy path, replacing reliance on Cloudflare Pages git-integration, which
+# is NOT connected for this project). Manual run via workflow_dispatch.
+#
+# Public repo: cannot use the org-scoped self-hosted dfl-runner
+# (runner-group allows_public=false) -> runs on ubuntu-latest, matching this
+# repo's ci.yml. Public-repo carve-out authorized by Tainan TG 2026-06-06
+# (see CLAUDE.md "CI green merge policy — Exceção escopada — repos PÚBLICOS").
+#
+# REQUIRED SECRETS (must be configured on this repo — see PR notes):
+#   CLOUDFLARE_API_TOKEN  — token with "Cloudflare Pages: Edit" on the account
+#                           that owns the `itera-landing` project.
+#   CLOUDFLARE_ACCOUNT_ID — that account's id.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-iterahq
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    # Public repo: self-hosted dfl-runner blocked (allows_public=false). Authorized Tainan TG 2026-06-06.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler@4 pages deploy dist --project-name=itera-landing --branch=main --commit-dirty=true

@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { useT } from '@/i18n/LangContext';
 
 interface ImageZoomModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface ImageZoomModalProps {
 }
 
 export function ImageZoomModal({ isOpen, imageUrl, caption, onClose }: ImageZoomModalProps) {
+  const { t } = useT();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -46,7 +48,7 @@ export function ImageZoomModal({ isOpen, imageUrl, caption, onClose }: ImageZoom
             {/* Image */}
             <img
               src={imageUrl}
-              alt={caption || 'Zoomed image'}
+              alt={caption || t('activity.imageZoomModal.zoomedImageAlt')}
               className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl"
             />
 

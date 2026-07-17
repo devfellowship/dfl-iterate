@@ -3,6 +3,7 @@ import { CodeEditor } from '@/components/editor/CodeEditor';
 import { ActivityGameCard } from '@/components/game';
 import { GameButton } from '@/components/game';
 import { useFixTheCode } from '@/hooks/useFixTheCode';
+import { useT } from '@/i18n/LangContext';
 
 export interface FixTheCodeProps {
   activity: Activity;
@@ -10,16 +11,17 @@ export interface FixTheCodeProps {
 }
 
 export function FixTheCode({ activity, onSubmit }: FixTheCodeProps) {
+  const { t } = useT();
   const { code, setCode, handleSubmit } = useFixTheCode(activity, { onSubmit });
 
   return (
     <ActivityGameCard
       type={activity.type}
       title={activity.title}
-      question="Corrija o código e envie quando estiver pronto"
+      question={t('activity.fixTheCode.defaultInstruction')}
       actions={
         <GameButton onClick={handleSubmit} variant="primary">
-          Enviar
+          {t('activity.fixTheCode.submit')}
         </GameButton>
       }
     >

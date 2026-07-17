@@ -13,9 +13,11 @@ import {
   previewLearningResume,
 } from '@/components/data-layer/preview.mock';
 import { PreviewSectionLabel } from './PreviewSectionLabel';
+import { useT } from '@/i18n/LangContext';
 
 /** SLOT T9, T7, T3, T11 — topo da HomePage (antes do hero) */
 export function HomePageTopDataSlots() {
+  const { t } = useT();
   return (
     <div className="max-w-4xl mx-auto space-y-8 mb-12">
       <section data-slot="T9">
@@ -29,13 +31,13 @@ export function HomePageTopDataSlots() {
       </section>
 
       <section data-slot="T3">
-        <h2 className="text-lg font-semibold text-foreground mb-3">Avisos</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-3">{t('home.slots.announcements')}</h2>
         <PreviewSectionLabel taskId="T3" />
         <AnnouncementList announcements={previewAnnouncements} />
       </section>
 
       <section data-slot="T11">
-        <h2 className="text-lg font-semibold text-foreground mb-3">Atividade recente</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-3">{t('home.slots.recentActivity')}</h2>
         <PreviewSectionLabel taskId="T11" />
         <RecentActivityFeed events={previewActivityEvents} />
       </section>

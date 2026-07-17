@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, ArrowRight, Sparkles } from 'lucide-react';
 import { GameButton } from './GameButton';
+import { useT } from '@/i18n/LangContext';
 
 interface CelebrationOverlayProps {
   isVisible: boolean;
@@ -11,6 +12,7 @@ interface CelebrationOverlayProps {
 }
 
 export function CelebrationOverlay({ isVisible, xpEarned, message, onContinue }: CelebrationOverlayProps) {
+  const { t } = useT();
   // Play celebration sound effect (optional)
   useEffect(() => {
     if (isVisible) {
@@ -76,7 +78,7 @@ export function CelebrationOverlay({ isVisible, xpEarned, message, onContinue }:
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring' }}
             >
-              INCRÍVEL!
+              {t('game.celebrationOverlay.title')}
             </motion.h2>
 
             {/* Message */}
@@ -102,7 +104,7 @@ export function CelebrationOverlay({ isVisible, xpEarned, message, onContinue }:
               transition={{ delay: 0.4 }}
             >
               <GameButton onClick={onContinue} variant="primary">
-                Continuar
+                {t('game.celebrationOverlay.continue')}
                 <ArrowRight className="w-5 h-5" />
               </GameButton>
             </motion.div>

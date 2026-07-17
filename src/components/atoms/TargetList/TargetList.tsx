@@ -1,16 +1,18 @@
 import { ListOrdered } from 'lucide-react';
 import { TargetPlaceholder } from '../TargetPlaceholder/TargetPlaceholder';
+import { useT } from '@/i18n/LangContext';
 
 interface TargetListProps {
   count: number;
 }
 
 export function TargetList({ count }: TargetListProps) {
+  const { t } = useT();
   return (
     <div className="space-y-3 p-4 bg-muted/20 rounded-xl border border-dashed border-border">
       <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
         <ListOrdered className="w-3 h-3" />
-        Sua Solução
+        {t('atoms.targetList.yourSolution')}
       </h3>
 
       <div className="space-y-2">

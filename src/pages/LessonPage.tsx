@@ -34,10 +34,12 @@ import { BestImplementation } from '@/components/activity/BestImplementation';
 import { ParsonsProblem } from '@/components/activity/ParsonsProblem';
 import { REPLChallenge } from '@/components/activity/REPLChallenge';
 import { SpotTheBug } from '@/components/activity/SpotTheBug';
+import { useT } from '@/i18n/LangContext';
 
-export default function LessonPage() {        
+export default function LessonPage() {
   const { lessonId } = useParams<{ lessonId: string }>();
   const navigate = useNavigate();
+  const { t, lp } = useT();
 
   // Sound effects
   const { playSuccess, playError, playCelebration } = useSoundEffects();
@@ -204,7 +206,7 @@ export default function LessonPage() {
         }}
         decisions={project.decisions}
         githubRepo="github.com/seu-usuario/boxshop-iterate"
-        onGoHome={() => navigate('/')}
+        onGoHome={() => navigate(lp('/'))}
       />
     );
   }
@@ -213,12 +215,12 @@ export default function LessonPage() {
     return (
       <div className="h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <h1 className="text-2xl font-display font-bold text-foreground mb-4">Lesson não encontrada</h1>
+          <h1 className="text-2xl font-display font-bold text-foreground mb-4">{t('lesson.notFound.title')}</h1>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(lp('/'))}
             className="px-6 py-3 bg-primary text-primary-foreground rounded-2xl font-bold"
           >
-            Voltar ao início
+            {t('lesson.backHome')}
           </button>
         </div>
       </div>
@@ -467,15 +469,15 @@ export default function LessonPage() {
   if (!lesson) {
     return (
       <div className="h-screen bg-background flex flex-col items-center justify-center gap-4 p-4">
-        <h1 className="text-2xl font-bold text-foreground">Lição não encontrada</h1>
+        <h1 className="text-2xl font-bold text-foreground">{t('lesson.notFound.title')}</h1>
         <p className="text-muted-foreground text-center max-w-md">
-          Esta lição não existe ou foi removida.
+          {t('lesson.notFound.body')}
         </p>
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate(lp('/'))}
           className="px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold hover:brightness-110 transition"
         >
-          Voltar para lições
+          {t('lesson.backToLessons')}
         </button>
       </div>
     );
@@ -486,13 +488,13 @@ export default function LessonPage() {
       <div className="h-screen bg-background flex flex-col items-center justify-center gap-4 p-4">
         <h1 className="text-2xl font-bold text-foreground">{lesson.title}</h1>
         <p className="text-muted-foreground text-center max-w-md">
-          Esta lição ainda não tem atividades cadastradas.
+          {t('lesson.noActivities')}
         </p>
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate(lp('/'))}
           className="px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-bold hover:brightness-110 transition"
         >
-          Voltar para lições
+          {t('lesson.backToLessons')}
         </button>
       </div>
     );
@@ -505,7 +507,7 @@ export default function LessonPage() {
         lives={lives}
         streak={streak}
         xp={xp}
-        onBack={() => navigate('/')}
+        onBack={() => navigate(lp('/'))}
       />
 
       {/* Progress Pills */}
