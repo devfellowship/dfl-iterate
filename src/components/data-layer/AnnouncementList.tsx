@@ -1,7 +1,6 @@
 import { cn } from '@devfellowship/components';
 import { AlertCircle, CheckCircle2, Info } from 'lucide-react';
 import type { Announcement, AnnouncementSeverity } from './types';
-import { useT } from '@/i18n/LangContext';
 
 /**
  * Integração: T3 — seção "Avisos" na `HomePage` (acima do grid de lições).
@@ -35,14 +34,13 @@ export interface AnnouncementListProps {
 }
 
 export function AnnouncementList({ announcements, className }: AnnouncementListProps) {
-  const { t } = useT();
   if (announcements.length === 0) {
     return (
       <p
         className={cn('text-sm text-muted-foreground text-center py-4', className)}
         data-testid="announcement-list-empty"
       >
-        {t('announcements.empty')}
+        Nenhum aviso no momento.
       </p>
     );
   }

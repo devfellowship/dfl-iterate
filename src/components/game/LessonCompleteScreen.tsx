@@ -3,7 +3,6 @@ import { ExternalLink, Copy, Check, Github } from 'lucide-react';
 import { useState } from 'react';
 import { GameButton } from './GameButton';
 import { Decision } from '@/types';
-import { useT } from '@/i18n/LangContext';
 
 interface LessonCompleteScreenProps {
   lessonTitle: string;
@@ -27,7 +26,6 @@ export function LessonCompleteScreen({
   onGoHome,
   onShare,
 }: LessonCompleteScreenProps) {
-  const { t } = useT();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -63,16 +61,16 @@ export function LessonCompleteScreen({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          {t('game.lessonComplete.title')}
+          LESSON COMPLETE!
         </motion.h1>
-
-        <motion.p
+        
+        <motion.p 
           className="text-center text-muted-foreground mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          {t('game.lessonComplete.completedPrefix')} <span className="text-primary font-semibold">{lessonTitle}</span>
+          Você completou <span className="text-primary font-semibold">{lessonTitle}</span>
         </motion.p>
 
         {/* Preview Mini */}
@@ -85,7 +83,7 @@ export function LessonCompleteScreen({
           <div className="bg-card rounded-xl p-6 text-center">
             <span className="text-4xl mb-2 block">🥊</span>
             <h3 className="font-bold text-lg text-foreground">BoxShop</h3>
-            <p className="text-sm text-muted-foreground">{t('game.lessonComplete.previewSubtitle')}</p>
+            <p className="text-sm text-muted-foreground">E-commerce Frontend Completo</p>
           </div>
         </motion.div>
 
@@ -97,29 +95,29 @@ export function LessonCompleteScreen({
           transition={{ delay: 0.6 }}
         >
           <h3 className="font-display font-bold text-lg text-foreground mb-4 flex items-center gap-2">
-            <span>📊</span> {t('game.lessonComplete.progressTitle')}
+            <span>📊</span> Seu Progresso
           </h3>
-
+          
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="bg-background rounded-xl p-4 text-center">
               <span className="text-2xl">⚡</span>
               <p className="text-2xl font-black text-xp">{stats.xpEarned} XP</p>
-              <p className="text-xs text-muted-foreground">{t('game.lessonComplete.xpEarnedLabel')}</p>
+              <p className="text-xs text-muted-foreground">ganhos</p>
             </div>
             <div className="bg-background rounded-xl p-4 text-center">
               <span className="text-2xl">❤️</span>
               <p className="text-2xl font-black text-life">{stats.livesRemaining}</p>
-              <p className="text-xs text-muted-foreground">{t('game.lessonComplete.livesRemainingLabel')}</p>
+              <p className="text-xs text-muted-foreground">vidas restantes</p>
             </div>
             <div className="bg-background rounded-xl p-4 text-center">
               <span className="text-2xl">🔥</span>
-              <p className="text-2xl font-black text-streak">{stats.streak} {t('game.lessonComplete.streakDaysLabel')}</p>
-              <p className="text-xs text-muted-foreground">{t('game.lessonComplete.streakLabel')}</p>
+              <p className="text-2xl font-black text-streak">{stats.streak} dias</p>
+              <p className="text-xs text-muted-foreground">streak</p>
             </div>
             <div className="bg-background rounded-xl p-4 text-center">
               <span className="text-2xl">⏱️</span>
               <p className="text-2xl font-black text-foreground">{stats.timeMinutes} min</p>
-              <p className="text-xs text-muted-foreground">{t('game.lessonComplete.totalTimeLabel')}</p>
+              <p className="text-xs text-muted-foreground">tempo total</p>
             </div>
           </div>
 
@@ -127,7 +125,7 @@ export function LessonCompleteScreen({
           {decisions.length > 0 && (
             <div>
               <h4 className="font-semibold text-sm text-muted-foreground mb-3 flex items-center gap-2">
-                <span>📝</span> {t('game.lessonComplete.decisionsTitle')}
+                <span>📝</span> Decisões tomadas
               </h4>
               <div className="space-y-2">
                 {decisions.map((decision, i) => (
@@ -157,7 +155,7 @@ export function LessonCompleteScreen({
         >
           <div className="flex items-center gap-3 mb-4">
             <Github className="w-6 h-6 text-white" />
-            <h3 className="font-bold text-lg text-white">{t('game.lessonComplete.githubTitle')}</h3>
+            <h3 className="font-bold text-lg text-white">Seu código está no GitHub!</h3>
           </div>
           
           <p className="font-mono text-sm text-[#58a6ff] mb-4">
@@ -170,7 +168,7 @@ export function LessonCompleteScreen({
               className="flex items-center gap-2 px-4 py-2.5 bg-[#238636] hover:bg-[#2ea043] text-white font-semibold rounded-lg transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
-              {t('game.lessonComplete.openRepoButton')}
+              Abrir Repositório
             </button>
             <button
               onClick={handleCopy}
@@ -179,12 +177,12 @@ export function LessonCompleteScreen({
               {copied ? (
                 <>
                   <Check className="w-4 h-4 text-success" />
-                  {t('game.lessonComplete.copiedLabel')}
+                  Copiado!
                 </>
               ) : (
                 <>
                   <Copy className="w-4 h-4" />
-                  {t('game.lessonComplete.copyLinkButton')}
+                  Copiar Link
                 </>
               )}
             </button>
@@ -203,7 +201,7 @@ export function LessonCompleteScreen({
             onClick={onGoHome}
             className="flex-1"
           >
-            {t('game.lessonComplete.goHomeButton')}
+            🏠 Voltar ao Início
           </GameButton>
           {onShare && (
             <GameButton
@@ -211,7 +209,7 @@ export function LessonCompleteScreen({
               onClick={onShare}
               className="flex-1"
             >
-              {t('game.lessonComplete.shareButton')}
+              📤 Compartilhar
             </GameButton>
           )}
         </motion.div>

@@ -3,7 +3,6 @@ import { cn } from '@devfellowship/components';
 import { Button } from '@devfellowship/components';
 import { BookOpen, Clock } from 'lucide-react';
 import type { LearningResume } from './types';
-import { useT } from '@/i18n/LangContext';
 
 /**
  * Integração: T9 — corpo da `HomePage` (`HomePageTopDataSlots`).
@@ -25,7 +24,6 @@ function formatLastVisited(iso: string) {
 }
 
 export function ContinueLearningCard({ resume, className }: ContinueLearningCardProps) {
-  const { t } = useT();
   return (
     <article
       className={cn(
@@ -38,14 +36,14 @@ export function ContinueLearningCard({ resume, className }: ContinueLearningCard
         <div className="space-y-3 min-w-0 flex-1">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
             <BookOpen className="h-4 w-4" />
-            {t('resume.continueFrom')}
+            Continue de onde parou
           </div>
           <h2 className="text-lg font-bold text-foreground truncate">{resume.lessonTitle}</h2>
           <div className="space-y-1.5 max-w-md">
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>{t('progress.label')}</span>
+              <span>Progresso</span>
               <span>
-                {resume.completedActivities} {t('progress.of')} {resume.totalActivities} {t('common.activities')}
+                {resume.completedActivities} de {resume.totalActivities} atividades
               </span>
             </div>
             <div
@@ -60,15 +58,15 @@ export function ContinueLearningCard({ resume, className }: ContinueLearningCard
                 style={{ width: `${resume.percent}%` }}
               />
             </div>
-            <p className="text-xs font-medium text-foreground">{resume.percent}% {t('progress.completed')}</p>
+            <p className="text-xs font-medium text-foreground">{resume.percent}% concluído</p>
           </div>
           <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <Clock className="h-3.5 w-3.5" />
-            {t('resume.lastVisit')} {formatLastVisited(resume.lastVisitedAt)}
+            Última visita: {formatLastVisited(resume.lastVisitedAt)}
           </p>
         </div>
         <Button asChild className="shrink-0 w-full md:w-auto">
-          <Link to={`/lesson/${resume.lessonId}`}>{t('resume.continueLesson')}</Link>
+          <Link to={`/lesson/${resume.lessonId}`}>Continuar lição</Link>
         </Button>
       </div>
     </article>

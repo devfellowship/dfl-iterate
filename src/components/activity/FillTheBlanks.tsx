@@ -3,7 +3,6 @@ import { Activity } from '@/types';
 import { ActivityGameCard, GameButton } from '@/components/game';
 import { cn } from '@/lib/utils';
 import { tokenizeCode, useFillTheBlanks } from '@/hooks/useFillTheBlanks';
-import { useT } from '@/i18n/LangContext';
 
 export { useFillTheBlanks };
 
@@ -13,7 +12,6 @@ interface FillTheBlanksProps {
 }
 
 export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
-    const { t } = useT();
     const {
         blanks,
         codeLines,
@@ -42,7 +40,7 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
                         className="inline-flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                     >
                         <Eye className="h-4 w-4" />
-                        {showPreview ? t('activity.fillTheBlanks.hidePreview') : t('activity.fillTheBlanks.showPreview')}
+                        {showPreview ? 'Ocultar preview' : 'Ver preview'}
                         {showPreview ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                     </button>
 
@@ -52,7 +50,7 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
                         variant="primary"
                         icon={<Check className="h-5 w-5" />}
                     >
-                        {t('activity.fillTheBlanks.validateCode')}
+                        Validar código
                     </GameButton>
                 </div>
             }
@@ -70,8 +68,8 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
                             }}
                         >
                             <Lightbulb className="h-3.5 w-3.5" />
-                            <span>{t('activity.fillTheBlanks.blankLabel')} {index + 1}</span>
-                            <span style={{ color: 'hsl(var(--warning-foreground) / 0.7)' }}>{t('activity.fillTheBlanks.lineLower')} {blank.line}</span>
+                            <span>Lacuna {index + 1}</span>
+                            <span style={{ color: 'hsl(var(--warning-foreground) / 0.7)' }}>linha {blank.line}</span>
                             {blank.hint ? (
                                 <span style={{ color: 'hsl(var(--foreground) / 0.72)' }}>{blank.hint}</span>
                             ) : null}
@@ -96,7 +94,7 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
                             color: 'hsl(215 20% 68%)',
                         }}
                     >
-                        {t('activity.fillTheBlanks.headerTitle')}
+                        Fill the blanks
                     </div>
 
                     <div className="custom-scrollbar max-h-[420px] overflow-auto py-2">
@@ -144,7 +142,7 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
                                             : 'border-warning/70 bg-warning/90 text-primary-foreground'
                                 )}
                             >
-                              <option value="">{t('activity.fillTheBlanks.selectPlaceholder')}</option>
+                              <option value="">Selecione</option>
                                 {blank.options.map((option) => (
                                     <option key={option} value={option}>
                                         {option}
@@ -195,20 +193,20 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
                                     status === 'idle' && 'border-border bg-card/70'
                                 )}
                             >
-                                <div className="mb-1 text-sm font-semibold text-foreground">{t('activity.fillTheBlanks.blankLabel')} {index + 1}</div>
+                                <div className="mb-1 text-sm font-semibold text-foreground">Lacuna {index + 1}</div>
                                 <div className="text-xs text-muted-foreground">
-                                    {blank.hint || `${t('activity.fillTheBlanks.lineCap')} ${blank.line}`}
+                                    {blank.hint || `Linha ${blank.line}`}
                                 </div>
                                 {status === 'correct' ? (
-                                    <div className="mt-2 text-sm text-success">{t('activity.fillTheBlanks.correct')}</div>
+                                    <div className="mt-2 text-sm text-success">Correto</div>
                                 ) : null}
                                 {status === 'incorrect' ? (
                                     <div className="mt-2 text-sm text-destructive-foreground">
-                                        {t('activity.fillTheBlanks.incorrectPrefix')} <code>{blank.correctAnswer}</code>
+                                        Incorreto. Resposta esperada: <code>{blank.correctAnswer}</code>
                                     </div>
                                 ) : null}
                                 {status === 'idle' && answer ? (
-                                    <div className="mt-2 text-sm text-warning">{t('activity.fillTheBlanks.pendingValidation')}</div>
+                                    <div className="mt-2 text-sm text-warning">Resposta preenchida, aguardando validação.</div>
                                 ) : null}
                             </div>
                         );
@@ -219,11 +217,11 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
                     <div className="rounded-[1.75rem] border border-primary/20 bg-card/80 p-4">
                         <div className="mb-3 flex items-center justify-between">
                             <div>
-                                <div className="text-sm font-semibold text-foreground">{t('activity.fillTheBlanks.previewTitle')}</div>
+                                <div className="text-sm font-semibold text-foreground">Preview do código completo</div>
                                 <div className="text-xs text-muted-foreground">
                                     {allCorrect
-                                        ? t('activity.fillTheBlanks.allCorrect')
-                                        : t('activity.fillTheBlanks.notAllCorrect')}
+                                        ? 'Todas as lacunas estão corretas.'
+                                        : 'Preencha e valide para conferir o resultado final.'}
                                 </div>
                             </div>
                         </div>
@@ -235,7 +233,7 @@ export function FillTheBlanks({ activity, onSubmit }: FillTheBlanksProps) {
 
                 {hasValidatedAnswers && !allCorrect ? (
                     <div className="rounded-2xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive-foreground">
-                        {t('activity.fillTheBlanks.someIncorrect')}
+                        Algumas lacunas ainda estão incorretas. Corrija os campos marcados em vermelho para continuar.
                     </div>
                 ) : null}
             </div>

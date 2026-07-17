@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { ProjectStatus } from '@/enums';
 import { RefreshCw, ExternalLink, AlertTriangle } from 'lucide-react';
 import { Button } from '@devfellowship/components';
-import { useT } from '@/i18n/LangContext';
 
 interface ProjectPreviewProps {
   status: ProjectStatus;
@@ -10,7 +9,6 @@ interface ProjectPreviewProps {
 }
 
 export function ProjectPreview({ status, errorMessage }: ProjectPreviewProps) {
-  const { t } = useT();
   const isBroken = status === ProjectStatus.BROKEN;
 
   return (
@@ -23,7 +21,7 @@ export function ProjectPreview({ status, errorMessage }: ProjectPreviewProps) {
             <div className="w-3 h-3 rounded-full bg-warning/60" />
             <div className="w-3 h-3 rounded-full bg-success/60" />
           </div>
-          <span className="text-xs text-muted-foreground ml-2">{t('preview.projectPreview.toolbarLabel')}</span>
+          <span className="text-xs text-muted-foreground ml-2">BoxShop Preview</span>
         </div>
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon" className="h-7 w-7">
@@ -44,7 +42,7 @@ export function ProjectPreview({ status, errorMessage }: ProjectPreviewProps) {
             animate={{ opacity: 1 }}
           >
             <AlertTriangle className="w-16 h-16 text-red-500 mb-4" />
-            <h3 className="text-lg font-bold text-red-700 mb-2">{t('preview.projectPreview.buildErrorTitle')}</h3>
+            <h3 className="text-lg font-bold text-red-700 mb-2">Build Error</h3>
             <div className="bg-red-100 border border-red-200 rounded-lg p-4 max-w-md">
               <pre className="text-xs text-red-600 font-mono whitespace-pre-wrap">
                 {errorMessage || 'TypeError: Cannot read property \'map\' of undefined'}

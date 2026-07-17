@@ -1,7 +1,6 @@
 import { cn } from '@devfellowship/components';
 import { Flame, Heart, Zap } from 'lucide-react';
 import type { UserStats } from './types';
-import { useT } from '@/i18n/LangContext';
 
 /**
  * Integração: T4 — header da `HomePage` (`HomePageHeaderDataSlots`).
@@ -14,7 +13,6 @@ export interface UserStatsBadgeProps {
 }
 
 export function UserStatsBadge({ stats, className }: UserStatsBadgeProps) {
-  const { t } = useT();
   return (
     <div
       className={cn(
@@ -36,7 +34,7 @@ export function UserStatsBadge({ stats, className }: UserStatsBadgeProps) {
       </span>
       <span
         className="inline-flex items-center gap-1 rounded-full border border-life/20 bg-life/10 px-2.5 py-1 text-life"
-        title={t('stats.livesRemaining')}
+        title="Vidas restantes"
       >
         <Heart className="h-3.5 w-3.5 fill-life" />
         {stats.livesRemaining}

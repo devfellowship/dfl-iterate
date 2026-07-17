@@ -1,6 +1,5 @@
 import { cn } from '@devfellowship/components';
 import type { UserProfile } from './types';
-import { useT } from '@/i18n/LangContext';
 
 /**
  * Integração: T1 — header da `HomePage` (`HomePageHeaderDataSlots`, variant `compact`).
@@ -17,7 +16,6 @@ export function UserProfileCard({
   variant = 'default',
   className,
 }: UserProfileCardProps) {
-  const { t } = useT();
   if (variant === 'compact') {
     return (
       <div
@@ -55,7 +53,7 @@ export function UserProfileCard({
       <div className="min-w-0">
         <p className="font-semibold text-foreground truncate">{profile.name}</p>
         <p className="text-sm text-muted-foreground truncate">{profile.email}</p>
-        <p className="text-xs text-muted-foreground">{profile.age} {t('profile.years')}</p>
+        <p className="text-xs text-muted-foreground">{profile.age} anos</p>
       </div>
     </article>
   );

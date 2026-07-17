@@ -1,7 +1,6 @@
 import { cn } from '@devfellowship/components';
 import { Trophy } from 'lucide-react';
 import type { LeaderboardEntry } from './types';
-import { useT } from '@/i18n/LangContext';
 
 /**
  * Integração: T8 — seção "Ranking" na `HomePage` (abaixo do grid de lições).
@@ -14,11 +13,10 @@ export interface LeaderboardTableProps {
 }
 
 export function LeaderboardTable({ entries, className }: LeaderboardTableProps) {
-  const { t } = useT();
   if (entries.length === 0) {
     return (
       <p className={cn('text-sm text-muted-foreground text-center py-6', className)}>
-        {t('leaderboard.unavailable')}
+        Ranking indisponível.
       </p>
     );
   }
@@ -27,14 +25,14 @@ export function LeaderboardTable({ entries, className }: LeaderboardTableProps) 
     <div className={cn('overflow-hidden rounded-xl border border-border', className)}>
       <div className="flex items-center gap-2 border-b border-border bg-muted/40 px-4 py-3">
         <Trophy className="h-4 w-4 text-xp" />
-        <h2 className="font-semibold text-foreground">{t('leaderboard.title')}</h2>
+        <h2 className="font-semibold text-foreground">Ranking</h2>
       </div>
       <table className="w-full text-sm" data-testid="leaderboard-table">
         <thead className="sr-only">
           <tr>
-            <th>{t('leaderboard.col.rank')}</th>
-            <th>{t('leaderboard.col.player')}</th>
-            <th>{t('leaderboard.col.xp')}</th>
+            <th>Posição</th>
+            <th>Jogador</th>
+            <th>XP</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
@@ -64,7 +62,7 @@ export function LeaderboardTable({ entries, className }: LeaderboardTableProps) 
                     {entry.displayName}
                     {entry.isCurrentUser && (
                       <span className="ml-2 text-xs font-normal text-muted-foreground">
-                        {t('leaderboard.you')}
+                        (você)
                       </span>
                     )}
                   </span>

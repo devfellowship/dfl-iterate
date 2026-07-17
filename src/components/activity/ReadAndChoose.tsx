@@ -4,7 +4,6 @@ import { ActivityGameCard, GameButton } from '@/components/game';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { ChooseCard } from '@/components/atoms/ChooseCard/ChooseCard';
 import { useReadAndChoose } from '@/hooks/useReadAndChoose';
-import { useT } from '@/i18n/LangContext';
 
 interface ReadAndChooseProps {
   activity: Activity;
@@ -12,7 +11,6 @@ interface ReadAndChooseProps {
 }
 
 export function ReadAndChoose({ activity, onSubmit }: ReadAndChooseProps) {
-  const { t } = useT();
   const code = activity.aiGeneratedCode || '';
   const { selectedOption, setSelectedOption, isConfirming, handleConfirm } =
     useReadAndChoose(activity, { onSubmit });
@@ -29,7 +27,7 @@ export function ReadAndChoose({ activity, onSubmit }: ReadAndChooseProps) {
           variant="primary"
           icon={isConfirming ? <Sparkles className="w-5 h-5 animate-pulse" /> : undefined}
         >
-          {isConfirming ? t('activity.readAndChoose.applying') : t('activity.readAndChoose.confirm')}
+          {isConfirming ? 'Aplicando...' : 'Confirmar'}
         </GameButton>
       }
     >
