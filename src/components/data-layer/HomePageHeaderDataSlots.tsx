@@ -39,7 +39,12 @@ export function HomePageHeaderDataSlots() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const { data: notifications, isPending, isError, refetch } = useGetNotifications();
+  const {
+    data: notificationsData,
+    isPending: isNotificationsPending,
+    isError: isNotificationsError,
+    refetch: notificationsRefetch,
+  } = useGetNotifications();
 
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
@@ -85,7 +90,7 @@ export function HomePageHeaderDataSlots() {
             className="h-9 w-9 shrink-0"
             aria-label="Notificações"
           >
-            <NotificationBellIcon unreadCount={notifications?.unreadCount ?? 0} />
+            <NotificationBellIcon unreadCount={notificationsData?.unreadCount ?? 0} />
           </Button>
         </DrawerTrigger>
         <DrawerContent className="max-h-[85vh]">
@@ -94,22 +99,22 @@ export function HomePageHeaderDataSlots() {
           </DrawerHeader>
           <div className="overflow-y-auto px-4 pb-2">
             <PreviewSectionLabel taskId="T10" />
-            {isPending && (
+            {isNotificationsPending ? (
               <p className="text-sm text-muted-foreground text-center py-6">
                 Carregando...
               </p>
-            )}
-            {isError && (
+            ) : isNotificationsError ? (
               <div className="text-center py-6">
                 <p className="text-sm text-destructive mb-2">
                   Erro ao carregar notificações.
                 </p>
-                <Button variant="outline" size="sm" onClick={() => refetch()}>
+                <Button variant="outline" size="sm" onClick={() => notificationsRefetch()}>
                   Tentar de novo
                 </Button>
               </div>
+            ) : (
+              <NotificationList summary={notificationsData!} />
             )}
-            {notifications && <NotificationList summary={notifications} />}
           </div>
           <DrawerClose asChild>
             <Button variant="outline" className="mx-4 mb-4">

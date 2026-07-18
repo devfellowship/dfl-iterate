@@ -1,5 +1,6 @@
 import { ActivityType, ActivityStatus, ProjectStatus } from '@/enums';
 import { StepVariableValue } from './StepVariableValue';
+export * from './Notification';
 
 export interface Lesson {
   id: string;
@@ -177,15 +178,4 @@ export interface CodeBlock {
   code: string;
   indentLevel?: number;
   isDistractor?: boolean;
-}
-export interface Notification {
-  id: string;
-  title: string;
-  read: boolean;
-  createdAt: string;
-}
-
-export interface NotificationsSummary {
-  unreadCount: number;
-  items: Notification[];
 }

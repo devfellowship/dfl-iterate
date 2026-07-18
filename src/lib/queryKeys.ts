@@ -19,6 +19,6 @@ export const queryKeys = {
     byLesson: (lessonId: string) => ['activities', { lessonId }] as const,
   },
   notifications: {
-    mine: ['notifications', 'mine'] as const,
+    all: ['notifications'] as const,
   },
 } as const;

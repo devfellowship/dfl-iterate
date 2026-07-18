@@ -4,7 +4,7 @@ import { getNotifications } from '@/services/notifications.service';
 
 export function useGetNotifications() {
   return useQuery({
-    queryKey: queryKeys.notifications.mine,
+    queryKey: queryKeys.notifications.all,
     queryFn: getNotifications,
   });
 }
