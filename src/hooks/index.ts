@@ -10,3 +10,4 @@ export { useQualityReview } from './useQualityReview';
 export type { UseQualityReviewCallbacks } from './useQualityReview';
 export { useLessons } from './useLessons';
 export { useLessonProgressBarById } from './useLessonProgressBar';
+export { useGetUserPreferences } from './useGetUserPreferences';

@@ -5,6 +5,9 @@ export const queryKeys = {
   },
   activities: {
     byLesson: (lessonId: string) => ['activities', { lessonId }] as const,
+ },
+  userPreferences: {
+    current: ['user-preferences', 'current'] as const,
   },
   lessonProgress: {
     byLesson: (lessonId: string) => ['lessonProgress', lessonId] as const,
