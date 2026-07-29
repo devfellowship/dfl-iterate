@@ -21,4 +21,7 @@ export const queryKeys = {
   dailyChallenge: {
     current: ['daily-challenge', 'current'] as const,
   },
+  userStats: {
+    current: ['user-stats', 'current'] as const,
+  },
 } as const;

@@ -11,3 +11,5 @@ export type { UseQualityReviewCallbacks } from './useQualityReview';
 export { useLessons } from './useLessons';
 export { useGetDailyChallenge } from './useGetDailyChallenge';
 export { useCompleteDailyChallenge } from './useCompleteDailyChallenge';
+export { useGetUserStats } from './useGetUserStats';
+export { useClaimPracticeXp } from './useClaimPracticeXp';

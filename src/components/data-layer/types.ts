@@ -33,13 +33,7 @@ export interface Announcement {
   expiresAt: string | null;
 }
 
-export interface UserStats {
-  userId: string;
-  totalXp: number;
-  level: number;
-  currentStreak: number;
-  livesRemaining: number;
-}
+export type { UserStats } from '@/types';
 
 export interface LessonProgress {
   lessonId: string;

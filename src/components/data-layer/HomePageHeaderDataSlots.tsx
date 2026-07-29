@@ -22,15 +22,14 @@ import {
   previewNotifications,
   previewUserPreferences,
   previewUserProfile,
-  previewUserStats,
 } from '@/components/data-layer/preview.mock';
 import { PreviewSectionLabel } from './PreviewSectionLabel';
+import { useGetUserStats, useClaimPracticeXp } from '@/hooks';
 
 /**
- * Preview + slots T1, T2, T4, T6 no header da `HomePage`.
+ * Preview + slots T1, T2, T4, T6, T10 no header da `HomePage`.
  *
  * Fellow T1: substituir mock por `useGetUserProfile()` + estados.
- * Fellow T4: substituir mock por `useGetUserStats()`.
  * Fellow T6: drawer 🏆 → `useGetUserAchievements()`.
  * Fellow T2: drawer ⚙️ → `useGetUserPreferences()`.
  * Fellow T10: drawer 🔔 → `useGetNotifications()`.
@@ -40,10 +39,59 @@ export function HomePageHeaderDataSlots() {
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
+  const {
+    data: stats,
+    isPending: isStatsPending,
+    isError: isStatsError,
+    refetch: refetchStats,
+  } = useGetUserStats();
+
+  const {
+    mutate: claimXp,
+    isPending: isClaiming,
+    isError: isClaimError,
+    reset: resetClaim,
+  } = useClaimPracticeXp();
+
   return (
     <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
       {/* SLOT T4 */}
-      <UserStatsBadge stats={previewUserStats} className="flex" />
+      <div className="flex flex-col items-end gap-1" data-slot="T4">
+        <PreviewSectionLabel taskId="T4" />
+        {isStatsPending ? (
+          <span className="text-xs text-muted-foreground">Carregando stats…</span>
+        ) : isStatsError ? (
+          <div className="flex items-center gap-2 text-xs text-destructive">
+            <span>Erro ao carregar stats</span>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="h-7 px-2"
+              onClick={() => void refetchStats()}
+            >
+              Tentar de novo
+            </Button>
+          </div>
+        ) : stats ? (
+          <>
+            <UserStatsBadge
+              stats={stats}
+              className="flex"
+              onClaimXp={() => {
+                resetClaim();
+                claimXp(25);
+              }}
+              isClaiming={isClaiming}
+            />
+            {isClaimError ? (
+              <span className="text-xs text-destructive">
+                Não foi possível ganhar XP. Tente de novo.
+              </span>
+            ) : null}
+          </>
+        ) : null}
+      </div>
 
       {/* SLOT T6 */}
       <Drawer open={achievementsOpen} onOpenChange={setAchievementsOpen}>

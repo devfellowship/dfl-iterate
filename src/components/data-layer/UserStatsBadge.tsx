@@ -1,6 +1,6 @@
 import { cn } from '@devfellowship/components';
 import { Flame, Heart, Zap } from 'lucide-react';
-import type { UserStats } from './types';
+import type { UserStats } from '@/types';
 
 /**
  * Integração: T4 — header da `HomePage` (`HomePageHeaderDataSlots`).
@@ -10,9 +10,16 @@ import type { UserStats } from './types';
 export interface UserStatsBadgeProps {
   stats: UserStats;
   className?: string;
+  onClaimXp?: () => void;
+  isClaiming?: boolean;
 }
 
-export function UserStatsBadge({ stats, className }: UserStatsBadgeProps) {
+export function UserStatsBadge({
+  stats,
+  className,
+  onClaimXp,
+  isClaiming = false,
+}: UserStatsBadgeProps) {
   return (
     <div
       className={cn(
@@ -39,6 +46,20 @@ export function UserStatsBadge({ stats, className }: UserStatsBadgeProps) {
         <Heart className="h-3.5 w-3.5 fill-life" />
         {stats.livesRemaining}
       </span>
+      {onClaimXp ? (
+        <button
+          type="button"
+          onClick={onClaimXp}
+          disabled={isClaiming}
+          className={cn(
+            'inline-flex items-center rounded-full border border-xp/40 bg-xp/20 px-2.5 py-1 text-xp',
+            'hover:bg-xp/30 disabled:cursor-not-allowed disabled:opacity-50',
+          )}
+          aria-label="Ganhar XP de prática"
+        >
+          {isClaiming ? '…' : '+XP'}
+        </button>
+      ) : null}
     </div>
   );
 }
