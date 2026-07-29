@@ -9,3 +9,5 @@ export type { UseFixTheCodeCallbacks } from './useFixTheCode';
 export { useQualityReview } from './useQualityReview';
 export type { UseQualityReviewCallbacks } from './useQualityReview';
 export { useLessons } from './useLessons';
+export { useGetDailyChallenge } from './useGetDailyChallenge';
+export { useCompleteDailyChallenge } from './useCompleteDailyChallenge';

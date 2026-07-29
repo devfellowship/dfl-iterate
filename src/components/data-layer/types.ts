@@ -56,14 +56,7 @@ export interface UserAchievement {
   unlockedAt: string | null;
 }
 
-export interface DailyChallenge {
-  id: string;
-  title: string;
-  description: string;
-  bonusXp: number;
-  expiresAt: string;
-  targetLessonId: string;
-}
+export type { DailyChallenge } from '@/types';
 
 export interface LeaderboardEntry {
   rank: number;

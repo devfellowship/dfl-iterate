@@ -178,3 +178,13 @@ export interface CodeBlock {
   indentLevel?: number;
   isDistractor?: boolean;
 }
+
+export interface DailyChallenge {
+  id: string;
+  title: string;
+  description: string;
+  bonusXp: number;
+  expiresAt: string;
+  targetLessonId: string;
+  completedAt: string | null;
+}

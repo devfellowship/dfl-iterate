@@ -106,6 +106,7 @@ export const previewDailyChallenge: DailyChallenge = {
   bonusXp: 50,
   expiresAt: '2026-05-28T23:59:59.000Z',
   targetLessonId: 'lesson-1',
+  completedAt: null,
 };
 
 export const previewLearningResume: LearningResume = {

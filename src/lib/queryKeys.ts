@@ -18,4 +18,7 @@ export const queryKeys = {
   activities: {
     byLesson: (lessonId: string) => ['activities', { lessonId }] as const,
   },
+  dailyChallenge: {
+    current: ['daily-challenge', 'current'] as const,
+  },
 } as const;
