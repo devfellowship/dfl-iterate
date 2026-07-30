@@ -113,7 +113,7 @@ export function HomePageHeaderDataSlots() {
                 </Button>
               </div>
             ) : (
-              <NotificationList summary={notificationsData!} />
+              <NotificationList summary={notificationsData} />
             )}
           </div>
           <DrawerClose asChild>
