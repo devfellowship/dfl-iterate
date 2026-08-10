@@ -21,4 +21,15 @@ export const queryKeys = {
   activityEvents: {
     recent: () => ['activityEvents', "recent"] as const,
   },
-} as const; 
+  userPreferences: {
+    current: ['user-preferences', 'current'] as const,
+  },
+  userStats: {
+    current: ['userStats', 'current'] as const,
+    byUserId: (userId: string) => ['userStats', { userId }] as const,
+  },
+  leaderboard: {
+     all: ['leaderboard'] as const,
+     list: () => ['leaderboard', 'list'] as const,
+   },
+} as const;

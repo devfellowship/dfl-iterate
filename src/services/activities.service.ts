@@ -15,8 +15,9 @@ import type { Activity } from '@/types';
 
 const SIMULATED_LATENCY_MS = 300;
 
-const simulateNetworkDelay = () =>
+export async function simulateNetworkDelay() { 
   new Promise<void>((resolve) => setTimeout(resolve, SIMULATED_LATENCY_MS));
+}
 
 export async function getActivitiesByLessonId(lessonId: string): Promise<Activity[]> {
   await simulateNetworkDelay();
