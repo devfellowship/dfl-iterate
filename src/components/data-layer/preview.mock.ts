@@ -5,7 +5,6 @@
  * Fellows: não importem este arquivo nas tasks finais.
  */
 import type {
-  ActivityEvent,
   Announcement,
   DailyChallenge,
   LeaderboardEntry,
@@ -17,6 +16,7 @@ import type {
   UserProfile,
   UserStats,
 } from './types';
+import { ActivityEvent } from '@/types'
 
 export const previewUserProfile: UserProfile = {
   id: 'user-1',
