@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Lesson } from '@/types';
-import { useLessons } from '@/hooks';
-import { Clock, Layers, ArrowRight } from 'lucide-react';
+import { useLessons, useLessonProgressBarById } from '@/hooks';
+import { Clock, Layers, ArrowRight, Loader2, RefreshCw } from 'lucide-react';
 import { Button } from '@devfellowship/components';
 import {
   HomePageTopDataSlots,
@@ -10,12 +10,21 @@ import {
 } from '@/components/data-layer/HomePageDataSlots';
 import { HomePageHeaderDataSlots } from '@/components/data-layer/HomePageHeaderDataSlots';
 import { LessonProgressBar } from '@/components/data-layer';
-import { previewLessonProgress } from '@/components/data-layer/preview.mock';
 import { PreviewSectionLabel } from '@/components/data-layer/PreviewSectionLabel';
+import { LeaderboardTable } from '@/components/data-layer/LeaderboardTable';
+import { useGetLeaderboard } from '@/hooks/useGetLeaderBoardTable';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { data: lessons = [], isPending, isError, refetch } = useLessons();
+
+  const {
+    data: leaderboardEntries = [],
+    isLoading: isLeaderboardLoading,
+    isError: isLeaderboardError,
+    isFetching: isLeaderboardFetching,
+    refetch: refetchLeaderboard,
+  } = useGetLeaderboard();
 
   const handleStartLesson = (lessonId: string) => {
     navigate(`/lesson/${lessonId}`);
@@ -91,6 +100,33 @@ export default function HomePage() {
           </motion.div>
 
           <HomePageBottomDataSlots />
+
+          <motion.div
+            className="max-w-4xl mx-auto mt-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            {isLeaderboardLoading ? (
+              <div className="flex items-center justify-center gap-2 py-10 text-sm text-muted-foreground">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Carregando ranking…
+              </div>
+            ) : isLeaderboardError ? (
+              <div className="flex flex-col items-center gap-3 py-10 text-sm text-muted-foreground">
+                <p>Não foi possível carregar o ranking.</p>
+                <Button
+                  onClick={() => refetchLeaderboard()}
+                  disabled={isLeaderboardFetching}
+                >
+                  <RefreshCw className={`h-3.5 w-3.5 mr-1.5 ${isLeaderboardFetching ? 'animate-spin' : ''}`} />
+                  Tentar novamente
+                </Button>
+              </div>
+            ) : (
+              <LeaderboardTable entries={leaderboardEntries} />
+            )}
+          </motion.div>
         </div>
       </main>
 
@@ -114,6 +150,8 @@ interface LessonCardProps {
 }
 
 function LessonCard({ lesson, index, onStart }: LessonCardProps) {
+  const { data, isPending, isError, refetch } = useLessonProgressBarById(lesson.id);
+
   return (
     <motion.div
       className="card-interactive p-6"
@@ -144,7 +182,18 @@ function LessonCard({ lesson, index, onStart }: LessonCardProps) {
 
           <div className="mt-4 max-w-md" data-slot="T5">
             <PreviewSectionLabel taskId="T5" />
-            <LessonProgressBar progress={previewLessonProgress} />
+            {isPending ? (
+              <div className="text-sm text-muted-foreground">Carregando progresso...</div>
+            ) : isError ? (
+              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <span>Falha ao carregar o progresso.</span>
+                <button type="button" className="text-primary underline" onClick={() => refetch()}>
+                  Tentar de novo
+                </button>
+              </div>
+            ) : data ? (
+              <LessonProgressBar progress={data} />
+            ) : null}
           </div>
         </div>
 
