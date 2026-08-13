@@ -1,24 +1,32 @@
-/**
- * Factory central de query keys do React Query.
- *
- * Por que existir:
- * - Evita chave string solta espalhada pelo código.
- * - Permite invalidar grupos inteiros (ex.: `queryClient.invalidateQueries({ queryKey: queryKeys.lessons.all })`).
- * - Ajuda autocomplete a guiar quem está escrevendo um hook novo.
- *
- * Convenção:
- * - `all` é a chave-raiz daquele recurso (sem parâmetro).
- * - Funções recebem parâmetros e retornam tuplas `as const` para o TS narrar bem.
- */
 export const queryKeys = {
   lessons: {
-    all: ['lessons'] as const,
-    byId: (id: string) => ['lessons', id] as const,
+    all: ["lessons"] as const,
+    byId: (id: string) => ["lessons", id] as const,
   },
   activities: {
-    byLesson: (lessonId: string) => ['activities', { lessonId }] as const,
+    byLesson: (lessonId: string) => ["activities", { lessonId }] as const,
   },
   announcements: {
     all: ['announcements'] as const,
+  },
+  activityEvents: {
+    recent: () => ['activityEvents', "recent"] as const,
+  },
+  userPreferences: {
+    current: ['user-preferences', 'current'] as const,
+  },
+  lessonProgress: {
+    byLesson: (lessonId: string) => ['lessonProgress', lessonId] as const,
+  },
+  userStats: {
+    current: ['userStats', 'current'] as const,
+    byUserId: (userId: string) => ['userStats', { userId }] as const,
+  },
+  leaderboard: {
+    all: ['leaderboard'] as const,
+    list: () => ['leaderboard', 'list'] as const,
+  },
+  notifications: {
+    all: ['notifications'] as const,
   },
 } as const;

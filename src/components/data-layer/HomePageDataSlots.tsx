@@ -8,12 +8,14 @@ import {
 } from '@/components/data-layer';
 import {
   previewActivityEvents,
+  previewAnnouncements,
   previewDailyChallenge,
   previewLeaderboard,
   previewLearningResume,
 } from '@/components/data-layer/preview.mock';
 import { useAnnouncements } from '@/hooks';
 import { PreviewSectionLabel } from './PreviewSectionLabel';
+import { useGetRecentActivity } from '@/hooks';
 
 /** SLOT T9, T7, T3, T11 — topo da HomePage (antes do hero) */
 export function HomePageTopDataSlots() {
@@ -24,6 +26,8 @@ export function HomePageTopDataSlots() {
     refetch: refetchAnnouncements,
   } = useAnnouncements();
 
+  const { data: activityEvents, isPending: isActivityPending, isError: isActivityError, refetch: refetchActivity } = useGetRecentActivity();
+  
   return (
     <div className="max-w-4xl mx-auto space-y-8 mb-12">
       <section data-slot="T9">
@@ -60,7 +64,17 @@ export function HomePageTopDataSlots() {
       <section data-slot="T11">
         <h2 className="text-lg font-semibold text-foreground mb-3">Atividade recente</h2>
         <PreviewSectionLabel taskId="T11" />
-        <RecentActivityFeed events={previewActivityEvents} />
+
+        {isActivityPending && <p>Carregando...</p>}
+
+        {isActivityError && (
+          <div>
+            <p>Erro ao carregar atividade recente.</p>
+            <button onClick={() => refetchActivity()}>Tentar de Novo</button>
+          </div>
+        )}
+
+        {activityEvents && <RecentActivityFeed events={activityEvents} />}
       </section>
     </div>
   );

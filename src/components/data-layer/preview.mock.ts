@@ -7,6 +7,7 @@
 import type { Announcement } from '@/types';
 import type {
   ActivityEvent,
+  Announcement,
   DailyChallenge,
   LeaderboardEntry,
   LearningResume,
@@ -17,6 +18,7 @@ import type {
   UserProfile,
   UserStats,
 } from './types';
+import { ActivityEvent } from '@/types'
 
 export const previewUserProfile: UserProfile = {
   id: 'user-1',
