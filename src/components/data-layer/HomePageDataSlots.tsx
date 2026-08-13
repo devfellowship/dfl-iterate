@@ -18,7 +18,7 @@ import { PreviewSectionLabel } from './PreviewSectionLabel';
 /** SLOT T9, T7, T3, T11 — topo da HomePage (antes do hero) */
 export function HomePageTopDataSlots() {
   const {
-    data: announcements = [],
+    data: announcementesData = [],
     isPending: isAnnouncementsPending,
     isError: isAnnouncementsError,
     refetch: refetchAnnouncements,
@@ -53,7 +53,7 @@ export function HomePageTopDataSlots() {
             <Button onClick={() => refetchAnnouncements()}>Tentar de novo</Button>
           </div>
         ) : (
-          <AnnouncementList announcementsData={announcements} />
+          <AnnouncementList announcementsData={announcementesData} />
         )}
       </section>
 
