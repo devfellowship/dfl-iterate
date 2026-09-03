@@ -1,4 +1,5 @@
 import { cn } from '@devfellowship/components';
+import { Button } from '@devfellowship/components';
 import { Bell } from 'lucide-react';
 import type { NotificationsSummary } from './types';
 
@@ -32,6 +33,8 @@ export function NotificationBellIcon({ unreadCount, className }: NotificationBel
 export interface NotificationListProps {
   summary: NotificationsSummary;
   className?: string;
+  onMarkAsRead?: (id: string) => void;
+  isMarkingId?: string;
 }
 
 function formatCreatedAt(iso: string) {
@@ -44,7 +47,12 @@ function formatCreatedAt(iso: string) {
 }
 
 /** Lista de notificações — conteúdo do drawer. */
-export function NotificationList({ summary, className }: NotificationListProps) {
+export function NotificationList({
+  summary,
+  className,
+  onMarkAsRead,
+  isMarkingId,
+}: NotificationListProps) {
   if (summary.items.length === 0) {
     return (
       <p className={cn('text-sm text-muted-foreground text-center py-6', className)}>
@@ -65,8 +73,26 @@ export function NotificationList({ summary, className }: NotificationListProps) 
               : 'border-primary/25 bg-primary/5 text-foreground font-medium',
           )}
         >
-          <p>{item.title}</p>
-          <p className="text-xs text-muted-foreground mt-1">{formatCreatedAt(item.createdAt)}</p>
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <p>{item.title}</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {formatCreatedAt(item.createdAt)}
+              </p>
+            </div>
+            {!item.read && onMarkAsRead && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="shrink-0"
+                disabled={isMarkingId === item.id}
+                onClick={() => onMarkAsRead(item.id)}
+              >
+                Marcar como lida
+              </Button>
+            )}
+          </div>
         </li>
       ))}
     </ul>
