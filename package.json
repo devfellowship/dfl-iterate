@@ -13,9 +13,9 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@dnd-kit/react": "^0.3.2",
     "@devfellowship/components": "^0.2.0",
     "@devfellowship/observability": "^2.0.1",
+    "@dnd-kit/react": "^0.3.2",
     "@hookform/resolvers": "^3.10.0",
     "@monaco-editor/react": "^4.7.0",
     "@opentelemetry/api": "^1.9.0",
@@ -53,6 +53,7 @@
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@sentry/react": "^10.47.0",
+    "@supabase/supabase-js": "^2.116.0",
     "@tanstack/react-query": "^5.83.0",
     "@types/prismjs": "^1.26.6",
     "class-variance-authority": "^0.7.1",
