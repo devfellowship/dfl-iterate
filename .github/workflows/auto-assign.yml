@@ -10,6 +10,13 @@ on:
   pull_request_target:
     types: [opened, reopened, synchronize]
 
+# Cancel a superseded run of the same PR. The key is the PR number; a run
+# without a PR (push, schedule, dispatch) gets its own run_id group, so it is
+# never cancelled. ADR-5 of plan 20260917-fleet-compute-rebalance-render-runners-renovate.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   assign:
     runs-on: ubuntu-latest
