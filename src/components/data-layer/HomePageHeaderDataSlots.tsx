@@ -1,5 +1,5 @@
 import { useGetNotifications } from '@/hooks/useGetNotifications';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Settings, Trophy } from 'lucide-react';
 import { Button } from '@devfellowship/components';
 import {
@@ -24,6 +24,7 @@ import {
   useUpdateUserPreferences,
   useGetUserProfile,
   useGetUserStats,
+  useUpdateUserProfile
 } from '@/hooks';
 import { PreviewSectionLabel } from './PreviewSectionLabel';
 
@@ -35,12 +36,20 @@ export function HomePageHeaderDataSlots() {
     null,
   );
 
+  const [profileName, setProfileName] = useState('');
+
   const {
     data: userProfileData,
     isPending: isUserProfilePending,
     isError: isUserProfileError,
     refetch: userProfileRefetch,
   } = useGetUserProfile();
+
+  const {
+    mutate: updateUserProfile,
+    isPending: isUpdatingUserProfile,
+    isError: isUpdateUserProfileError,
+  } = useUpdateUserProfile();
 
   const {
     data: notificationsData,
@@ -89,6 +98,21 @@ export function HomePageHeaderDataSlots() {
     updatePreferences({
       ...preferences,
       soundEffectsEnabled: !preferences.soundEffectsEnabled,
+    });
+  };
+
+  useEffect(() => {
+    if (userProfileData) {
+      setProfileName(userProfileData.name);
+    }
+  }, [userProfileData]);
+
+  const handleSaveProfile = () => {
+    if (!userProfileData) return;
+
+    updateUserProfile({
+      ...userProfileData,
+      name: profileName,
     });
   };
 
@@ -247,11 +271,36 @@ export function HomePageHeaderDataSlots() {
       ) : isUserProfileError ? (
         <>
           <span>Erro</span>
-          <Button onClick={() => userProfileRefetch()}>Tentar de novo</Button>
+          <Button onClick={() => userProfileRefetch()}>
+            Tentar de novo
+          </Button>
         </>
-      ) : (
-        <UserProfileCard profile={userProfileData} variant="compact" />
-      )}
+      ) : userProfileData ? (
+        <>
+          <input
+            value={profileName}
+            onChange={(event) => setProfileName(event.target.value)}
+            className="h-9 w-32 rounded-md border border-border bg-background px-2 text-sm"
+          />
+          <Button
+            type="button"
+            onClick={handleSaveProfile}
+            disabled={isUpdatingUserProfile}
+          >
+            {isUpdatingUserProfile ? 'Salvando...' : 'Salvar'}
+          </Button>
+          {isUpdateUserProfileError && (
+            <span className="text-sm text-destructive">
+              Não foi possível salvar o perfil.
+            </span>
+          )}
+          <UserProfileCard
+            profile={userProfileData}
+            variant="compact"
+          />
+        </>
+      ) : null}
     </div>
   );
 }
+
