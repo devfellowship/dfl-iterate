@@ -1,4 +1,5 @@
 import { useGetNotifications } from '@/hooks/useGetNotifications';
+import { useMarkNotificationAsRead } from '@/hooks';
 import { useState } from 'react';
 import { Settings, Trophy } from 'lucide-react';
 import { Button } from '@devfellowship/components';
@@ -41,14 +42,22 @@ export function HomePageHeaderDataSlots() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [achievementsOpen, setAchievementsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  
+
   const {
     data: notificationsData,
     isPending: isNotificationsPending,
     isError: isNotificationsError,
     refetch: notificationsRefetch,
   } = useGetNotifications();
-  
+
+  const {
+    mutate: markNotificationAsReadMutate,
+    isPending: isMarkingNotificationAsRead,
+    isError: isMarkNotificationError,
+    variables: markingNotificationId,
+    reset: resetMarkNotification,
+  } = useMarkNotificationAsRead();
+
   const {
     data: preferences,
     isPending: isPreferencesPending,
@@ -143,7 +152,23 @@ export function HomePageHeaderDataSlots() {
                 </Button>
               </div>
             ) : (
-              <NotificationList summary={notificationsData} />
+              <>
+                {isMarkNotificationError && (
+                  <p className="text-xs text-destructive text-center mb-2">
+                    Não foi possível marcar como lida. Tente de novo.
+                  </p>
+                )}
+                <NotificationList
+                  summary={notificationsData}
+                  onMarkAsRead={(id) => {
+                    resetMarkNotification();
+                    markNotificationAsReadMutate(id);
+                  }}
+                  isMarkingId={
+                    isMarkingNotificationAsRead ? markingNotificationId : undefined
+                  }
+                />
+              </>
             )}
           </div>
           <DrawerClose asChild>
