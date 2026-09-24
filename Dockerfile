@@ -1,6 +1,9 @@
 # Stage 1: Build
 FROM node:20-alpine AS build
 WORKDIR /app
+# Umami website id (optional). Empty = the build adds no Umami tag.
+ARG VITE_UMAMI_WEBSITE_ID=
+ENV VITE_UMAMI_WEBSITE_ID=$VITE_UMAMI_WEBSITE_ID
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
