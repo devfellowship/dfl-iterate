@@ -1,36 +1,48 @@
-import {
-  getUserPreferencesData,
-  setUserPreferencesData,
-} from '@/test-utils/user-preferences.dummy';
+import { supabase } from '@/lib/supabase';
 import type { UserPreferences } from '@/types/UserPreferences';
 
-const SIMULATED_LATENCY_MS = 300;
-
-const simulateNetworkDelay = () =>
-  new Promise<void>((resolve) => setTimeout(resolve, SIMULATED_LATENCY_MS));
-
 export async function getUserPreferences(): Promise<UserPreferences> {
-  await simulateNetworkDelay();
+  const { data, error } = await supabase
+    .from('user_preferences')
+    .select('user_id, theme, sound_effects_enabled, language')
+    .eq('user_id', 'user-1')
+    .single();
 
-  const preferences = getUserPreferencesData();
-
-  if (!preferences) {
-    throw new Error('User preferences not found');
+  if (error) {
+    throw new Error(`Failed to load preferences: ${error.message}`);
   }
 
-  return preferences;
+  return {
+    userId: data.user_id,
+    theme: data.theme,
+    soundEffectsEnabled: data.sound_effects_enabled,
+    language: data.language,
+  };
 }
 
 export async function updateUserPreferences(
   next: UserPreferences,
 ): Promise<UserPreferences> {
-  await simulateNetworkDelay();
+  const { data, error } = await supabase
+    .from('user_preferences')
+    .update({
+      theme: next.theme,
+      sound_effects_enabled: next.soundEffectsEnabled,
+      language: next.language,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('user_id', next.userId)
+    .select('user_id, theme, sound_effects_enabled, language')
+    .single();
 
-  if (!next.userId) {
-    throw new Error('User preferences must include a userId');
+  if (error) {
+    throw new Error(`Failed to update preferences: ${error.message}`);
   }
 
-  const updated = setUserPreferencesData(next);
-
-  return updated;
+  return {
+    userId: data.user_id,
+    theme: data.theme,
+    soundEffectsEnabled: data.sound_effects_enabled,
+    language: data.language,
+  };
 }
