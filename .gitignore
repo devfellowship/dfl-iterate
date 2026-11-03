@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-docs
+# docs
 
 # Local AI workflow (not shared via git)
 .cursor/rules/
