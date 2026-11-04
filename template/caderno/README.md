@@ -13,8 +13,9 @@ registrada como planta do template.
 |---|---|
 | [01-produto.md](./01-produto.md) | Tema, o que o starter traz, o que o fellow constrói, demo, rubrica |
 | [02-estrutura.md](./02-estrutura.md) | Pastas, camadas, o que entra para ficar perto de um projeto real |
-| [03-ia.md](./03-ia.md) | AGENTS.md, skills, aceite do plano, handoff entre chats |
-| [AGENTS.md](./AGENTS.md) | Texto que vai para a raiz do template, pronto para copiar |
+| [03-ia.md](./03-ia.md) | Fluxo de IA, aceite do plano, handoff entre chats |
+| [04-abrir-o-repo.md](./04-abrir-o-repo.md) | O que o template precisa ter no ar para a aula |
+| [starter/](./starter/) | Arquivos que vão para a raiz do `dfl-caderno`: AGENTS.md, skills, qualidade, plano ouro, template de PR |
 
 ## Decisões fechadas
 

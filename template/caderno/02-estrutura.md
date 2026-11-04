@@ -15,6 +15,7 @@ dfl-caderno/
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   └── workflows/ci.yml       # npm run check, sem secret
 ├── docs/
+│   ├── qualidade.md         # lista canônica; as skills apontam para cá
 │   ├── usando-a-ia.md
 │   ├── plans/
 │   │   └── profile.md       # plano ouro, já aceito, só de exemplo

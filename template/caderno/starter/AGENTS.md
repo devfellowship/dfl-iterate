@@ -1,7 +1,9 @@
 # AGENTS.md — Caderno de bordo
 
-Lei deste repositório. Skills em `.cursor/skills/` detalham um passo. Este
-arquivo manda quando os dois falarem juntos.
+Lei deste repositório. Skills em `.cursor/skills/` detalham um passo. A lista
+canônica de qualidade está em `docs/qualidade.md`. Se uma skill e esse arquivo
+divergirem, vale `docs/qualidade.md`. Este arquivo manda na arquitetura e no
+fluxo quando os dois falarem com a skill.
 
 O fellow pede o resultado como no dia a dia ("cria a lista de entradas",
 "revisa o PR", "continua do handoff"). Você executa branch, código,

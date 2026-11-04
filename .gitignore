@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 docs
+# Registro do template Caderno. O app iterate segue sem a pasta /docs.
+!template/caderno/starter/docs/
+!template/caderno/starter/docs/**
 
 # Local AI workflow (not shared via git)
 .cursor/rules/
