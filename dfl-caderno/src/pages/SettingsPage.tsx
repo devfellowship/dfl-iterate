@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useGetProfile, useUpdateProfile } from '@/hooks';
+import { isSupabaseConfigured } from '@/lib/supabase';
 import type { Theme } from '@/types';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { Spinner } from '@/components/ui/Spinner';
@@ -21,7 +22,7 @@ export function SettingsPage() {
     update.mutate({ name, theme });
   }
 
-  if (profile.isPending) return <Spinner label="Carregando perfil…" />;
+  if (profile.isLoading) return <Spinner label="Carregando perfil…" />;
   if (profile.isError) {
     return <ErrorState message={profile.error.message} onRetry={() => profile.refetch()} />;
   }
@@ -29,6 +30,11 @@ export function SettingsPage() {
   return (
     <section className="max-w-md">
       <h1 className="text-xl font-semibold">Ajustes</h1>
+      {!isSupabaseConfigured && (
+        <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
+          Sem Supabase, o formulário abre para a aula. Salvar grava quando o .env estiver preenchido.
+        </p>
+      )}
       <form className="mt-6 space-y-4" onSubmit={onSubmit}>
         <label className="block text-sm">
           Nome
@@ -42,7 +48,11 @@ export function SettingsPage() {
           Tema
           <select
             value={theme}
-            onChange={(event) => setTheme(event.target.value as Theme)}
+            onChange={(event) => {
+              const next = event.target.value as Theme;
+              setTheme(next);
+              document.documentElement.classList.toggle('dark', next === 'dark');
+            }}
             className="mt-1 w-full rounded-md border border-stone-300 bg-white px-3 py-2 dark:border-stone-700 dark:bg-stone-900"
           >
             <option value="light">Claro</option>
