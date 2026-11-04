@@ -32,7 +32,8 @@ update otimista, tipos gerados pelo CLI do Supabase.
 
 - No Vite entra só `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`. A chave `service_role` não vai para o client, para o Git nem para o texto do PR.
 - `.env` fica de fora do commit. O exemplo versionado é `.env.example`.
-- Tabela nova nasce com `enable row level security` e policy em `auth.uid()`.
+- Tabela nova nasce com `enable row level security` e policies de select, insert, update e delete. `USING` e `WITH CHECK` usam `auth.uid()`. Em `tasks`, a policy também exige que a entry pai seja do mesmo usuário. Apagar entry usa `on delete cascade` nas tasks.
+- `profiles` nasce num trigger `after insert` em `auth.users`. Não invente seed com usuário fixo.
 - `supabase/schema.sql` é a fonte da tabela. SQL idempotente (`if not exists`).
 - Interface com o escape padrão do React, sem `dangerouslySetInnerHTML`.
 
@@ -54,6 +55,7 @@ não houver nenhuma, pergunte o prefixo uma vez e reutilize.
 Entidade ou tabela nova: grave `docs/plans/<slug>.md` (tabela, colunas, rotas,
 arquivos, query keys, mutations, fora de escopo) e pare. Implemente só depois
 de um aceite explícito do fellow: "aceito", "pode executar" ou "ok, executa".
+Entries e tasks cabem no mesmo plano e no mesmo aceite.
 
 Se ele mudar o plano, regrave o arquivo e espere de novo. Correção dentro do
 que já foi aceito segue direto, sem plano novo.

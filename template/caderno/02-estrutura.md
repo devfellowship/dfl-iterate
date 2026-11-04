@@ -11,7 +11,9 @@ dfl-caderno/
 ├── .cursor/skills/          # git-flow, plan-feature, schema-rls,
 │                            # new-service, new-query-hook, new-mutation-hook,
 │                            # wire-page, review-diff, open-pr, debug, handoff
-├── .github/PULL_REQUEST_TEMPLATE.md
+├── .github/
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── workflows/ci.yml       # npm run check, sem secret
 ├── docs/
 │   ├── usando-a-ia.md
 │   ├── plans/
@@ -51,8 +53,7 @@ dfl-caderno/
 │       ├── AuthProvider.tsx
 │       └── AppProviders.tsx
 ├── supabase/
-│   ├── schema.sql
-│   └── seed.sql
+│   └── schema.sql             # profiles, trigger de signup, RLS. Sem usuário falso
 ├── .env.example
 ├── AGENTS.md
 └── README.md
@@ -65,7 +66,9 @@ dfl-caderno/
 - `lib/queryClient.ts` separado do client do Supabase — cada um tem um dono.
 - `components/ui` com pending, erro e empty — a página da prova usa, em vez de reinventar.
 - `components/layout/RequireAuth.tsx` — rota logada pronta. A prova não é configurar o router.
-- `supabase/seed.sql` separado do schema — dá para rerodar o schema sem discutir seed.
+- Trigger em `auth.users` cria `profiles`. Sem seed de usuário: a linha só existe depois do signup, porque `profiles.id` aponta para `auth.users`.
+- `npm run check` e o CI rodam sem chave. `supabase.ts` avisa se o env falta e não quebra o import. O client de verdade só nasce quando a URL e a anon key existem.
+- CI no template (`.github/workflows/ci.yml`) executa `npm run check` em todo PR. O fellow vê o mesmo sinal que vai ver no trabalho.
 - Cascas de `EntriesPage` e `EntryDetailPage` — o `npm run dev` abre, a rota existe, o trabalho do fellow é a lista.
 - Um teste do mapper do perfil — mostra função pura testável. Não vira critério da prova.
 - Barrels `hooks/index.ts` e `services/index.ts` — igual ao iterate.

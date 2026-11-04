@@ -24,7 +24,9 @@ registrada como planta do template.
 - Tabelas: `profiles` (pronta no starter), `entries`, `tasks`.
 - Cada fellow cria o próprio projeto gratuito no Supabase, roda o SQL e preenche o `.env`. Confirmação de e-mail desligada no projeto de aula.
 - Fatia ouro pronta: perfil (ler e atualizar), com loading, erro e mapper.
-- O fellow constrói entradas e tasks no mesmo padrão.
+- O fellow constrói entradas e tasks no mesmo padrão, num plano só e num aceite.
+- Signup cria `profiles` por trigger. Login do starter também cria conta. Tema do perfil pinta a tela.
+- CI roda `npm run check` sem secret.
 - A IA executa git, código, `npm run check` e o texto do PR. O fellow lê o diff.
 - Entidade nova: a IA escreve o plano e **espera o aceite** antes de implementar.
 - Chat longo: a skill `handoff` grava `docs/handoff.md` para o próximo chat começar dali.

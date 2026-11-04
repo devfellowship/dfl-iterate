@@ -10,7 +10,7 @@ conta. Serve como prova e, depois, como caderno de verdade.
 
 | Rota | Quem faz | O que mostra |
 |---|---|---|
-| `/login` | starter | Login e logout, sessão já ligada |
+| `/login` | starter | Criar conta, entrar e sair. Sessão já ligada |
 | `/` | fellow | Lista das próprias entradas |
 | `/entries/:id` | fellow | Detalhe, tasks, marcar feita, apagar |
 | `/settings` | starter | Nome e tema (`light` / `dark`), fatia ouro |
@@ -21,22 +21,28 @@ Paths ficam em `src/consts/routes.ts`.
 
 | Tabela | Colunas | Dono |
 |---|---|---|
-| `profiles` | `id` (= `auth.uid()`), `name`, `theme` | starter, em `supabase/schema.sql` |
+| `profiles` | `id` (= `auth.uid()`), `name`, `theme` | starter. Um trigger em `auth.users` cria a linha no signup |
 | `entries` | `id`, `user_id`, `title`, `studied_on`, `summary`, `status` (`draft` / `published`) | fellow |
-| `tasks` | `id`, `entry_id`, `user_id`, `title`, `done` | fellow |
+| `tasks` | `id`, `entry_id`, `user_id`, `title`, `done`. `entry_id` com `on delete cascade` | fellow |
 
 `status` no banco em inglês. Rótulo na tela em português (rascunho / publicado).
 
-RLS em todas: `user_id = auth.uid()`. O id do dono sai de `supabase.auth.getUser()`
-dentro do service. A página não manda `user_id`.
+RLS em todas, com policy de select, insert, update e delete. `USING` e
+`WITH CHECK` comparam `user_id` a `auth.uid()`. Em `tasks`, a policy também
+exige que a `entry` pai seja do mesmo usuário. O id do dono sai de
+`supabase.auth.getUser()` dentro do service. A página não manda `user_id`.
+
+Não há `seed.sql` com usuário falso: `profiles.id` referencia `auth.users`,
+e a linha nasce no trigger. O que o README chama de ritual continua valendo
+(confirmar e-mail desligado, senão o signup não entra).
 
 ## O que o starter já traz
 
 - Vite, React, TypeScript, React Router, TanStack Query, Tailwind, alias `@/`.
 - Client do Supabase, `QueryClient`, `AuthProvider`, rota protegida.
-- Perfil de ponta a ponta: type, service, `queryKeys.profile`, `useGetProfile`, `useUpdateProfile`, página de ajustes.
+- Perfil de ponta a ponta: type, service, `queryKeys.profile`, `useGetProfile` (só com sessão), `useUpdateProfile`, página de ajustes. O tema salvo é aplicado no `documentElement`, para o refresh da demo pintar a tela e não só o banco.
 - Estados reutilizáveis: pending, erro com "Tentar de novo", empty.
-- `supabase/schema.sql` (profiles + RLS) e `supabase/seed.sql`.
+- `supabase/schema.sql` com `profiles`, RLS e o trigger de signup.
 - `.env.example` com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
 - `npm run check`: `tsc`, lint e busca por `service_role` no que está staged.
 - Um teste do mapper do perfil, como exemplo de função pura. A prova não pede teste novo.
@@ -49,7 +55,7 @@ O fellow troca a casca pela lista de verdade.
 
 ## O que o fellow constrói
 
-- Schema de `entries` e `tasks` (idempotente) dentro de `supabase/schema.sql`.
+- Um plano só, "caderno", cobrindo `entries` e `tasks`. Um aceite. Schema das duas tabelas em `supabase/schema.sql`.
 - Types, services, query keys, hooks de GET e de mutation, páginas.
 - Lista, criar, editar, apagar entrada.
 - Na entrada: criar task e marcar `done`.
