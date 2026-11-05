@@ -42,5 +42,9 @@
 <!-- END GENERATED:agents/base -->
 
 <!-- BEGIN MANUAL:repo/agent-notes -->
-<!-- repo-specific notes live here -->
+## Cloud Agent
+
+- Install with `npm ci`. Dev server is `npm run dev` on port 8080 (`vite.config.ts`).
+- `.node-version` is 22. GitHub CI still installs Node 20.
+- `@supabase/supabase-js` throws `supabaseUrl is required` at import when `VITE_SUPABASE_URL` or `VITE_SUPABASE_ANON_KEY` is empty, which blanks the SPA. Lessons and activities read local dummy data and do not need a live project. Any non-empty values boot the app. Ranking and recent activity stay in their error state until real classroom keys are set.
 <!-- END MANUAL:repo/agent-notes -->
