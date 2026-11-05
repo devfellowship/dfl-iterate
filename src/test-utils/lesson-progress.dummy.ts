@@ -1,6 +1,6 @@
 import type { LessonProgress } from '@/types/LessonProgress';
 
-export const lessonsProgressData: LessonProgress[] = [
+const initialLessonsProgressData: LessonProgress[] = [
   {
     lessonId: 'lesson-1',
     completedActivities: 5,
@@ -20,3 +20,13 @@ export const lessonsProgressData: LessonProgress[] = [
     percent: null,
   },
 ];
+
+let lessonsProgressStore = initialLessonsProgressData.map((progress) => ({ ...progress }));
+
+export function getLessonsProgressData(): LessonProgress[] {
+  return lessonsProgressStore.map((progress) => ({ ...progress }));
+}
+
+export function setLessonsProgressData(progressData: LessonProgress[]): void {
+  lessonsProgressStore = progressData.map((progress) => ({ ...progress }));
+}

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Lesson } from '@/types';
-import { useLessons, useLessonProgressBarById } from '@/hooks';
+import { useAdvanceLessonProgress, useLessons, useLessonProgressBarById } from '@/hooks';
 import { Clock, Layers, ArrowRight, Loader2, RefreshCw } from 'lucide-react';
 import { Button } from '@devfellowship/components';
 import { HomePageTopDataSlots } from '@/components/data-layer/HomePageDataSlots';
@@ -146,6 +146,7 @@ interface LessonCardProps {
 
 function LessonCard({ lesson, index, onStart }: LessonCardProps) {
   const { data, isPending, isError, refetch } = useLessonProgressBarById(lesson.id);
+  const advanceProgress = useAdvanceLessonProgress();
 
   return (
     <motion.div
@@ -175,7 +176,7 @@ function LessonCard({ lesson, index, onStart }: LessonCardProps) {
             </div>
           </div>
 
-          <div className="mt-4 max-w-md" data-slot="T5">
+          <div className="mt-4 max-w-xl" data-slot="T5">
             <PreviewSectionLabel taskId="T5" />
             {isPending ? (
               <div className="text-sm text-muted-foreground">Carregando progresso...</div>
@@ -187,7 +188,28 @@ function LessonCard({ lesson, index, onStart }: LessonCardProps) {
                 </button>
               </div>
             ) : data ? (
-              <LessonProgressBar progress={data} />
+              <div className="flex items-end gap-3">
+                <div className="min-w-0 flex-1">
+                  <LessonProgressBar progress={data} />
+                </div>
+                <div className="shrink-0">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => advanceProgress.mutate(lesson.id)}
+                    disabled={advanceProgress.isPending || data.completedActivities >= data.totalActivities}
+                  >
+                    {advanceProgress.isPending ? 'Atualizando...' : '+1 atividade'}
+                  </Button>
+                  {advanceProgress.isError && (
+                    <p className="mt-1 max-w-48 text-xs text-destructive">
+                      {advanceProgress.error instanceof Error
+                        ? advanceProgress.error.message
+                        : 'Não foi possível atualizar o progresso.'}
+                    </p>
+                  )}
+                </div>
+              </div>
             ) : null}
           </div>
         </div>

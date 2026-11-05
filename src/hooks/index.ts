@@ -13,6 +13,7 @@ export { useGetUserProfile } from './useGetUserProfile';
 export { useUpdateUserProfile } from './useUpdateUserProfile';
 export { useAnnouncements } from './useAnnouncements';
 export { useLessonProgressBarById } from './useLessonProgressBar';
+export { useAdvanceLessonProgress } from './useAdvanceLessonProgress';
 export { useGetRecentActivity } from './useGetRecentActivity';
 export { useGetUserStats } from './useGetUserStats';
 export { useGetUserPreferences } from './useGetUserPreferences';
