@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@devfellowship/components": "^0.2.0",
-    "@devfellowship/observability": "^2.0.1",
+    "@devfellowship/observability": "^2.2.0",
     "@dnd-kit/react": "^0.3.2",
     "@hookform/resolvers": "^3.10.0",
     "@monaco-editor/react": "^4.7.0",
