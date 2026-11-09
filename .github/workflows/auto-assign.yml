@@ -6,8 +6,14 @@ name: Auto-assign PR author
 # Inlined here on ubuntu-latest. Public-repo carve-out authorized by Tainan
 # TG 2026-06-06 (see CLAUDE.md "🚦 CI green merge policy — repos PÚBLICOS").
 # Housekeeping only — never a merge gate (continue-on-error on step + job).
+# Trigger is `pull_request`, NOT `pull_request_target`. GitHub blocks `pull_request_target` by
+# default in public repos (brownouts 2026-11-09 and 2026-11-16 16:00-18:00 UTC, permanent from
+# 2026-12-02): the run ends in startup_failure with zero jobs. This job checks out no code, so a
+# same-repo PR gets the write token and the org secret under `pull_request`. A fork PR gets a
+# read-only token: the assign step then warns and moves on (best-effort, never a gate).
+# https://github.blog/changelog/2026-11-02-pull_request_target-blocked-by-default-december-2
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, reopened, synchronize]
 
 # Cancel a superseded run of the same PR. The key is the PR number; a run
