@@ -1,0 +1,895 @@
+diff --git a/.cursor/skills/debug/SKILL.md b/.cursor/skills/debug/SKILL.md
+index a3a3de0..e5d5d79 100644
+--- a/.cursor/skills/debug/SKILL.md
++++ b/.cursor/skills/debug/SKILL.md
+@@ -1,18 +1,22 @@
+ ---
+ name: debug
+ description: >-
+-  Corrige um erro de tsc, lint ou Supabase na camada dona do erro e roda npm
+-  run check de novo. Use quando o check falhar ou o Table Editor não refletir
+-  a tela. Não reescreva a feature nem mude o plano aceito.
++  Corrige um erro de tipo, lint ou do banco na camada dona do erro e roda o
++  check de novo. Use quando o check falhar ou a tela não refletir o que foi
++  gravado. Não reescreva a feature nem mude o plano aceito.
+ ---
+ 
+ # Debug
+ 
+ 1. Copie a mensagem de erro. Diga a camada dona: type, service, hook, página ou schema.
+-2. Corrija só essa causa. Um erro do Supabase sobre policy se investiga no SQL e no `user_id` gravado pelo service, não na página.
+-3. Rode `npm run check` de novo.
+-4. Se a correção exigir coluna, rota ou escopo diferentes do plano aceito, pare, regrave o plano e espere aceite. Não "aproveite" o erro para redesenhar a feature.
++2. Corrija só essa causa. Um erro de permissão se investiga na policy e no id do dono gravado pelo service, não na página.
++3. Rode o check do repositório de novo.
++4. Se a correção exigir coluna, rota ou escopo diferentes do plano aceito, pare, regrave o plano e espere aceite. Não aproveite o erro para redesenhar a feature.
++
++## Neste repositório
++
++O check é `npm run check`. Erro de policy do Supabase se investiga no SQL e no `user_id` gravado pelo service. Não reescreva `supabase/schema.sql` para contornar o erro do caderno.
+ 
+ ## Qualidade
+ 
+-A seção Debug de `docs/qualidade.md` passa inteira. A resposta mostra o erro original e o que mudou.
++A seção Debug de `docs/qualidade.md` passa inteira. A resposta mostra o erro original e o que mudou. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/.cursor/skills/git-flow/SKILL.md b/.cursor/skills/git-flow/SKILL.md
+index 5dc86c9..abb65a9 100644
+--- a/.cursor/skills/git-flow/SKILL.md
++++ b/.cursor/skills/git-flow/SKILL.md
+@@ -10,11 +10,15 @@ description: >-
+ 
+ Abra a branch e pare. Não edite produto nesta skill.
+ 
+-1. Confira `git status`. Mudança sem commit fica guardada ou commitada na branch atual antes do checkout. Não descarte trabalho do fellow.
++1. Confira `git status`. Mudança sem commit fica guardada ou commitada na branch atual antes do checkout. Não descarte trabalho de quem está usando.
+ 2. `git checkout main` e `git pull origin main`.
+ 3. O prefixo é o que já aparece nas branches deste clone (`ana/feat/...`). Se não houver nenhuma, pergunte o prefixo uma vez.
+-4. Crie `<usuario>/<tipo>/<descricao-curta>`, em minúsculas e hífen. Tipos: `feat`, `fix`, `chore`, `refactor`, `docs`. Exemplo: `ana/feat/notebooks-list`.
+-5. Uma branch, um objetivo.
++4. Crie `<usuario>/<tipo>/<descricao-curta>`, em minúsculas e hífen. Tipos: `feat`, `fix`, `chore`, `refactor`, `docs`.
++5. Uma branch, um objetivo. O objetivo é uma fatia do plano aceito, não o produto inteiro.
++
++## Neste repositório
++
++Uma branch é uma tarefa de `docs/tasks.md`. Exemplo: `ana/feat/notebooks-list`. Não abra uma branch que implemente cadernos, notas e tarefas juntos.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/handoff/SKILL.md b/.cursor/skills/handoff/SKILL.md
+index 526beac..aaa1913 100644
+--- a/.cursor/skills/handoff/SKILL.md
++++ b/.cursor/skills/handoff/SKILL.md
+@@ -2,7 +2,7 @@
+ name: handoff
+ description: >-
+   Regrava docs/handoff.md para continuar o trabalho num chat novo, sem levar
+-  o histórico. Use quando o fellow for abrir outro chat ou quando a conversa
++  o histórico. Use quando a pessoa for abrir outro chat ou quando a conversa
+   estiver longa e o próximo passo já estiver claro. Não comece feature nova.
+ ---
+ 
+@@ -13,17 +13,16 @@ Regrave `docs/handoff.md`. Um arquivo só. No máximo 60 linhas. Sem código, se
+ ```md
+ # Handoff
+ 
+-- **Branch:** ana/feat/notebooks-list
+-- **Objetivo:** lista de cadernos com criar, favoritar e a quantidade de notas
+-- **Plano:** docs/plans/caderno.md — aceito
+-- **Feito:** schema em supabase/schema.sql; cascas das três telas
+-- **Falta:** notebooks.service.ts; hooks; ligar NotebooksPage; review; PR
+-- **Próximo passo:** criar o service de cadernos imitando o perfil, com notes(count)
++- **Branch:** <usuario>/<tipo>/<descricao>
++- **Objetivo:** uma frase, a fatia atual
++- **Plano:** docs/plans/<slug>.md — aceito ou aguardando aceite
++- **Feito:** o que já está na branch
++- **Falta:** o que a fatia ainda pede
++- **Próximo passo:** uma frase e uma skill
+ - **Abrir só:**
+-  - docs/ficha-tecnica.md
+-  - docs/plans/caderno.md
+-  - src/services/profile.service.ts
+-  - src/lib/queryKeys.ts
++  - o plano aceito
++  - a régua de qualidade
++  - o arquivo ouro da próxima skill
+ ```
+ 
+ O próximo passo é uma frase e uma skill. A lista "Abrir só" tem os arquivos que essa frase precisa, mais o plano.
+@@ -31,10 +30,14 @@ O próximo passo é uma frase e uma skill. A lista "Abrir só" tem os arquivos q
+ No fim, entregue este prompt:
+ 
+ ```txt
+-Continua o caderno a partir de docs/handoff.md.
++Continua a partir de docs/handoff.md.
+ Faz só o próximo passo.
+ ```
+ 
++## Neste repositório
++
++O plano do diário é `docs/plans/caderno.md`, aceito. A fatia atual sai de `docs/tasks.md`. Exemplo de objetivo: "lista de cadernos com criar, favoritar e a quantidade de notas". Exemplo de próximo passo: "criar o service de cadernos imitando o perfil".
++
+ ## Qualidade
+ 
+ A seção Handoff de `docs/qualidade.md` passa inteira. Se passar de 60 linhas, corte. Não implemente o próximo passo nesta skill.
+diff --git a/.cursor/skills/new-mutation-hook/SKILL.md b/.cursor/skills/new-mutation-hook/SKILL.md
+index 3348989..e1a315f 100644
+--- a/.cursor/skills/new-mutation-hook/SKILL.md
++++ b/.cursor/skills/new-mutation-hook/SKILL.md
+@@ -1,27 +1,29 @@
+ ---
+ name: new-mutation-hook
+ description: >-
+-  Cria useMutation que grava pelo service e invalida as query keys da seção
+-  Cache da ficha. Use para criar, editar, apagar e favoritar caderno ou nota,
+-  e para criar ou marcar tarefa. Não invente query key nova.
++  Cria useMutation que grava pelo service e invalida as query keys do plano
++  aceito. Não invente query key nova. Não altere a página nesta skill. No
++  caderno, use para criar, editar, apagar e favoritar caderno ou nota, e para
++  criar ou marcar tarefa.
+ ---
+ 
+ # Hook de mutation
+ 
+ 1. Leia o hook de GET da entidade e anote a key. A mutation invalida essa key, não uma nova.
+-2. Imite `useUpdateProfile`.
++2. Imite o hook de mutation ouro do repositório.
+ 3. `useMutation` chama a função de escrita do service.
+-4. No sucesso, siga a seção Cache de `docs/ficha-tecnica.md`:
+-   - caderno invalida o prefixo `['notebooks']`
+-   - nota invalida `['notes', { notebookId }]`
+-   - editar, apagar ou favoritar nota também invalida `queryKeys.notes.byId(id)`
+-   - criar ou apagar nota também invalida `['notebooks']`
+-   - favoritar nota não invalida cadernos
+-   - tarefa invalida `queryKeys.tasks.byNote(noteId)`
+-5. Nomes: `useCreateNotebook`, `useUpdateNotebook`, `useDeleteNotebook`, `useToggleNotebookFavorite`, `useCreateNote`, `useUpdateNote`, `useDeleteNote`, `useToggleNoteFavorite`, `useCreateTask`, `useToggleTask`.
++4. No sucesso, invalide o que o plano aceito lista:
++   - a família inteira, quando qualquer variante da lista precisa atualizar
++   - a linha, quando a tela aberta também lê por id
++   - uma segunda entidade, só quando o plano diz que o dado dela mudou
++5. O nome segue o verbo e a entidade: `useCreate*`, `useUpdate*`, `useDelete*`, `useToggle*`.
+ 
+-Não altere a página nesta skill.
++Não altere a página nesta skill. `reset()` antes do `mutate` fica em `wire-page`.
++
++## Neste repositório
++
++O ouro é `useUpdateProfile`. A lista do que cada mutation invalida está na seção Cache de `docs/ficha-tecnica.md`. Os nomes dos hooks estão em `docs/plans/caderno.md`. A fatia desta branch está em `docs/tasks.md`.
+ 
+ ## Qualidade
+ 
+-A seção Hook de mutation de `docs/qualidade.md` passa inteira. Se a `invalidateQueries` aponta para uma key que o GET não usa, troque pela key do GET.
++A seção Hook de mutation de `docs/qualidade.md` passa inteira. Se a `invalidateQueries` aponta para uma key que o GET não usa, troque pela key do GET. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/.cursor/skills/new-query-hook/SKILL.md b/.cursor/skills/new-query-hook/SKILL.md
+index 1787c67..bc01934 100644
+--- a/.cursor/skills/new-query-hook/SKILL.md
++++ b/.cursor/skills/new-query-hook/SKILL.md
+@@ -1,31 +1,33 @@
+ ---
+ name: new-query-hook
+ description: >-
+-  Cria o hook useGet* e a query key de uma entidade já aceita no plano do
+-  caderno. Use para useGetNotebooks, useGetNotes, useGetNote e useGetTasks.
+-  Antes de criar, confira types, services, queryKeys e hooks para não duplicar
+-  key. Não crie mutation nem página.
++  Cria o hook useGet* e a query key de uma entidade já aceita no plano. Antes
++  de criar, confira types, services, queryKeys e hooks para não duplicar key.
++  Não crie mutation nem página. No caderno, use para useGetNotebooks,
++  useGetNotes, useGetNote e useGetTasks.
+ ---
+ 
+ # Hook de leitura
+ 
+ 1. Liste o que já existe em `src/types/`, `src/services/`, `src/lib/queryKeys.ts` e `src/hooks/`.
+-2. Se a entidade não está num plano aceito, pare e pergunte. Cadernos, notas e tarefas já estão.
++2. Se a entidade não está num plano aceito, pare e pergunte.
+ 3. Se a key já existe, estenda o factory. Não crie uma segunda key para o mesmo dado.
+-4. Acrescente a key na forma da seção Cache de `docs/ficha-tecnica.md`:
++4. A forma da key sai do plano aceito. Filtro, página e busca entram na key quando mudam o resultado. Não use string solta.
++5. Crie `useGet<Entidade>` imitando o hook de leitura ouro: `useQuery` com `queryKey` e `queryFn` chamando o service.
++6. `enabled` segura a query quando falta o que ela precisa:
++   - leitura da conta usa a sessão
++   - leitura que depende de um id da rota usa `enabled: Boolean(id)`
+ 
+-- `queryKeys.notebooks.list(favoritesOnly)` → `['notebooks', { favoritesOnly }]`
+-- `queryKeys.notes.byNotebook(notebookId, page, query)` → `['notes', { notebookId, page, query }]`
+-- `queryKeys.notes.byId(id)` → `['notes', id]`
+-- `queryKeys.tasks.byNote(noteId)` → `['tasks', { noteId }]`
++Não crie `useMutation` nesta skill.
+ 
+-`query` vazio é `''`. Página 1 é `1`.
++## Neste repositório
+ 
+-5. Crie `useGetNotebooks`, `useGetNotes`, `useGetNote` e `useGetTasks` imitando `useGetProfile`: `useQuery` com `queryKey` e `queryFn` chamando o service. Nome `useGet*`.
+-6. Hook que depende de sessão usa `enabled` com a sessão, como o perfil.
++O hook ouro é `useGetProfile`. As keys e o `enabled` de cada leitura estão na seção Cache de `docs/ficha-tecnica.md` e na seção Hook de leitura de `docs/qualidade.md`.
+ 
+-Não crie `useMutation` nesta skill.
++- `useGetNotebooks` usa a sessão
++- `useGetNotes` e `useGetNote` usam `enabled: Boolean(notebookId)`; `useGetNote` também exige o id da nota
++- `useGetTasks` usa `enabled: Boolean(noteId)`
+ 
+ ## Qualidade
+ 
+-A seção Hook de leitura de `docs/qualidade.md` passa inteira. String solta na `queryKey` se corrige antes de seguir.
++A seção Hook de leitura de `docs/qualidade.md` passa inteira. String solta na `queryKey` se corrige antes de seguir. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/.cursor/skills/new-service/SKILL.md b/.cursor/skills/new-service/SKILL.md
+index 19a2b04..c9f4bdb 100644
+--- a/.cursor/skills/new-service/SKILL.md
++++ b/.cursor/skills/new-service/SKILL.md
+@@ -1,29 +1,37 @@
+ ---
+ name: new-service
+ description: >-
+-  Cria o service async de uma entidade do plano aceito do caderno. Use ao
+-  adicionar notebooks.service.ts, notes.service.ts ou tasks.service.ts. Imite
+-  profile.service.ts. Não crie hook nem página nesta skill.
++  Cria o service async de uma entidade que já está num plano aceito. Use ao
++  adicionar um arquivo em src/services. Imite o service ouro do repositório.
++  Não crie hook nem página nesta skill. No caderno, use para notebooks, notes
++  e tasks.
+ ---
+ 
+ # Service
+ 
+-1. Confirme `docs/plans/caderno.md`. O schema já existe. Não o edite.
+-2. Leia `src/services/profile.service.ts` e imite a forma.
++1. Confirme que a entidade está num plano aceito. Sem plano aceito, pare e use `plan-feature`.
++2. Leia o service ouro do repositório e imite a forma. Não copie para outro arquivo a função que lê o usuário: importe a que já existe.
+ 3. Crie `src/services/<entidade>.service.ts`:
+    - sem import de React
+    - funções `async`
+    - mapper snake_case → camelCase no mesmo arquivo
+-   - `throw new Error(...)` quando o Supabase devolver `error`
+-   - dono via `supabase.auth.getUser()`, nunca por argumento vindo da página
++   - `throw new Error(...)` quando o banco devolver erro
++   - o id do dono sai da função compartilhada de sessão, nunca de argumento vindo da página
++   - o insert manda a coluna do dono com esse id
++   - texto obrigatório passa por `trim`; se ficar vazio, `throw` e não grave `''`
+    - colunas nomeadas no `select`, iguais ao mapper
+-   - não envie `updated_at`
+-4. No GET de cadernos, peça `notes(count)` na mesma query. O mapper expõe a quantidade. Não faça uma query por card.
+-5. No GET de notas, peça `count: 'exact'`, ordene `updated_at` descendente e use `range` com `pageSize` de `src/consts/pagination.ts`. Use `ilike` no título só quando a busca, sem espaços nas pontas, não for vazia. Devolva as linhas e o total.
+-6. Exporte no barrel `src/services/index.ts` se ele já reexporta os services.
++   - não envie coluna que o banco preenche sozinho, como `updated_at` ou id gerado
++4. Contagem, paginação, busca e ordem são as do plano aceito. Se o plano pede a contagem na mesma leitura, não faça uma query por item.
++5. Exporte no barrel `src/services/index.ts` se ele já reexporta os services. A função de sessão não entra no barrel: o service importa o arquivo direto.
+ 
+ Não crie hook, página nem query key nesta skill. A key entra em `new-query-hook`.
+ 
++## Neste repositório
++
++- Plano aceito: `docs/plans/caderno.md`. Não edite `supabase/schema.sql`.
++- Ouro: `src/services/profile.service.ts` e `src/services/current-user.ts`. O insert manda `user_id`.
++- Contagem de notas, `range`, `ilike` e a ordem de `created_at` estão na seção Service de `docs/qualidade.md`. A fatia desta branch está em `docs/tasks.md`.
++
+ ## Qualidade
+ 
+-A seção Service de `docs/qualidade.md` passa inteira antes de encerrar.
++A seção Service de `docs/qualidade.md` passa inteira antes de encerrar. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/.cursor/skills/open-pr/SKILL.md b/.cursor/skills/open-pr/SKILL.md
+index 1a3093d..be9d8a3 100644
+--- a/.cursor/skills/open-pr/SKILL.md
++++ b/.cursor/skills/open-pr/SKILL.md
+@@ -2,19 +2,23 @@
+ name: open-pr
+ description: >-
+   Abre o pull request com título Conventional Commits e o corpo do template
+-  (Summary, What was done, How to verify). Use depois de review-diff limpo.
+-  Você escreve o texto. Não peça para o fellow redigir.
++  do repositório. Use depois de review-diff limpo. Você escreve o texto. Não
++  peça para a pessoa redigir.
+ ---
+ 
+ # Abrir o PR
+ 
+-1. `review-diff` já passou e `npm run check` está limpo. Se não passou, volte para lá.
++1. `review-diff` já passou e o check do repositório está limpo. Se não passou, volte para lá.
+ 2. Traga a `main` para a branch se ela ficou para trás.
+-3. Título: `tipo(escopo): assunto no imperativo`, sem ponto final. Exemplo: `feat(notebooks): add list query and service`.
+-4. Corpo no formato de `.github/PULL_REQUEST_TEMPLATE.md`. Marque em How to verify só o que esta mudança cobre.
+-5. Você preenche Summary e What was done a partir do diff. Não peça redação ao fellow.
++3. Título: `tipo(escopo): assunto no imperativo`, sem ponto final. Exemplo: `feat(orders): add list query and service`.
++4. Corpo no formato do template de pull request do repositório. Marque em How to verify só o que esta mudança cobre.
++5. Você preenche Summary e What was done a partir do diff. Não peça redação a quem está usando.
+ 6. A `main` não recebe push direto.
+ 
++## Neste repositório
++
++O template é `.github/PULL_REQUEST_TEMPLATE.md`. O check é `npm run check`. Exemplo de título: `feat(notebooks): add list query and service`. O roteiro de verificação está em `docs/ficha-tecnica.md`; marque só a fatia desta branch, descrita em `docs/tasks.md`.
++
+ ## Qualidade
+ 
+-A seção Pull request de `docs/qualidade.md` passa inteira. Entregue a URL do PR.
++A seção Pull request de `docs/qualidade.md` passa inteira. Entregue a URL do PR. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/.cursor/skills/plan-feature/SKILL.md b/.cursor/skills/plan-feature/SKILL.md
+index 938a5f5..9b58f63 100644
+--- a/.cursor/skills/plan-feature/SKILL.md
++++ b/.cursor/skills/plan-feature/SKILL.md
+@@ -1,26 +1,27 @@
+ ---
+ name: plan-feature
+ description: >-
+-  Escreve docs/plans/<slug>.md para uma feature ou tabela nova, fora do
+-  caderno, e para até o fellow aceitar. O diário já está aceito em
+-  docs/plans/caderno.md. Não implemente nesta skill.
++  Escreve docs/plans/<slug>.md para uma entidade ou tabela nova e para até o
++  aceite. Não implemente nesta skill. No caderno, notebooks, notes e tasks já
++  estão aceitos: não grave outro plano para eles.
+ ---
+ 
+ # Plano da feature
+ 
+-O caderno (`notebooks`, `notes`, `tasks`) já está aceito. Se o pedido é lista, nota, tarefa, favorito ou paginação, não grave outro plano e não pare: use `new-service`, `new-query-hook`, `new-mutation-hook` ou `wire-page`. Não reescreva `supabase/schema.sql`.
+-
+-Para uma entidade que a ficha não descreve:
+-
+-1. Grave `docs/plans/<slug>.md` e pare. Sem código, sem branch de implementação, sem SQL aplicado.
+-2. Leia `docs/plans/profile.md` e copie o formato, não o conteúdo.
+-3. Escreva: tabelas e colunas com tipo, quem lê a linha, rotas, arquivos a criar, query keys, mutations e a key que cada uma invalida, fora de escopo com pelo menos dois itens.
+-4. A última linha é `Aguardando aceite`.
++1. Se a entidade já está num plano aceito, não grave outro plano e não pare. Siga a skill da camada pedida.
++2. Fora de um plano aceito, grave `docs/plans/<slug>.md` e pare. Sem código, sem branch de implementação, sem SQL aplicado.
++3. Copie o formato de um plano que já existe no repositório, não o conteúdo.
++4. Escreva: tabelas e colunas com tipo, quem lê a linha, rotas, arquivos a criar, query keys, mutations e a key que cada uma invalida, fora de escopo com pelo menos dois itens.
++5. A última linha é `Aguardando aceite`.
+ 
+ Implemente só depois de "aceito", "pode executar" ou "ok, executa". Se a resposta mudar coluna, rota ou escopo, regrave o plano e espere de novo.
+ 
+ Correção dentro de um plano já aceito não usa esta skill.
+ 
++## Neste repositório
++
++`notebooks`, `notes` e `tasks` já estão aceitos em `docs/plans/caderno.md`. Pedido de lista, nota, tarefa, favorito ou paginação segue `new-service`, `new-query-hook`, `new-mutation-hook` ou `wire-page`. Não reescreva `supabase/schema.sql`. O formato para copiar está em `docs/plans/profile.md`.
++
+ ## Qualidade
+ 
+-A seção Plano de `docs/qualidade.md` passa inteira antes de você dizer que o plano está pronto.
++A seção Plano de `docs/qualidade.md` passa inteira antes de você dizer que o plano está pronto. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/.cursor/skills/review-diff/SKILL.md b/.cursor/skills/review-diff/SKILL.md
+index 5bbaf96..cbf5c6a 100644
+--- a/.cursor/skills/review-diff/SKILL.md
++++ b/.cursor/skills/review-diff/SKILL.md
+@@ -28,6 +28,10 @@ Sugestões
+ 
+ Ajuste antes do merge é só item da lista que falhou. Sugestão é o resto.
+ 
++## Neste repositório
++
++O check é `npm run check`. A régua que os oito itens conferem está em `docs/qualidade.md`. Não aproveite a revisão para puxar a próxima tarefa de `docs/tasks.md`.
++
+ ## Qualidade
+ 
+-Não diga que está pronto enquanto um item da seção Diff estiver falho, ou enquanto `npm run check` falhar.
++Não diga que está pronto enquanto um item da seção Diff estiver falho, ou enquanto `npm run check` falhar. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/.cursor/skills/schema-rls/SKILL.md b/.cursor/skills/schema-rls/SKILL.md
+index 1f9bc86..63f84bb 100644
+--- a/.cursor/skills/schema-rls/SKILL.md
++++ b/.cursor/skills/schema-rls/SKILL.md
+@@ -1,22 +1,31 @@
+ ---
+ name: schema-rls
+ description: >-
+-  Protege o schema já aceito do caderno. Use quando o pedido for tabela,
+-  policy, RLS ou coluna de notebooks, notes, tasks ou profiles. Não reescreva
+-  supabase/schema.sql.
++  Acrescenta tabela idempotente com RLS no schema do repositório, só de um
++  plano já aceito. Não reescreva tabela que o plano manda preservar. No
++  caderno, notebooks, notes, tasks e profiles já estão no schema: não os
++  edite.
+ ---
+ 
+ # Schema e RLS
+ 
+-`notebooks`, `notes`, `tasks` e `profiles` já estão em `supabase/schema.sql`, com RLS, cascade e a trigger de `updated_at`. O aluno cola esse arquivo no SQL Editor.
++Só rode com plano aceito. Edite o arquivo de schema do repositório. Não crie `seed.sql` e não insira usuário fixo.
+ 
+-1. Leia `docs/ficha-tecnica.md` e o schema atual.
+-2. Não edite `supabase/schema.sql` para o caderno. Não crie outra migration. Não crie `seed.sql`. Não insira usuário fixo.
+-3. Não altere `profiles` nem o trigger em `auth.users`.
+-4. Se o pedido pede coluna, tabela ou policy que a ficha não tem, pare e diga que isso muda o escopo aceito.
++1. Leia o plano aceito e o schema atual.
++2. `create table if not exists` com as colunas do plano. A coluna do dono referencia o usuário autenticado.
++3. Filho aponta para o pai com `on delete cascade` quando o plano diz que apagar o pai apaga o filho.
++4. `enable row level security`.
++5. Para cada ação (select, insert, update e delete): `drop policy if exists` e crie de novo. `USING` e `WITH CHECK` comparam o dono ao usuário autenticado.
++6. Na policy do filho, o pai também é do mesmo usuário.
++7. Não altere tabela nem trigger que o plano manda preservar.
++8. Coluna, tabela ou policy que o plano não lista: pare e diga que isso muda o escopo aceito.
+ 
+-Tabela de uma feature nova, com plano aceito que não é o caderno, segue a seção Schema de `docs/qualidade.md`: SQL idempotente, RLS, quatro policies, `auth.uid()`.
++Quem for usar o projeto cola o arquivo no SQL Editor. O commit leva o SQL.
++
++## Neste repositório
++
++`notebooks`, `notes`, `tasks` e `profiles` já estão em `supabase/schema.sql`, com RLS, cascade e a trigger de `updated_at`. Não edite esse arquivo para o caderno. Não crie outra migration. Não altere `profiles` nem o trigger em `auth.users`. O aluno cola o arquivo no SQL Editor do projeto dele.
+ 
+ ## Qualidade
+ 
+-A seção Schema de `docs/qualidade.md` passa inteira. Se o diff reescreve o schema do caderno, reverta antes de seguir para o service.
++A seção Schema de `docs/qualidade.md` passa inteira. Se o diff reescreve tabela preservada, reverta antes de seguir para o service. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/.cursor/skills/wire-page/SKILL.md b/.cursor/skills/wire-page/SKILL.md
+index b03568d..5715986 100644
+--- a/.cursor/skills/wire-page/SKILL.md
++++ b/.cursor/skills/wire-page/SKILL.md
+@@ -1,26 +1,36 @@
+ ---
+ name: wire-page
+ description: >-
+-  Liga a página ao hook, com pending, erro com tentar de novo e empty. Use ao
+-  implementar NotebooksPage, NotebookNotesPage ou NotePage. A página não
+-  importa service nem o client do Supabase.
++  Liga a página ao hook, com pending, erro com tentar de novo e empty. A
++  página não importa service nem o client do banco. No caderno, use ao
++  implementar NotebooksPage, NotebookNotesPage ou NotePage.
+ ---
+ 
+ # Página
+ 
+-1. Leia `SettingsPage` e os componentes em `src/components/ui` (pending, erro, empty).
+-2. A página importa o hook. Não importa service nem `@/lib/supabase`.
+-3. Links e `navigate` usam `src/consts/routes.ts`. A lista de notas usa `pageSize` de `src/consts/pagination.ts`.
++1. Leia a página ouro e os componentes de pending, erro e empty.
++2. A página importa o hook. Não importa service nem o client do banco.
++3. Links e `navigate` usam o arquivo de rotas do repositório. Número de página e tamanho de página vêm de consts, quando o plano pede lista paginada.
+ 4. Três estados, sempre:
+    - `isPending` → indicador de carregamento
+    - `isError` → mensagem e botão "Tentar de novo" que chama `refetch`
+-   - lista vazia → empty state em português
+-5. Empty de "nenhum caderno" é diferente de "nenhum favorito". Empty de "nenhuma nota" é diferente de "busca sem resultado".
+-6. Filtro, página e busca vêm da URL: `favoritos=1` na home; `page` e `q` nas notas. Mudar `q` volta para a página 1. `page` ausente ou inválido mostra a página 1. Página além do fim mostra a última que ainda tem nota. Apagar a última nota de uma página maior que 1 volta para a página anterior.
+-7. Texto da interface em português. Identificadores em inglês.
++   - lista vazia → empty state no idioma da interface
++5. Empty de "ainda não existe nenhum" é diferente de empty de filtro ou busca sem resultado.
++6. Texto obrigatório passa por `trim`. O botão de criar fica desabilitado quando, sem espaços nas pontas, ele está vazio.
++7. Antes de `mutate`, chame `reset()` no hook de mutation. Enquanto `isPending`, o botão mostra o texto de espera e fica desabilitado.
++8. Apagar pede confirmação quando o plano pede. Cancelar não chama `mutate`.
++9. Filtro, página e busca ficam na URL quando o plano pede. Mudar a busca volta para a página 1. Página ausente ou inválida mostra a página 1. Página além do fim mostra a última que ainda tem item. Apagar o último item de uma página maior que 1 volta para a página anterior.
++10. Texto da interface no idioma do produto. Identificadores em inglês.
+ 
+ Não busque dado novo aqui. Se falta um GET ou uma mutation, pare e use a skill do hook.
+ 
++## Neste repositório
++
++- Página ouro: `SettingsPage`. Componentes em `src/components/ui`. Rotas em `src/consts/routes.ts`. Tamanho da página em `src/consts/pagination.ts`.
++- O botão de espera mostra "Salvando…".
++- Filtro `favoritos=1` na home. `page` e `q` nas notas. Confirmação ao apagar caderno ou nota.
++- A fatia desta branch está em `docs/tasks.md`.
++
+ ## Qualidade
+ 
+-A seção Página de `docs/qualidade.md` passa inteira.
++A seção Página de `docs/qualidade.md` passa inteira. Se a régua do repositório for mais específica que esta skill, vale a régua.
+diff --git a/AGENTS.md b/AGENTS.md
+index e68d0bd..a187e31 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -22,12 +22,12 @@ página → hook (useQuery / useMutation) → service async → Supabase
+ - O client do Supabase mora em `src/lib/supabase.ts`. Service é o único lugar que o importa, fora a auth: `useAuth` e `AuthProvider`. `RequireAuth` lê `isSupabaseConfigured` de `src/lib/env.ts`. O ESLint bloqueia o resto.
+ - Página e componente importam hook. Não importam service nem o client.
+ - Service sem React: `async`, mapper snake_case → camelCase, `throw new Error(...)` quando o Supabase devolver `error`.
+-- O id do dono sai de `supabase.auth.getUser()` dentro do service.
++- O id do dono sai de `currentUserId()` em `src/services/current-user.ts`. O insert manda `user_id`. A página não envia esse id.
+ - Mutation invalida as keys da seção Cache da ficha.
+ - Toda lista trata `isPending`, `isError` (mensagem + "Tentar de novo") e empty.
+ - Identificadores em inglês. Texto de interface em português.
+ - A fatia ouro é o perfil: `profile.service.ts`, `useGetProfile`, `useUpdateProfile`, `queryKeys.profile`. Feature nova imita esses arquivos.
+-- Domínio da prova: `notebooks`, `notes` e `tasks`. O schema já está em `supabase/schema.sql`. `profiles` já vem pronta. A entrega é service, hook e página. O plano aceito é `docs/plans/caderno.md`.
++- Domínio da prova: `notebooks`, `notes` e `tasks`. O schema já está em `supabase/schema.sql`. `profiles` já vem pronta. A entrega é service, hook e página, uma fatia por branch, na ordem de `docs/tasks.md`. O plano aceito é `docs/plans/caderno.md`.
+ 
+ Fora de escopo: storage, realtime, edge functions, i18n, paginação infinita,
+ update otimista, tipos gerados pelo CLI do Supabase, compartilhar caderno,
+@@ -61,7 +61,7 @@ não houver nenhuma, pergunte o prefixo uma vez e reutilize.
+ Entidade ou tabela nova, fora do caderno: grave `docs/plans/<slug>.md` (tabela, colunas, rotas,
+ arquivos, query keys, mutations, fora de escopo) e pare. Implemente só depois
+ de um aceite explícito do fellow: "aceito", "pode executar" ou "ok, executa".
+-`notebooks`, `notes` e `tasks` já estão aceitos em `docs/plans/caderno.md`. Não abra outro plano para eles.
++`notebooks`, `notes` e `tasks` já estão aceitos em `docs/plans/caderno.md`. Não abra outro plano para eles. Implemente uma tarefa de `docs/tasks.md` por branch. Não antecipe a fatia seguinte.
+ 
+ Se ele mudar o plano, regrave o arquivo e espere de novo. Correção dentro do
+ que já foi aceito segue direto, sem plano novo.
+@@ -92,7 +92,7 @@ Olhe o diff e corrija o que falhar. Só então escreva o PR.
+ 
+ 1. Caminho página → hook → service.
+ 2. Query key no factory. Path em `consts/routes.ts`.
+-3. Service `async`, sem React, com `throw` no erro. Dono via `getUser()`.
++3. Service `async`, sem React, com `throw` no erro. Dono via `currentUserId()`. O insert manda `user_id`.
+ 4. `isPending` e `isError` com ação. Empty quando a lista vem vazia.
+ 5. Tipagem sem `any` desnecessário.
+ 6. Mudança dentro do que foi aceito.
+@@ -112,7 +112,7 @@ e sugestões soltas.
+ |---|---|
+ | Abrir branch | `git-flow` |
+ | Entidade nova, fora do caderno | `plan-feature` (para no aceite), depois `schema-rls` |
+-| Caderno já aceito | service, hook e página. Não reescreva o schema |
++| Caderno já aceito | uma fatia de `docs/tasks.md`: service, hook e página dessa fatia. Não reescreva o schema |
+ | Service, GET, mutation, página | `new-service`, `new-query-hook`, `new-mutation-hook`, `wire-page` |
+ | Diff e PR | `review-diff`, `open-pr` |
+ | Erro de check ou do Supabase | `debug` |
+diff --git a/README.md b/README.md
+index 20c8fa3..2afa3ff 100644
+--- a/README.md
++++ b/README.md
+@@ -44,4 +44,4 @@ A chave `service_role` não entra no `.env` do Vite.
+ 
+ ## Para a turma
+ 
+-O schema já está aceito. Peça a lista de cadernos, as notas paginadas ou as tarefas da nota. A régua está em `docs/qualidade.md`. O uso da IA está em `docs/usando-a-ia.md`. A entrega está pronta quando o roteiro da ficha passa, inclusive explicar o que acontece ao favoritar uma nota.
++A ordem da entrega está em `docs/tasks.md`. A primeira tarefa é conectar o seu projeto no Supabase. O resto segue uma fatia por branch. A régua está em `docs/qualidade.md`. O uso da IA está em `docs/usando-a-ia.md`. A entrega está pronta quando o roteiro da ficha passa, inclusive explicar o que acontece ao favoritar uma nota.
+diff --git a/docs/plans/caderno.md b/docs/plans/caderno.md
+index f25a358..65c1539 100644
+--- a/docs/plans/caderno.md
++++ b/docs/plans/caderno.md
+@@ -2,7 +2,7 @@
+ 
+ Escopo aceito. O produto está em `docs/ficha-tecnica.md`. O schema de `notebooks`, `notes` e `tasks` já está em `supabase/schema.sql`. Não reescreva essas tabelas, nem `profiles`, nem o trigger de signup.
+ 
+-A entrega do aluno é type, service, hook e página. As três telas já existem em casca.
++A entrega do aluno é type, service, hook e página. As três telas já existem em casca. A ordem das fatias está em `docs/tasks.md`: uma branch por tarefa, sem juntar cadernos, notas e tarefas no mesmo PR.
+ 
+ ## Tabelas
+ 
+diff --git a/docs/qualidade.md b/docs/qualidade.md
+index a944ece..6ce1245 100644
+--- a/docs/qualidade.md
++++ b/docs/qualidade.md
+@@ -32,10 +32,12 @@ para o fellow preencher isto à mão.
+ - Arquivo em `src/services/`, sem import de React.
+ - Funções `async`. Mapper snake_case → camelCase no mesmo arquivo.
+ - Erro do Supabase vira `throw new Error(...)`.
+-- O dono vem de `supabase.auth.getUser()`. A função não recebe `userId` da página.
++- O dono vem de `currentUserId()` em `src/services/current-user.ts`. A função não recebe `userId` da página. O insert manda `user_id` com esse valor.
+ - A query pede as colunas pelo nome. Sem `select('*')` solto quando o mapper já lista os campos.
++- Título de caderno, nota e tarefa passa por `trim`. Vazio vira `throw`. O service não grava `''`.
+ - O GET de cadernos pede `notes(count)` na mesma query. O mapper expõe a quantidade. Não faz uma query por card.
+ - O GET de notas pede `count: 'exact'`, ordena `updated_at` descendente e usa `range` com `pageSize` de `src/consts/pagination.ts`. `ilike` no título só quando a busca, sem espaços nas pontas, não é vazia.
++- O GET de tarefas ordena `created_at` ascendente: `order('created_at', { ascending: true })`.
+ - O service não envia `updated_at`. A trigger do schema atualiza.
+ 
+ ## Hook de leitura
+@@ -43,7 +45,9 @@ para o fellow preencher isto à mão.
+ - Antes de criar, lista o que já existe em `src/types/`, `src/services/`, `src/lib/queryKeys.ts` e `src/hooks/`.
+ - A key sai de `queryKeys`. String solta não passa.
+ - Key que já existe é estendida, não duplicada. A forma está na ficha, seção Cache.
+-- `useQuery` com `queryKey` e `queryFn`. `useGetProfile` só busca com sessão (`enabled`).
++- `useQuery` com `queryKey` e `queryFn`. `useGetProfile` e `useGetNotebooks` só buscam com sessão (`enabled`).
++- `useGetNotes` e `useGetNote` usam `enabled: Boolean(notebookId)`. `useGetNote` também exige o id da nota.
++- `useGetTasks` usa `enabled: Boolean(noteId)`.
+ - Cadernos: `queryKeys.notebooks.list(favoritesOnly)`.
+ - Notas do caderno: `queryKeys.notes.byNotebook(notebookId, page, query)`.
+ - Uma nota: `queryKeys.notes.byId(id)`.
+@@ -64,6 +68,9 @@ para o fellow preencher isto à mão.
+ - Path vem de `src/consts/routes.ts`.
+ - Trata `isPending`, `isError` com "Tentar de novo" (`refetch`) e empty quando a lista vem vazia.
+ - Texto da interface em português.
++- Título de caderno, nota e tarefa é obrigatório depois do `trim`. O botão de criar fica desabilitado quando o título, sem espaços nas pontas, está vazio.
++- Antes de `mutate`, a página chama `reset()` no hook de mutation. Enquanto `isPending`, o botão mostra "Salvando…" e fica desabilitado.
++- Apagar caderno ou nota pede confirmação antes do `mutate`. Cancelar não chama o service.
+ - Filtro "só favoritos" na URL (`favoritos=1`). Página e busca das notas na URL (`page`, `q`). Mudar a busca volta para a página 1.
+ - `page` ausente ou inválido mostra a página 1. Página além do fim mostra a última que ainda tem nota.
+ - Apagar a última nota da página atual, se ela for maior que 1, volta para a página anterior.
+@@ -74,7 +81,7 @@ para o fellow preencher isto à mão.
+ 
+ 1. Página → hook → service.
+ 2. Query key no factory, na forma da ficha. Path em `consts/routes.ts`.
+-3. Service `async`, sem React, com `throw`. Dono via `getUser()`.
++3. Service `async`, sem React, com `throw`. Dono via `currentUserId()`. O insert manda `user_id`.
+ 4. `isPending`, `isError` com ação, empty na lista.
+ 5. Sem `any` desnecessário.
+ 6. Diff dentro do plano aceito. Sem coluna nova e sem reescrever o schema.
+diff --git a/docs/tasks.md b/docs/tasks.md
+new file mode 100644
+index 0000000..55249b7
+--- /dev/null
++++ b/docs/tasks.md
+@@ -0,0 +1,150 @@
++# Entrega
++
++Ordem fechada. A primeira tarefa é sua: conectar o Supabase. As seguintes são uma branch cada, a partir da `main` atualizada, e só começam quando a anterior já está na `main`.
++
++O comportamento de cada tela está em `docs/ficha-tecnica.md`. A régua está em `docs/qualidade.md`. O plano aceito está em `docs/plans/caderno.md`. Este arquivo só diz a ordem e o que fecha cada passo.
++
++Não reescreva `supabase/schema.sql`, `profiles` nem o trigger de signup. Não junte duas tarefas no mesmo PR.
++
++## 1. Conectar o Supabase
++
++Esta tarefa não vira commit. O `.env` fica na sua máquina.
++
++1. Crie uma conta e um projeto gratuito em [supabase.com](https://supabase.com).
++2. Em Authentication → Providers → Email, desligue **Confirm email**.
++3. Em Project Settings → API, copie a URL do projeto e a chave **anon**.
++4. Na raiz do repositório:
++
++```bash
++cp .env.example .env
++```
++
++Preencha `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`. A chave `service_role` não entra nesse arquivo.
++
++5. No SQL Editor, cole e rode `supabase/schema.sql`.
++6. Suba o app:
++
++```bash
++npm install
++npm run dev
++```
++
++7. Abra [http://localhost:5173/login](http://localhost:5173/login), crie uma conta e entre.
++
++Pronto quando:
++
++- A home de cadernos abre vazia.
++- Em Ajustes, um nome só com espaços não salva. Com nome preenchido, o botão mostra "Salvando…" e, depois do refresh, nome e tema continuam.
++- No Table Editor existem `profiles`, `notebooks`, `notes` e `tasks`, e a sua linha está em `profiles`.
++- `git status` não lista `.env`.
++
++## 2. Cadernos: lista, criar e favoritar
++
++Peça: "Liga a lista de cadernos, com criar, favoritar, filtro de favoritos e a quantidade de notas."
++
++Branch: `<usuario>/feat/notebooks-list`.
++
++Arquivos desta fatia:
++
++- `src/types/notebook.ts`
++- `src/services/notebooks.service.ts`
++- `queryKeys.notebooks.list(favoritesOnly)` em `src/lib/queryKeys.ts`
++- `useGetNotebooks`, `useCreateNotebook`, `useToggleNotebookFavorite`
++- `NotebooksPage`
++
++O GET pede `notes(count)` na mesma query. O insert manda `user_id` vindo de `currentUserId()` em `src/services/current-user.ts`. Título passa por `trim`; vazio não grava. A lista ordena do atualizado mais recente para o mais antigo. `useGetNotebooks` usa `enabled` com a sessão, como o perfil. A mutation chama `reset()` antes do `mutate` e invalida o prefixo `['notebooks']`.
++
++Pronto quando:
++
++- Criar um caderno grava e o card aparece com quantidade 0.
++- Favoritar e desfavoritar sobrevivem ao refresh.
++- `?favoritos=1` mostra só os favoritos e continua depois do refresh.
++- Lista vazia e filtro sem resultado têm textos diferentes.
++- Carregando, erro com "Tentar de novo" e `npm run check` limpo.
++- O PR marca só esta parte do roteiro.
++
++## 3. Cadernos: renomear e apagar
++
++Peça: "Renomeia e apaga caderno, com confirmação."
++
++Branch: `<usuario>/feat/notebooks-edit`.
++
++Arquivos: `useUpdateNotebook`, `useDeleteNotebook`, e o uso deles em `NotebooksPage`.
++
++Pronto quando:
++
++- Renomear grava o título sem espaços nas pontas e recusa título vazio.
++- Apagar pede confirmação. Cancelar não chama o service.
++- Apagar tira o card da lista. A invalidação continua no prefixo `['notebooks']`.
++- `npm run check` limpo.
++
++## 4. Notas do caderno
++
++Peça: "Liga as notas do caderno, paginadas, com busca, favorito, editar e apagar."
++
++Branch: `<usuario>/feat/notes-list`.
++
++Arquivos desta fatia:
++
++- `src/types/note.ts`
++- `src/services/notes.service.ts`
++- `queryKeys.notes.byNotebook(notebookId, page, query)` e `queryKeys.notes.byId(id)`
++- `useGetNotes`, `useCreateNote`, `useUpdateNote`, `useDeleteNote`, `useToggleNoteFavorite`
++- `NotebookNotesPage`
++
++O GET pede `count: 'exact'`, ordena `updated_at` descendente e usa `range` com `pageSize`. A busca é `ilike` no título, só quando o texto, sem espaços nas pontas, não é vazio. O insert manda `user_id` de `currentUserId()`. `useGetNotes` usa `enabled: Boolean(notebookId)`.
++
++Criar ou apagar nota invalida `['notes', { notebookId }]` e também `['notebooks']`, porque a quantidade do card muda. Favoritar nota invalida as notas daquele caderno e `queryKeys.notes.byId(id)`. Favoritar nota não invalida cadernos.
++
++Pronto quando:
++
++- Seis notas aparecem em duas páginas, 5 e 1. A página 2 continua depois do refresh (`?page=2`).
++- Buscar um título volta para a página 1 dos resultados (`?q=`).
++- `page` ausente ou inválido mostra a página 1. Página além do fim mostra a última que ainda tem nota.
++- Apagar a última nota de uma página maior que 1 volta para a página anterior, com confirmação.
++- Caderno sem nota e busca sem resultado têm textos diferentes.
++- Caderno que não existe ou não é da conta mostra mensagem e volta para `/`.
++- O card do caderno passa a contar as notas.
++- `npm run check` limpo.
++
++## 5. Nota aberta e tarefas
++
++Peça: "Liga a nota aberta e as tarefas: editar o texto, favoritar, apagar a nota, criar tarefa e marcar como feita."
++
++Branch: `<usuario>/feat/note-tasks`.
++
++Arquivos desta fatia:
++
++- `src/types/task.ts`
++- `src/services/tasks.service.ts`
++- `queryKeys.tasks.byNote(noteId)`
++- `useGetNote`, `useGetTasks`, `useCreateTask`, `useToggleTask`
++- `NotePage`, reusando os hooks de editar, apagar e favoritar nota
++
++O GET de tarefas ordena `created_at` ascendente: `order('created_at', { ascending: true })`. O insert manda `user_id` de `currentUserId()`. `useGetNote` usa `enabled: Boolean(notebookId)` e o id da nota. `useGetTasks` usa `enabled: Boolean(noteId)`. Criar ou marcar tarefa invalida `queryKeys.tasks.byNote(noteId)`. Não há editar nem apagar o título de uma tarefa.
++
++Pronto quando:
++
++- Editar título e texto sobrevive ao refresh. Título vazio, depois do trim, não grava.
++- Favoritar a nota atualiza a nota e a lista do caderno, e a quantidade do card não muda.
++- Apagar a nota pede confirmação, volta para a lista do caderno e leva as tarefas junto.
++- Criar duas tarefas e marcar uma como feita sobrevive ao refresh, na ordem em que foram criadas.
++- Nota que não existe, não é da conta, ou não pertence àquele caderno mostra mensagem e volta para a lista do caderno.
++- `npm run check` limpo.
++
++## 6. Fechar a entrega
++
++Com as quatro fatias na `main`, percorra o roteiro de `docs/ficha-tecnica.md` numa conta só e depois numa segunda conta.
++
++Pronto quando todos estes pontos são verdadeiros:
++
++- Criar conta, entrar e ver cadernos vazios.
++- Favoritar um caderno, ligar "só favoritos" e ver o filtro depois do refresh.
++- Seis notas em duas páginas; a página 2 continua depois do refresh.
++- A busca abre na página 1 dos resultados.
++- Duas tarefas, uma marcada como feita, continuam depois do refresh.
++- Apagar a nota remove as tarefas. Apagar o caderno remove as notas.
++- As linhas aparecem no Table Editor.
++- A outra conta vê a lista de cadernos vazia.
++- O tema de Ajustes continua depois do refresh.
++- Você explica, em voz alta, o caminho de favoritar uma nota: quais query keys são invalidadas e por que a outra conta não vê essa linha.
+diff --git a/docs/usando-a-ia.md b/docs/usando-a-ia.md
+index 9eb7bec..f2d063f 100644
+--- a/docs/usando-a-ia.md
++++ b/docs/usando-a-ia.md
+@@ -9,13 +9,18 @@ não preenche rubrica à mão.
+ 
+ ## Pedidos que funcionam
+ 
++A ordem está em [tasks.md](./tasks.md). Uma frase pede uma tarefa. A primeira
++é sua: conectar o Supabase. A IA não cria o projeto, não vê a chave e não
++commita o `.env`.
++
+ ```txt
+-Liga a lista de cadernos, com favorito e a quantidade de notas.
++Liga a lista de cadernos, com criar, favoritar, filtro de favoritos e a quantidade de notas.
+ ```
+ 
+ O plano do caderno já está aceito em `docs/plans/caderno.md`. A IA implementa
+-service, hook e página. Não reescreve o schema. Uma mudança de coluna, rota
+-ou escopo faz a IA regravar o plano e esperar de novo.
++a fatia pedida: service, hook e página. Não reescreve o schema. Não antecipa
++a tarefa seguinte. Notas e tarefas ficam para o pedido delas. Uma mudança de
++coluna, rota ou escopo faz a IA regravar o plano e esperar de novo.
+ 
+ ```txt
+ O empty state da lista está sem texto.
+diff --git a/src/pages/SettingsPage.tsx b/src/pages/SettingsPage.tsx
+index cc45f40..6ff0890 100644
+--- a/src/pages/SettingsPage.tsx
++++ b/src/pages/SettingsPage.tsx
+@@ -1,4 +1,4 @@
+-import { FormEvent, useEffect, useState } from 'react';
++import { FormEvent, useState } from 'react';
+ import { useGetProfile, useUpdateProfile } from '@/hooks';
+ import type { Theme } from '@/types';
+ import { ErrorState } from '@/components/ui/ErrorState';
+@@ -7,18 +7,18 @@ import { Spinner } from '@/components/ui/Spinner';
+ export function SettingsPage() {
+   const profile = useGetProfile();
+   const update = useUpdateProfile();
+-  const [name, setName] = useState('');
+-  const [theme, setTheme] = useState<Theme>('light');
+-
+-  useEffect(() => {
+-    if (!profile.data) return;
+-    setName(profile.data.name);
+-    setTheme(profile.data.theme);
+-  }, [profile.data]);
++  const [name, setName] = useState<string | null>(null);
++  const [theme, setTheme] = useState<Theme | null>(null);
++  const shownName = name ?? profile.data?.name ?? '';
++  const shownTheme = theme ?? profile.data?.theme ?? 'light';
+ 
+   function onSubmit(event: FormEvent) {
+     event.preventDefault();
+-    update.mutate({ name, theme });
++    const nextName = shownName.trim();
++    if (!nextName) return;
++    setName(nextName);
++    update.reset();
++    update.mutate({ name: nextName, theme: shownTheme });
+   }
+ 
+   if (profile.isPending) return <Spinner label="Carregando perfil…" />;
+@@ -33,15 +33,16 @@ export function SettingsPage() {
+         <label className="block text-sm">
+           Nome
+           <input
+-            value={name}
++            value={shownName}
+             onChange={(event) => setName(event.target.value)}
+             className="mt-1 w-full rounded-md border border-stone-300 bg-white px-3 py-2 dark:border-stone-700 dark:bg-stone-900"
+           />
++          {shownName.trim() === '' && <span className="mt-1 block text-red-700">Informe o nome.</span>}
+         </label>
+         <label className="block text-sm">
+           Tema
+           <select
+-            value={theme}
++            value={shownTheme}
+             onChange={(event) => setTheme(event.target.value as Theme)}
+             className="mt-1 w-full rounded-md border border-stone-300 bg-white px-3 py-2 dark:border-stone-700 dark:bg-stone-900"
+           >
+@@ -53,10 +54,10 @@ export function SettingsPage() {
+         {update.isSuccess && <p className="text-sm text-emerald-700">Salvo.</p>}
+         <button
+           type="submit"
+-          disabled={update.isPending}
++          disabled={update.isPending || shownName.trim() === ''}
+           className="rounded-md bg-stone-900 px-3 py-2 text-sm text-white disabled:opacity-60 dark:bg-stone-100 dark:text-stone-900"
+         >
+-          Salvar
++          {update.isPending ? 'Salvando…' : 'Salvar'}
+         </button>
+       </form>
+     </section>
+diff --git a/src/services/current-user.ts b/src/services/current-user.ts
+new file mode 100644
+index 0000000..dcf2e55
+--- /dev/null
++++ b/src/services/current-user.ts
+@@ -0,0 +1,14 @@
++import { getSupabase } from '@/lib/supabase';
++
++// Um só lugar. Os services de caderno, nota e tarefa importam daqui
++// e mandam user_id no insert. A página não envia esse id.
++export async function currentUserId(): Promise<string> {
++  const { data, error } = await getSupabase().auth.getUser();
++  if (error) {
++    throw new Error(error.message);
++  }
++  if (!data.user) {
++    throw new Error('Sessão ausente.');
++  }
++  return data.user.id;
++}
+diff --git a/src/services/profile.service.ts b/src/services/profile.service.ts
+index b75e6ae..5936cce 100644
+--- a/src/services/profile.service.ts
++++ b/src/services/profile.service.ts
+@@ -1,5 +1,6 @@
+ import { getSupabase } from '@/lib/supabase';
+ import type { Profile, Theme } from '@/types';
++import { currentUserId } from './current-user';
+ 
+ type ProfileRow = {
+   id: string;
+@@ -18,17 +19,6 @@ export function toProfile(row: ProfileRow): Profile {
+   };
+ }
+ 
+-async function currentUserId(): Promise<string> {
+-  const { data, error } = await getSupabase().auth.getUser();
+-  if (error) {
+-    throw new Error(error.message);
+-  }
+-  if (!data.user) {
+-    throw new Error('Sessão ausente.');
+-  }
+-  return data.user.id;
+-}
+-
+ export async function getProfile(): Promise<Profile> {
+   const userId = await currentUserId();
+   const { data, error } = await getSupabase()
+@@ -47,10 +37,14 @@ export async function getProfile(): Promise<Profile> {
+ }
+ 
+ export async function updateProfile(input: { name: string; theme: Theme }): Promise<Profile> {
++  const name = input.name.trim();
++  if (!name) {
++    throw new Error('Informe o nome.');
++  }
+   const userId = await currentUserId();
+   const { data, error } = await getSupabase()
+     .from('profiles')
+-    .update({ name: input.name, theme: input.theme })
++    .update({ name, theme: input.theme })
+     .eq('id', userId)
+     .select('id, name, theme')
+     .single();
