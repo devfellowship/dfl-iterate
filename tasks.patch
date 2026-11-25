@@ -1,0 +1,478 @@
+diff --git a/.cursor/skills/debug/SKILL.md b/.cursor/skills/debug/SKILL.md
+index e5d5d79..c6663b8 100644
+--- a/.cursor/skills/debug/SKILL.md
++++ b/.cursor/skills/debug/SKILL.md
+@@ -15,7 +15,7 @@ description: >-
+ 
+ ## Neste repositório
+ 
+-O check é `npm run check`. Erro de policy do Supabase se investiga no SQL e no `user_id` gravado pelo service. Não reescreva `supabase/schema.sql` para contornar o erro do caderno.
++O check é `npm run check`. Erro de policy do Supabase se investiga no SQL e no `user_id` gravado pelo service. Não reescreva `supabase/schema.sql` para contornar o erro do caderno. A correção fica na tarefa atual de `docs/tasks.md`. Não implemente a tarefa seguinte para destravar o erro.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/git-flow/SKILL.md b/.cursor/skills/git-flow/SKILL.md
+index abb65a9..9f7b722 100644
+--- a/.cursor/skills/git-flow/SKILL.md
++++ b/.cursor/skills/git-flow/SKILL.md
+@@ -18,7 +18,7 @@ Abra a branch e pare. Não edite produto nesta skill.
+ 
+ ## Neste repositório
+ 
+-Uma branch é uma tarefa de `docs/tasks.md`. Exemplo: `ana/feat/notebooks-list`. Não abra uma branch que implemente cadernos, notas e tarefas juntos.
++Uma branch é uma tarefa de `docs/tasks.md`. Exemplo: `ana/feat/notebooks-list`. A branch sai da `main` do repositório do aluno, depois que a tarefa anterior já está nessa `main`. O pull request abre nesse mesmo repositório. Se o destino sugerido for `Alexandremma/dfl-journal`, troque para o repositório do aluno. Os arquivos permitidos estão em "Nesta branch"; os de "Fora desta branch" não entram.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/handoff/SKILL.md b/.cursor/skills/handoff/SKILL.md
+index aaa1913..d099aed 100644
+--- a/.cursor/skills/handoff/SKILL.md
++++ b/.cursor/skills/handoff/SKILL.md
+@@ -36,7 +36,7 @@ Faz só o próximo passo.
+ 
+ ## Neste repositório
+ 
+-O plano do diário é `docs/plans/caderno.md`, aceito. A fatia atual sai de `docs/tasks.md`. Exemplo de objetivo: "lista de cadernos com criar, favoritar e a quantidade de notas". Exemplo de próximo passo: "criar o service de cadernos imitando o perfil".
++O plano do diário é `docs/plans/caderno.md`, aceito. A fatia atual sai de `docs/tasks.md`. O próximo passo é o próximo item de "Passos" dessa tarefa, ou a tarefa seguinte se a atual já está na `main` do aluno. Exemplo de objetivo: "lista de cadernos com criar, favoritar e a quantidade de notas". Exemplo de próximo passo: "criar o service de cadernos imitando o perfil".
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/new-mutation-hook/SKILL.md b/.cursor/skills/new-mutation-hook/SKILL.md
+index e1a315f..897b80d 100644
+--- a/.cursor/skills/new-mutation-hook/SKILL.md
++++ b/.cursor/skills/new-mutation-hook/SKILL.md
+@@ -22,7 +22,7 @@ Não altere a página nesta skill. `reset()` antes do `mutate` fica em `wire-pag
+ 
+ ## Neste repositório
+ 
+-O ouro é `useUpdateProfile`. A lista do que cada mutation invalida está na seção Cache de `docs/ficha-tecnica.md`. Os nomes dos hooks estão em `docs/plans/caderno.md`. A fatia desta branch está em `docs/tasks.md`.
++O ouro é `useUpdateProfile`. A lista do que cada mutation invalida está na seção Cache de `docs/ficha-tecnica.md`. Os nomes dos hooks estão em `docs/plans/caderno.md`. Crie só as mutations da tarefa atual em `docs/tasks.md`, com a invalidação descrita nos "Passos" dessa tarefa.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/new-query-hook/SKILL.md b/.cursor/skills/new-query-hook/SKILL.md
+index bc01934..83728e1 100644
+--- a/.cursor/skills/new-query-hook/SKILL.md
++++ b/.cursor/skills/new-query-hook/SKILL.md
+@@ -27,6 +27,7 @@ O hook ouro é `useGetProfile`. As keys e o `enabled` de cada leitura estão na
+ - `useGetNotebooks` usa a sessão
+ - `useGetNotes` e `useGetNote` usam `enabled: Boolean(notebookId)`; `useGetNote` também exige o id da nota
+ - `useGetTasks` usa `enabled: Boolean(noteId)`
++- Crie só as keys e os hooks de leitura da tarefa atual em `docs/tasks.md`.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/new-service/SKILL.md b/.cursor/skills/new-service/SKILL.md
+index c9f4bdb..38ddf56 100644
+--- a/.cursor/skills/new-service/SKILL.md
++++ b/.cursor/skills/new-service/SKILL.md
+@@ -30,7 +30,8 @@ Não crie hook, página nem query key nesta skill. A key entra em `new-query-hoo
+ 
+ - Plano aceito: `docs/plans/caderno.md`. Não edite `supabase/schema.sql`.
+ - Ouro: `src/services/profile.service.ts` e `src/services/current-user.ts`. O insert manda `user_id`.
+-- Contagem de notas, `range`, `ilike` e a ordem de `created_at` estão na seção Service de `docs/qualidade.md`. A fatia desta branch está em `docs/tasks.md`.
++- Contagem de notas, `range`, `ilike` e a ordem de `created_at` estão na seção Service de `docs/qualidade.md`.
++- Implemente só as funções do item "Passos" da tarefa atual em `docs/tasks.md`. Função de "Fora desta branch" não entra neste arquivo.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/open-pr/SKILL.md b/.cursor/skills/open-pr/SKILL.md
+index be9d8a3..22c8e6a 100644
+--- a/.cursor/skills/open-pr/SKILL.md
++++ b/.cursor/skills/open-pr/SKILL.md
+@@ -17,7 +17,7 @@ description: >-
+ 
+ ## Neste repositório
+ 
+-O template é `.github/PULL_REQUEST_TEMPLATE.md`. O check é `npm run check`. Exemplo de título: `feat(notebooks): add list query and service`. O roteiro de verificação está em `docs/ficha-tecnica.md`; marque só a fatia desta branch, descrita em `docs/tasks.md`.
++O template é `.github/PULL_REQUEST_TEMPLATE.md`. O check é `npm run check`. Exemplo de título: `feat(notebooks): add list query and service`. O pull request abre no repositório do aluno, com base na `main` dele. O diff contém os arquivos de "Nesta branch" em `docs/tasks.md`. Em How to verify, marque os itens de "Conferir" dessa tarefa.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/plan-feature/SKILL.md b/.cursor/skills/plan-feature/SKILL.md
+index 9b58f63..3435e61 100644
+--- a/.cursor/skills/plan-feature/SKILL.md
++++ b/.cursor/skills/plan-feature/SKILL.md
+@@ -20,7 +20,7 @@ Correção dentro de um plano já aceito não usa esta skill.
+ 
+ ## Neste repositório
+ 
+-`notebooks`, `notes` e `tasks` já estão aceitos em `docs/plans/caderno.md`. Pedido de lista, nota, tarefa, favorito ou paginação segue `new-service`, `new-query-hook`, `new-mutation-hook` ou `wire-page`. Não reescreva `supabase/schema.sql`. O formato para copiar está em `docs/plans/profile.md`.
++`notebooks`, `notes` e `tasks` já estão aceitos em `docs/plans/caderno.md`. Um pedido que já é uma tarefa de `docs/tasks.md` não abre plano novo: siga os "Passos" dessa tarefa. Não reescreva `supabase/schema.sql`. O formato para copiar está em `docs/plans/profile.md`.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/review-diff/SKILL.md b/.cursor/skills/review-diff/SKILL.md
+index cbf5c6a..ca0d4cc 100644
+--- a/.cursor/skills/review-diff/SKILL.md
++++ b/.cursor/skills/review-diff/SKILL.md
+@@ -30,7 +30,7 @@ Ajuste antes do merge é só item da lista que falhou. Sugestão é o resto.
+ 
+ ## Neste repositório
+ 
+-O check é `npm run check`. A régua que os oito itens conferem está em `docs/qualidade.md`. Não aproveite a revisão para puxar a próxima tarefa de `docs/tasks.md`.
++O check é `npm run check`. A régua que os oito itens conferem está em `docs/qualidade.md`. Compare o diff com "Nesta branch" e "Fora desta branch" da tarefa atual em `docs/tasks.md`. Arquivo da tarefa seguinte é ajuste antes do merge.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/schema-rls/SKILL.md b/.cursor/skills/schema-rls/SKILL.md
+index 63f84bb..4745c5d 100644
+--- a/.cursor/skills/schema-rls/SKILL.md
++++ b/.cursor/skills/schema-rls/SKILL.md
+@@ -24,7 +24,7 @@ Quem for usar o projeto cola o arquivo no SQL Editor. O commit leva o SQL.
+ 
+ ## Neste repositório
+ 
+-`notebooks`, `notes`, `tasks` e `profiles` já estão em `supabase/schema.sql`, com RLS, cascade e a trigger de `updated_at`. Não edite esse arquivo para o caderno. Não crie outra migration. Não altere `profiles` nem o trigger em `auth.users`. O aluno cola o arquivo no SQL Editor do projeto dele.
++`notebooks`, `notes`, `tasks` e `profiles` já estão em `supabase/schema.sql`, com RLS, cascade e a trigger de `updated_at`. Não edite esse arquivo para o caderno. Não crie outra migration. Não altere `profiles` nem o trigger em `auth.users`. A tarefa 1 de `docs/tasks.md` cola o arquivo no SQL Editor e não faz commit desse SQL.
+ 
+ ## Qualidade
+ 
+diff --git a/.cursor/skills/wire-page/SKILL.md b/.cursor/skills/wire-page/SKILL.md
+index 5715986..2ce9563 100644
+--- a/.cursor/skills/wire-page/SKILL.md
++++ b/.cursor/skills/wire-page/SKILL.md
+@@ -29,7 +29,7 @@ Não busque dado novo aqui. Se falta um GET ou uma mutation, pare e use a skill
+ - Página ouro: `SettingsPage`. Componentes em `src/components/ui`. Rotas em `src/consts/routes.ts`. Tamanho da página em `src/consts/pagination.ts`.
+ - O botão de espera mostra "Salvando…".
+ - Filtro `favoritos=1` na home. `page` e `q` nas notas. Confirmação ao apagar caderno ou nota.
+-- A fatia desta branch está em `docs/tasks.md`.
++- Ligue só a página da tarefa atual em `docs/tasks.md`. Botão, filtro ou formulário de "Fora desta branch" não entra.
+ 
+ ## Qualidade
+ 
+diff --git a/.github/PULL_REQUEST_TEMPLATE.md b/.github/PULL_REQUEST_TEMPLATE.md
+index d109846..6385256 100644
+--- a/.github/PULL_REQUEST_TEMPLATE.md
++++ b/.github/PULL_REQUEST_TEMPLATE.md
+@@ -6,7 +6,7 @@
+ 
+ ## How to verify
+ 
+-Marque só o que esta mudança cobre. O roteiro inteiro está em `docs/ficha-tecnica.md`.
++Marque os itens de "Conferir" da tarefa em `docs/tasks.md`. Deixe desmarcado o que é de outra tarefa. O roteiro inteiro está em `docs/ficha-tecnica.md`.
+ 
+ - [ ] Criar conta e entrar
+ - [ ] Favoritar um caderno, ligar "só favoritos" e ver o filtro depois do refresh
+diff --git a/AGENTS.md b/AGENTS.md
+index a187e31..33f0e5e 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -47,11 +47,11 @@ anexos, tags, editor rico. A paginação da prova é numerada, com `pageSize` em
+ 
+ Você opera o git.
+ 
+-1. `git pull` na `main` e abra `<usuario>/<tipo>/<descricao-curta>`. Tipos: `feat`, `fix`, `chore`, `refactor`, `docs`. Exemplo: `ana/feat/notebooks-list`.
+-2. Uma branch, um objetivo. Commits no Conventional Commits, imperativo, sem ponto final: `feat(notebooks): add list query and service`.
+-3. Vários commits na mesma branch cabem (schema, service, página).
+-4. Antes do PR, traga a `main` para a branch se ela tiver ficado para trás.
+-5. A `main` não recebe commit direto nem force push.
++1. `git pull` na `main` do repositório do aluno e abra `<usuario>/<tipo>/<descricao-curta>`. Tipos: `feat`, `fix`, `chore`, `refactor`, `docs`. Exemplo: `ana/feat/notebooks-list`.
++2. Uma branch, uma tarefa de `docs/tasks.md`. Commits no Conventional Commits, imperativo, sem ponto final: `feat(notebooks): add list query and service`.
++3. Vários commits na mesma branch cabem (service, hook, página). O diff fica nos arquivos de "Nesta branch".
++4. Antes do PR, traga a `main` do aluno para a branch se ela tiver ficado para trás.
++5. A `main` não recebe commit direto nem force push. O pull request abre no repositório do aluno. `Alexandremma/dfl-journal` não é o destino.
+ 
+ O prefixo `<usuario>` é o que já aparece nas branches desse clone. Se ainda
+ não houver nenhuma, pergunte o prefixo uma vez e reutilize.
+@@ -61,7 +61,7 @@ não houver nenhuma, pergunte o prefixo uma vez e reutilize.
+ Entidade ou tabela nova, fora do caderno: grave `docs/plans/<slug>.md` (tabela, colunas, rotas,
+ arquivos, query keys, mutations, fora de escopo) e pare. Implemente só depois
+ de um aceite explícito do fellow: "aceito", "pode executar" ou "ok, executa".
+-`notebooks`, `notes` e `tasks` já estão aceitos em `docs/plans/caderno.md`. Não abra outro plano para eles. Implemente uma tarefa de `docs/tasks.md` por branch. Não antecipe a fatia seguinte.
++`notebooks`, `notes` e `tasks` já estão aceitos em `docs/plans/caderno.md`. Não abra outro plano para eles. Implemente uma tarefa de `docs/tasks.md` por branch, só os "Passos" dela. Não antecipe o que está em "Fora desta branch".
+ 
+ Se ele mudar o plano, regrave o arquivo e espere de novo. Correção dentro do
+ que já foi aceito segue direto, sem plano novo.
+diff --git a/README.md b/README.md
+index 2afa3ff..de50b39 100644
+--- a/README.md
++++ b/README.md
+@@ -44,4 +44,4 @@ A chave `service_role` não entra no `.env` do Vite.
+ 
+ ## Para a turma
+ 
+-A ordem da entrega está em `docs/tasks.md`. A primeira tarefa é conectar o seu projeto no Supabase. O resto segue uma fatia por branch. A régua está em `docs/qualidade.md`. O uso da IA está em `docs/usando-a-ia.md`. A entrega está pronta quando o roteiro da ficha passa, inclusive explicar o que acontece ao favoritar uma nota.
++A ordem da entrega está em `docs/tasks.md`. Faça um fork, clone o seu fork e abra os pull requests nele. A primeira tarefa é conectar o seu projeto no Supabase. O resto segue uma fatia por branch: cada tarefa lista os arquivos, os passos e o que conferir. A régua está em `docs/qualidade.md`. O uso da IA está em `docs/usando-a-ia.md`. A entrega está pronta quando o roteiro da ficha passa, inclusive explicar o que acontece ao favoritar uma nota.
+diff --git a/docs/plans/caderno.md b/docs/plans/caderno.md
+index 65c1539..31b5de1 100644
+--- a/docs/plans/caderno.md
++++ b/docs/plans/caderno.md
+@@ -2,7 +2,7 @@
+ 
+ Escopo aceito. O produto está em `docs/ficha-tecnica.md`. O schema de `notebooks`, `notes` e `tasks` já está em `supabase/schema.sql`. Não reescreva essas tabelas, nem `profiles`, nem o trigger de signup.
+ 
+-A entrega do aluno é type, service, hook e página. As três telas já existem em casca. A ordem das fatias está em `docs/tasks.md`: uma branch por tarefa, sem juntar cadernos, notas e tarefas no mesmo PR.
++A entrega do aluno é type, service, hook e página. As três telas já existem em casca. A ordem das fatias está em `docs/tasks.md`: uma branch por tarefa, com os arquivos em "Nesta branch" e o que fica de fora em "Fora desta branch". Não junte cadernos, notas e tarefas no mesmo PR.
+ 
+ ## Tabelas
+ 
+diff --git a/docs/qualidade.md b/docs/qualidade.md
+index 6ce1245..6a56c7a 100644
+--- a/docs/qualidade.md
++++ b/docs/qualidade.md
+@@ -98,6 +98,8 @@ para o fellow preencher isto à mão.
+ 
+ - `git pull` na `main` antes de abrir `<usuario>/<tipo>/<descricao-curta>`.
+ - Uma branch, um objetivo. Commit Conventional Commits.
++- O pull request abre no repositório do aluno. A base é a `main` dele.
++- O diff contém os arquivos de "Nesta branch" da tarefa em `docs/tasks.md`.
+ - `main` sem commit direto e sem force push.
+ - `.env` não entra no stage.
+ 
+diff --git a/docs/tasks.md b/docs/tasks.md
+index 55249b7..f8381b8 100644
+--- a/docs/tasks.md
++++ b/docs/tasks.md
+@@ -1,19 +1,23 @@
+ # Entrega
+ 
+-Ordem fechada. A primeira tarefa é sua: conectar o Supabase. As seguintes são uma branch cada, a partir da `main` atualizada, e só começam quando a anterior já está na `main`.
++Ordem fechada. A primeira tarefa é sua: ter o seu repositório e conectar o Supabase. As seguintes são uma branch cada, a partir da sua `main` atualizada, e só começam quando a anterior já está nessa `main`.
+ 
+-O comportamento de cada tela está em `docs/ficha-tecnica.md`. A régua está em `docs/qualidade.md`. O plano aceito está em `docs/plans/caderno.md`. Este arquivo só diz a ordem e o que fecha cada passo.
++O repositório da turma, `Alexandremma/dfl-journal`, é o ponto de partida. O fork, os commits e os pull requests ficam no seu GitHub. A base do pull request é a sua `main`. Se o GitHub sugerir `Alexandremma/dfl-journal` como destino, troque para o seu repositório.
+ 
+-Não reescreva `supabase/schema.sql`, `profiles` nem o trigger de signup. Não junte duas tarefas no mesmo PR.
++O comportamento de cada tela está em `docs/ficha-tecnica.md`. A régua está em `docs/qualidade.md`. O plano aceito está em `docs/plans/caderno.md`. Este arquivo diz a ordem, os arquivos da branch e o que fecha cada passo.
+ 
+-## 1. Conectar o Supabase
++Não reescreva `supabase/schema.sql`, `profiles` nem o trigger de signup. Não junte duas tarefas no mesmo pull request. O diff mostra os arquivos de "Nesta branch" e não mostra os de "Fora desta branch".
+ 
+-Esta tarefa não vira commit. O `.env` fica na sua máquina.
++## 1. O seu repositório e o Supabase
+ 
+-1. Crie uma conta e um projeto gratuito em [supabase.com](https://supabase.com).
+-2. Em Authentication → Providers → Email, desligue **Confirm email**.
+-3. Em Project Settings → API, copie a URL do projeto e a chave **anon**.
+-4. Na raiz do repositório:
++Esta tarefa não vira commit de código. O `.env` fica na sua máquina.
++
++1. Abra [github.com/Alexandremma/dfl-journal](https://github.com/Alexandremma/dfl-journal) e faça um fork para a sua conta.
++2. Clone o seu fork. Os próximos pull requests abrem nele.
++3. Crie uma conta e um projeto gratuito em [supabase.com](https://supabase.com).
++4. Em Authentication → Providers → Email, desligue **Confirm email**.
++5. Em Project Settings → API, copie a URL do projeto e a chave **anon**.
++6. Na raiz do repositório:
+ 
+ ```bash
+ cp .env.example .env
+@@ -21,15 +25,15 @@ cp .env.example .env
+ 
+ Preencha `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`. A chave `service_role` não entra nesse arquivo.
+ 
+-5. No SQL Editor, cole e rode `supabase/schema.sql`.
+-6. Suba o app:
++7. No SQL Editor, cole e rode `supabase/schema.sql`.
++8. Suba o app:
+ 
+ ```bash
+ npm install
+ npm run dev
+ ```
+ 
+-7. Abra [http://localhost:5173/login](http://localhost:5173/login), crie uma conta e entre.
++9. Abra [http://localhost:5173/login](http://localhost:5173/login), crie uma conta e entre.
+ 
+ Pronto quando:
+ 
+@@ -37,66 +41,101 @@ Pronto quando:
+ - Em Ajustes, um nome só com espaços não salva. Com nome preenchido, o botão mostra "Salvando…" e, depois do refresh, nome e tema continuam.
+ - No Table Editor existem `profiles`, `notebooks`, `notes` e `tasks`, e a sua linha está em `profiles`.
+ - `git status` não lista `.env`.
++- O remote que recebe o push é o seu fork.
+ 
+ ## 2. Cadernos: lista, criar e favoritar
+ 
+ Peça: "Liga a lista de cadernos, com criar, favoritar, filtro de favoritos e a quantidade de notas."
+ 
+-Branch: `<usuario>/feat/notebooks-list`.
++Branch: `<usuario>/feat/notebooks-list`, a partir da sua `main`.
+ 
+-Arquivos desta fatia:
++### Nesta branch
+ 
+ - `src/types/notebook.ts`
+-- `src/services/notebooks.service.ts`
+-- `queryKeys.notebooks.list(favoritesOnly)` em `src/lib/queryKeys.ts`
+-- `useGetNotebooks`, `useCreateNotebook`, `useToggleNotebookFavorite`
++- `src/services/notebooks.service.ts`, exportado em `src/services/index.ts`
++- `queryKeys.notebooks` em `src/lib/queryKeys.ts`
++- `useGetNotebooks`, `useCreateNotebook`, `useToggleNotebookFavorite`, exportados em `src/hooks/index.ts`
+ - `NotebooksPage`
+ 
+-O GET pede `notes(count)` na mesma query. O insert manda `user_id` vindo de `currentUserId()` em `src/services/current-user.ts`. Título passa por `trim`; vazio não grava. A lista ordena do atualizado mais recente para o mais antigo. `useGetNotebooks` usa `enabled` com a sessão, como o perfil. A mutation chama `reset()` antes do `mutate` e invalida o prefixo `['notebooks']`.
++### Fora desta branch
+ 
+-Pronto quando:
++Renomear, apagar, nota e tarefa. Nenhum arquivo em `src/types/note.ts`, `src/types/task.ts`, `src/services/notes.service.ts` ou `src/services/tasks.service.ts`.
++
++### Passos
++
++1. O tipo `Notebook` leva `id`, `title`, `isFavorite`, `notesCount`, `createdAt` e `updatedAt`.
++2. No service, `getNotebooks`, `createNotebook` e `setNotebookFavorite`. O GET pede as colunas pelo nome e `notes(count)` na mesma query, ordena `updated_at` descendente e filtra `is_favorite` quando a tela pede só favoritos. O insert manda `user_id` de `currentUserId()`. O título passa por `trim`; vazio vira `throw`. O service não envia `updated_at`. Erro do Supabase vira `throw new Error(...)`.
++3. A key é `queryKeys.notebooks.list(favoritesOnly)`, no formato `['notebooks', { favoritesOnly }]`.
++4. `useGetNotebooks` usa `enabled` com a sessão, como o perfil. Criar e favoritar chamam o service e invalidam o prefixo `['notebooks']`.
++5. A página importa os hooks. Não importa service nem o client. O título vazio deixa o botão desabilitado. `reset()` roda antes do `mutate`. Enquanto `isPending`, o botão mostra "Salvando…" e fica desabilitado. O filtro fica na URL (`?favoritos=1`). Lista vazia e filtro sem resultado têm textos diferentes. Há carregando e erro com "Tentar de novo".
++
++### Conferir
+ 
+ - Criar um caderno grava e o card aparece com quantidade 0.
+ - Favoritar e desfavoritar sobrevivem ao refresh.
+ - `?favoritos=1` mostra só os favoritos e continua depois do refresh.
+ - Lista vazia e filtro sem resultado têm textos diferentes.
+ - Carregando, erro com "Tentar de novo" e `npm run check` limpo.
+-- O PR marca só esta parte do roteiro.
++- O pull request está no seu repositório e marca só esta parte do roteiro.
+ 
+ ## 3. Cadernos: renomear e apagar
+ 
+ Peça: "Renomeia e apaga caderno, com confirmação."
+ 
+-Branch: `<usuario>/feat/notebooks-edit`.
++Branch: `<usuario>/feat/notebooks-edit`, a partir da sua `main`, depois que a tarefa 2 já está nela.
+ 
+-Arquivos: `useUpdateNotebook`, `useDeleteNotebook`, e o uso deles em `NotebooksPage`.
++### Nesta branch
+ 
+-Pronto quando:
++- `updateNotebook` e `deleteNotebook` em `src/services/notebooks.service.ts`
++- `useUpdateNotebook` e `useDeleteNotebook`
++- o uso desses hooks em `NotebooksPage`
++
++### Fora desta branch
++
++Nota, tarefa e qualquer key nova. A invalidação continua no prefixo `['notebooks']`.
++
++### Passos
++
++1. `updateNotebook` faz `trim` no título, recusa título vazio e não envia `updated_at`.
++2. `deleteNotebook` apaga a linha do caderno. As notas saem pelo cascade do schema.
++3. Os dois hooks invalidam o prefixo `['notebooks']`.
++4. Na página, renomear grava o título sem espaços nas pontas. Apagar pede confirmação. Cancelar não chama o service. `reset()` roda antes de cada `mutate`. Enquanto `isPending`, o botão mostra "Salvando…" ou "Apagando…" e fica desabilitado.
++
++### Conferir
+ 
+ - Renomear grava o título sem espaços nas pontas e recusa título vazio.
+ - Apagar pede confirmação. Cancelar não chama o service.
+-- Apagar tira o card da lista. A invalidação continua no prefixo `['notebooks']`.
++- Apagar tira o card da lista.
+ - `npm run check` limpo.
++- O diff não traz arquivo de nota nem de tarefa.
+ 
+ ## 4. Notas do caderno
+ 
+ Peça: "Liga as notas do caderno, paginadas, com busca, favorito, editar e apagar."
+ 
+-Branch: `<usuario>/feat/notes-list`.
++Branch: `<usuario>/feat/notes-list`, a partir da sua `main`, depois que a tarefa 3 já está nela.
+ 
+-Arquivos desta fatia:
++### Nesta branch
+ 
+ - `src/types/note.ts`
+-- `src/services/notes.service.ts`
++- `src/services/notes.service.ts`, exportado no barrel
+ - `queryKeys.notes.byNotebook(notebookId, page, query)` e `queryKeys.notes.byId(id)`
+ - `useGetNotes`, `useCreateNote`, `useUpdateNote`, `useDeleteNote`, `useToggleNoteFavorite`
+ - `NotebookNotesPage`
+ 
+-O GET pede `count: 'exact'`, ordena `updated_at` descendente e usa `range` com `pageSize`. A busca é `ilike` no título, só quando o texto, sem espaços nas pontas, não é vazio. O insert manda `user_id` de `currentUserId()`. `useGetNotes` usa `enabled: Boolean(notebookId)`.
++### Fora desta branch
+ 
+-Criar ou apagar nota invalida `['notes', { notebookId }]` e também `['notebooks']`, porque a quantidade do card muda. Favoritar nota invalida as notas daquele caderno e `queryKeys.notes.byId(id)`. Favoritar nota não invalida cadernos.
++Tarefa. Nenhum arquivo `src/types/task.ts`, `src/services/tasks.service.ts`, `useGetTasks`, `useCreateTask` ou `useToggleTask`. A nota aberta continua casca.
+ 
+-Pronto quando:
++### Passos
++
++1. O tipo `Note` leva `id`, `notebookId`, `title`, `body`, `isFavorite`, `createdAt` e `updatedAt`.
++2. No service: listar, criar, editar, apagar e favoritar. O GET pede `count: 'exact'`, ordena `updated_at` descendente e usa `range` com `pageSize`. A busca é `ilike` no título, só quando o texto, sem espaços nas pontas, não é vazio. O insert manda `notebook_id` e `user_id` de `currentUserId()`. Título passa por `trim`; vazio vira `throw`. O texto da nota pode ir vazio. O service não envia `updated_at`.
++3. As keys seguem a ficha: `['notes', { notebookId, page, query }]` e `['notes', id]`. Sem busca, `query` é `''`. Sem `page` na URL, a página é `1`.
++4. `useGetNotes` usa `enabled: Boolean(notebookId)`. Criar ou apagar invalida `['notes', { notebookId }]` e também `['notebooks']`, porque a quantidade do card muda. Editar invalida as notas daquele caderno e `queryKeys.notes.byId(id)`. Favoritar invalida as notas daquele caderno e `queryKeys.notes.byId(id)`, e não invalida cadernos.
++5. A página lê `page` e `q` da URL. Mudar a busca volta para a página 1. `page` ausente ou inválido mostra a página 1. Página além do fim mostra a última que ainda tem nota. Apagar a última nota de uma página maior que 1 volta para a página anterior, com confirmação. Cancelar não chama o service. Caderno sem nota e busca sem resultado têm textos diferentes. Caderno que não existe ou não é da conta mostra mensagem e volta para `/`. São 5 notas por página, com anterior, próxima e "página 2 de N". Na ponta, o botão sem destino fica desabilitado. `reset()` roda antes do `mutate`. Enquanto `isPending`, o botão mostra "Salvando…" e fica desabilitado.
++
++### Conferir
+ 
+ - Seis notas aparecem em duas páginas, 5 e 1. A página 2 continua depois do refresh (`?page=2`).
+ - Buscar um título volta para a página 1 dos resultados (`?q=`).
+@@ -106,24 +145,35 @@ Pronto quando:
+ - Caderno que não existe ou não é da conta mostra mensagem e volta para `/`.
+ - O card do caderno passa a contar as notas.
+ - `npm run check` limpo.
++- O diff não traz tarefa.
+ 
+ ## 5. Nota aberta e tarefas
+ 
+ Peça: "Liga a nota aberta e as tarefas: editar o texto, favoritar, apagar a nota, criar tarefa e marcar como feita."
+ 
+-Branch: `<usuario>/feat/note-tasks`.
++Branch: `<usuario>/feat/note-tasks`, a partir da sua `main`, depois que a tarefa 4 já está nela.
+ 
+-Arquivos desta fatia:
++### Nesta branch
+ 
+ - `src/types/task.ts`
+-- `src/services/tasks.service.ts`
++- `src/services/tasks.service.ts`, exportado no barrel
+ - `queryKeys.tasks.byNote(noteId)`
+ - `useGetNote`, `useGetTasks`, `useCreateTask`, `useToggleTask`
+-- `NotePage`, reusando os hooks de editar, apagar e favoritar nota
++- `NotePage`, reusando `useUpdateNote`, `useDeleteNote` e `useToggleNoteFavorite`
+ 
+-O GET de tarefas ordena `created_at` ascendente: `order('created_at', { ascending: true })`. O insert manda `user_id` de `currentUserId()`. `useGetNote` usa `enabled: Boolean(notebookId)` e o id da nota. `useGetTasks` usa `enabled: Boolean(noteId)`. Criar ou marcar tarefa invalida `queryKeys.tasks.byNote(noteId)`. Não há editar nem apagar o título de uma tarefa.
++### Fora desta branch
+ 
+-Pronto quando:
++Um segundo service de nota. Editar ou apagar o título de uma tarefa. Favorito em tarefa. Paginação da checklist.
++
++### Passos
++
++1. O tipo `Task` leva `id`, `noteId`, `title`, `isDone` e `createdAt`.
++2. No service de tarefa: listar, criar e marcar. O GET ordena `created_at` ascendente, `order('created_at', { ascending: true })`. O insert manda `note_id` e `user_id` de `currentUserId()`. Título passa por `trim`; vazio vira `throw`.
++3. A key é `queryKeys.tasks.byNote(noteId)`, no formato `['tasks', { noteId }]`.
++4. `useGetNote` usa `enabled: Boolean(notebookId)` e o id da nota. `useGetTasks` usa `enabled: Boolean(noteId)`. Criar ou marcar tarefa invalida `queryKeys.tasks.byNote(noteId)`.
++5. A página reusa os hooks de editar, apagar e favoritar nota. Favoritar a nota invalida a nota e a lista do caderno, e não invalida `['notebooks']`. Apagar a nota pede confirmação, volta para a lista do caderno e leva as tarefas pelo cascade. Nota que não existe, não é da conta, ou não pertence àquele caderno mostra mensagem e volta para a lista do caderno. `reset()` roda antes do `mutate`. Enquanto `isPending`, o botão mostra "Salvando…" e fica desabilitado.
++
++### Conferir
+ 
+ - Editar título e texto sobrevive ao refresh. Título vazio, depois do trim, não grava.
+ - Favoritar a nota atualiza a nota e a lista do caderno, e a quantidade do card não muda.
+@@ -134,7 +184,7 @@ Pronto quando:
+ 
+ ## 6. Fechar a entrega
+ 
+-Com as quatro fatias na `main`, percorra o roteiro de `docs/ficha-tecnica.md` numa conta só e depois numa segunda conta.
++Com as quatro fatias na sua `main`, percorra o roteiro de `docs/ficha-tecnica.md` numa conta só e depois numa segunda conta.
+ 
+ Pronto quando todos estes pontos são verdadeiros:
+ 
+diff --git a/docs/usando-a-ia.md b/docs/usando-a-ia.md
+index f2d063f..a5b0253 100644
+--- a/docs/usando-a-ia.md
++++ b/docs/usando-a-ia.md
+@@ -10,17 +10,19 @@ não preenche rubrica à mão.
+ ## Pedidos que funcionam
+ 
+ A ordem está em [tasks.md](./tasks.md). Uma frase pede uma tarefa. A primeira
+-é sua: conectar o Supabase. A IA não cria o projeto, não vê a chave e não
+-commita o `.env`.
++é sua: fazer o fork, clonar o seu repositório e conectar o Supabase. A IA não
++cria o projeto, não vê a chave e não commita o `.env`. O pull request abre no
++seu repositório. A frase seguinte espera essa tarefa na sua `main`.
+ 
+ ```txt
+ Liga a lista de cadernos, com criar, favoritar, filtro de favoritos e a quantidade de notas.
+ ```
+ 
+ O plano do caderno já está aceito em `docs/plans/caderno.md`. A IA implementa
+-a fatia pedida: service, hook e página. Não reescreve o schema. Não antecipa
+-a tarefa seguinte. Notas e tarefas ficam para o pedido delas. Uma mudança de
+-coluna, rota ou escopo faz a IA regravar o plano e esperar de novo.
++os "Passos" da tarefa pedida: service, hook e página. Não reescreve o schema.
++Não traz o que está em "Fora desta branch". Notas e tarefas ficam para o
++pedido delas. Uma mudança de coluna, rota ou escopo faz a IA regravar o plano
++e esperar de novo.
+ 
+ ```txt
+ O empty state da lista está sem texto.
